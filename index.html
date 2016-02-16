@@ -6,8 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>API Reference</title>
 
-    <link href="stylesheets/screen.css" rel="stylesheet" media="screen" />
-    <link href="stylesheets/print.css" rel="stylesheet" media="print" />
     <style>
       .highlight table td { padding: 5px; }
 .highlight table pre { margin: 0; }
@@ -88,10 +86,12 @@
   color: #90a959;
 }
     </style>
+    <link href="stylesheets/screen.css" rel="stylesheet" media="screen" />
+    <link href="stylesheets/print.css" rel="stylesheet" media="print" />
       <script src="javascripts/all.js"></script>
   </head>
 
-  <body class="index" data-languages="[&quot;shell&quot;,&quot;ruby&quot;,&quot;python&quot;]">
+  <body class="index" data-languages="[&quot;json&quot;,&quot;shell&quot;,&quot;ruby&quot;,&quot;python&quot;]">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -101,6 +101,7 @@
     <div class="tocify-wrapper">
       <img src="images/logo.png" />
         <div class="lang-selector">
+              <a href="#" data-language-name="json">json</a>
               <a href="#" data-language-name="shell">shell</a>
               <a href="#" data-language-name="ruby">ruby</a>
               <a href="#" data-language-name="python">python</a>
@@ -277,6 +278,1003 @@ Remember — a happy kitten is an authenticated kitten!
 </tr>
 </tbody></table>
 
+          <h1 id="draw-api">Draw API</h1>
+
+          <h2 id="group-element">Group Element</h2>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"elementType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SWIMLANE"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Compliance Team"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Only for the compliance team"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"x"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"y"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"height"</span><span class="p">:</span><span class="w"> </span><span class="mi">150</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"width"</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"groupElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"authorization"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"serviceElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"globalAuthenticationType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SPECIFIED"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"streamBehaviourType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CREATE_NEW"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"groups"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"authenticationId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"id from directory"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"attribute"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MEMBER"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"users"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"authenticationId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"id from directory"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"attribute"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DELEGATES"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"locations"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"updateByName"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><em>The Group Element object represents any group or Element in your Flow diagram that can contain Map Elements.</em></p>
+
+<p>Group Elements are used to add additional behavior to Map Elements in your Flow. The Group Element currently only supports the ability to change the authentication context of the Map Elements it contains. This allows builders to change the permissions for Map Elements contained in the Group Element and restrict the ability for running users to edit or take action on any Outcomes. The properties of the Group Element are outlined here.</p>
+
+<aside class="notice">
+<b>SWIMLANES</b><br/>It&rsquo;s important to note that the Swimlane Group Element assigns a new authorization context to the Map Elements it holds. This authorization context is passed up the stack to any integrated Services that can leverage this information to provide additional features. For example, the Salesforce Service uses the Swimlane information to determine the percentage of running users that have voted. It also uses this context to determine who should be notified or emailed.
+</aside>
+
+<h4 id="object">Object</h4>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>id</strong><br/>string</td>
+<td>A unique identifier field assigned by the platform. This value should not be included for new Group Elements.</td>
+</tr>
+<tr>
+<td><strong>elementType</strong><br/>string</td>
+<td>A unique element type for the Group Element. Valid values are:<br/><ul><li><strong>SWIMLANE</strong>: Swimlane Element.</li></ul></td>
+</tr>
+<tr>
+<td><strong>developerName</strong><br/>string</td>
+<td>The name for the Group Element. This is typically a helpful name to remind builders of the purpose of the Group Element.</td>
+</tr>
+<tr>
+<td><strong>developerSummary</strong><br/>string</td>
+<td>The summary for the Group Element. This is typically additional information that will help explain the purpose of the Group Element.</td>
+</tr>
+<tr>
+<td><strong>x</strong><br/>integer</td>
+<td>The X coordinate of the Group Element in the Flow diagram.</td>
+</tr>
+<tr>
+<td><strong>y</strong><br/>integer</td>
+<td>The Y coordinate of the Group Element in the Flow diagram.</td>
+</tr>
+<tr>
+<td><strong>height</strong><br/>integer</td>
+<td>The height of the Group Element in the Flow diagram.</td>
+</tr>
+<tr>
+<td><strong>width</strong><br/>integer</td>
+<td>The width of the Group Element in the Flow diagram.</td>
+</tr>
+<tr>
+<td><strong>groupElementId</strong><br/>string</td>
+<td>The unique identifier for the Group Element that holds this Group Element. The Swimlane Group Element does not support nested groupings.</td>
+</tr>
+<tr>
+<td><strong>authorization</strong><br/>object</td>
+<td>The configuration of the authorization context for this Group Element. See GroupAuthorization for details</td>
+</tr>
+<tr>
+<td><strong>updateByName</strong><br/>boolean</td>
+<td>When working with Group Element objects through the modeling API, this setting should be set to true if you do not have a unique identifier for a Group Element but wish to update any Group Element in the system that has this same name. This key is typically only used when scripting updates to Flows as part of a migration tool.</td>
+</tr>
+</tbody></table>
+
+<h3 id="create-update-group-elements">Create/Update Group Elements</h3>
+
+<blockquote>
+<p>Example 200 OK Response</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"dateCreated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0001-01-01T00:00:00Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"dateModified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0001-01-01T00:00:00Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"whoCreated"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"whoModified"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"whoOwner"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"updateByName"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"groupElementId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"x"</span><span class="p">:</span><span class="w"> </span><span class="mi">170</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"y"</span><span class="p">:</span><span class="w"> </span><span class="mi">450</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"height"</span><span class="p">:</span><span class="w"> </span><span class="mi">250</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"width"</span><span class="p">:</span><span class="w"> </span><span class="mi">2480</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"authorization"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"serviceElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4d39d405-7eca-43f0-a4cb-419d55d8910c"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"globalAuthenticationType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SPECIFIED"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"streamBehaviourType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USE_EXISTING"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"groups"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"authenticationId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0F915000000TrafCAC"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"attribute"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MEMBERS"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"users"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"locations"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7f31a72e-eb11-4378-b9f8-ba70d334b789"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"elementType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SWIMLANE"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Compliance and Risk"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>Used to create new Group Element objects or update existing ones. The Group Element object represents any group or Element in your Flow diagram that can contain Map Elements.</p>
+
+<h4 id="http-request">HTTP Request</h4>
+
+<p><code class="prettyprint">POST /api/draw/1/{flow_id}/{editing_token}/group</code></p>
+
+<h4 id="parameters">Parameters</h4>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>flow_id</strong><br/>string</td>
+<td>Unique identifier for the Flow containing the Group Element</td>
+</tr>
+<tr>
+<td><strong>editing_token</strong><br/>string</td>
+<td>The active Editing Token for the Flow being edited</td>
+</tr>
+</tbody></table>
+
+<h4 id="body">Body</h4>
+
+<p>The raw JSON for the Group Element.</p>
+
+<aside class="notice">
+<b>Create vs Update</b><br/>
+If the &ldquo;id&rdquo; property is included in the request, the platform will update the Element with the matching unique identifier. If the &ldquo;updateByName&rdquo; property is set to true, the platform will update the Element with the matching &ldquo;developerName&rdquo; property.
+</aside>
+
+<h3 id="query-group-elements">Query Group Elements</h3>
+
+<blockquote>
+<p>Example 200 OK Response</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"dateCreated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0001-01-01T00:00:00Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"dateModified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0001-01-01T00:00:00Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"whoCreated"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"whoModified"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"whoOwner"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"updateByName"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"groupElementId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"x"</span><span class="p">:</span><span class="w"> </span><span class="mi">170</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"y"</span><span class="p">:</span><span class="w"> </span><span class="mi">450</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"height"</span><span class="p">:</span><span class="w"> </span><span class="mi">250</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"width"</span><span class="p">:</span><span class="w"> </span><span class="mi">2480</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"authorization"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"serviceElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4d39d405-7eca-43f0-a4cb-419d55d8910c"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"globalAuthenticationType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SPECIFIED"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"streamBehaviourType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USE_EXISTING"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"groups"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"authenticationId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0F915000000TrafCAC"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"attribute"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MEMBERS"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nt">"users"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"locations"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7f31a72e-eb11-4378-b9f8-ba70d334b789"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"elementType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SWIMLANE"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Compliance and Risk"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<p>Used to filter existing Group Element objects. The Group Element object represents any group or Element in your Flow diagram that can contain Map Elements.</p>
+
+<h4 id="http-request">HTTP Request</h4>
+
+<p><code class="prettyprint">GET /api/draw/1/{flow_id}/{editing_token}/group?filter={filter}</code></p>
+
+<h4 id="parameters">Parameters</h4>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>flow_id</strong><br/>string</td>
+<td>Unique identifier for the Flow containing the Group Element</td>
+</tr>
+<tr>
+<td><strong>editing_token</strong><br/>string</td>
+<td>The active Editing Token for the Flow being edited</td>
+</tr>
+<tr>
+<td><strong>filter</strong><br/>string</td>
+<td>The filter for querying Group Elements</td>
+</tr>
+</tbody></table>
+
+<h3 id="get-groupelement">Get GroupElement</h3>
+
+<blockquote>
+<p>Example 200 OK Response</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"dateCreated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0001-01-01T00:00:00Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"dateModified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0001-01-01T00:00:00Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"whoCreated"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"whoModified"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"whoOwner"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"updateByName"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"groupElementId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"x"</span><span class="p">:</span><span class="w"> </span><span class="mi">170</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"y"</span><span class="p">:</span><span class="w"> </span><span class="mi">450</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"height"</span><span class="p">:</span><span class="w"> </span><span class="mi">250</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"width"</span><span class="p">:</span><span class="w"> </span><span class="mi">2480</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"authorization"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"serviceElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4d39d405-7eca-43f0-a4cb-419d55d8910c"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"globalAuthenticationType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SPECIFIED"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"streamBehaviourType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USE_EXISTING"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"groups"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"authenticationId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0F915000000TrafCAC"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"attribute"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MEMBERS"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"users"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"locations"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7f31a72e-eb11-4378-b9f8-ba70d334b789"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"elementType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SWIMLANE"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Compliance and Risk"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>Used to get an existing Group Element object. The Group Element object represents any group or Element in your Flow diagram that can contain Map Elements.</p>
+
+<h4 id="http-request">HTTP Request</h4>
+
+<p><code class="prettyprint">GET /api/draw/1/{flow_id}/{editing_token}/group/{id}</code></p>
+
+<h4 id="parameters">Parameters</h4>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>flow_id</strong><br/>string</td>
+<td>Unique identifier for the Flow containing the Group Element</td>
+</tr>
+<tr>
+<td><strong>editing_token</strong><br/>string</td>
+<td>The active Editing Token for the Flow being edited</td>
+</tr>
+<tr>
+<td><strong>id</strong><br/>string</td>
+<td>The unique identifier for the Group Element</td>
+</tr>
+</tbody></table>
+
+<h3 id="delete-groupelement">Delete GroupElement</h3>
+
+<blockquote>
+<p>Success 204 No Content Response</p>
+</blockquote>
+
+<p>Used to delete an existing Group Element object. The Group Element object represents any group or Element in your Flow diagram that can contain Map Elements.</p>
+
+<h4 id="http-request">HTTP Request</h4>
+
+<p><code class="prettyprint">DELETE /api/draw/1/{flow_id}/{editing_token}/group/{id}</code></p>
+
+<h4 id="parameters">Parameters</h4>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>flow_id</strong><br/>string</td>
+<td>Unique identifier for the Flow containing the Group Element</td>
+</tr>
+<tr>
+<td><strong>editing_token</strong><br/>string</td>
+<td>The active Editing Token for the Flow being edited</td>
+</tr>
+<tr>
+<td><strong>id</strong><br/>string</td>
+<td>The unique identifier for the Group Element</td>
+</tr>
+</tbody></table>
+
+          <h2 id="map-element">Map Element</h2>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"My Map Element"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">"An example Map Element configuration"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"x"</span><span class="p">:</span><span class="w"> </span><span class="mi">250</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"y"</span><span class="p">:</span><span class="w"> </span><span class="mi">350</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"groupElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"pageElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"dataActions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Save My Account"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"crudOperationType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SAVE"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"isSmartSave"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"order"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"valueElementToReferenceId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"typeElementPropertyId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nt">"valueElementToApplyId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"typeElementPropertyId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nt">"objectDataRequest"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"typeElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"typeElementBindingId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"listFilter"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"filterId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"typeElementPropertyId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"comparisonType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AND"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"where"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+              </span><span class="nt">"columnTypeElementPropertyId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+              </span><span class="nt">"criteriaType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EQUAL"</span><span class="p">,</span><span class="w">
+              </span><span class="nt">"valueElementToReferenceId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"typeElementPropertyId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+              </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+          </span><span class="p">],</span><span class="w">
+          </span><span class="nt">"orderByTypeElementPropertyId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"orderByDirectionType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DESC"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"limit"</span><span class="p">:</span><span class="w"> </span><span class="mi">250</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"filterByProvidedObjects"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"commandType"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"key1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"value1"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"key2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"value2"</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nt">"listeners"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"My Listener"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"serviceElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"listenerType"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"valueElementToReferenceForListeningId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"typeElementPropertyId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nt">"attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"key1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"attribute1"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"key2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"attribute2"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nt">"messageActions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Send Message"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"serviceElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"uriPart"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"inputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hello"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"contentType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ContentString"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"typeElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"valueElementToReferenceId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"typeElementPropertyId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"order"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nt">"outputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"World"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"contentType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ContentString"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"typeElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"valueElementToApplyId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"typeElementPropertyId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"order"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nt">"attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"key1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"attribute1"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"key2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"attribute2"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nt">"order"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nt">"navigationOverrides"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"navigationElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"navigationItemId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"locationMapElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"isEnabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"isVisible"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nt">"operations"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"valueElementToApplyId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"typeElementPropertyId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nt">"valueElementToReferenceId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"typeElementPropertyId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nt">"macroElementToExecuteId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"order"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nt">"outcomes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Next"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Next"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"nextMapElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"pageActionType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SAVE"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"isBulkAction"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"pageActionBindingType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EDIT"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"pageObjectBindingId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"order"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"comparison"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"comparisonType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AND"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"rules"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+          </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"leftValueElementToReferenceId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+              </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+              </span><span class="nt">"typeElementPropertyId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+              </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"criteriaType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EQUAL_TO"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"rightValueElementToReferenceId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+              </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+              </span><span class="nt">"typeElementPropertyId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+              </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="nt">"comparisons"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"order"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nt">"flowOut"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"valueElementStateId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"typeElementPropertyId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"valueElementFlowId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"typeElementPropertyId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"flowId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"versionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"valueElementExternalIdentifierId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"typeElementPropertyId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nt">"controlPoints"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"x"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"y"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nt">"viewMessageAction"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"vote"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"voteType"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"minimumCount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"minimumPercent"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"key1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"attribute1"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"key2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"attribute2"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"clearNavigationOverrides"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"postUpdateToStream"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"postUpdateWhenType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"not sure what this is"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"postUpdateMessage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The Flow has progressed to this step"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"statusMessage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The Flow is currently busy doing some work"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"notAuthorizedMessage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"You are not authenticated for the swimlane"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"userContent"</span><span class="p">:</span><span class="w"> </span><span class="s2">"This is my content"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"updateByName"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><em>The Map Element object represents any node or Element in your Flow diagram.</em></p>
+
+<p>Map Elements are used to set out the actions and journey of your Flow. Each Map Element performs an action - which may be to present the user with information, collect information, or perform logical actions such as inserting records into a database, executing business rules, or sending messages to a 3rd party application. There&rsquo;s a lot of functionality packed into Map Elements, and that has been separated out in the sections below. The base properties of the Map Element are outlined here.</p>
+
+<h4 id="object">Object</h4>
+
+<h5 id="map-element">Map Element</h5>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>id</strong><br/>string</td>
+<td>A unique identifier field assigned by the platform. This value should not be included for new Map Elements.</td>
+</tr>
+<tr>
+<td><strong>elementType</strong><br/>string</td>
+<td>A unique element type for the Map Element. Valid values are:<ol><li><strong>START</strong>: Start Element.</li><li><strong>STEP</strong>: Step Element.</li><li><strong>INPUT</strong>: Page Element.</li><li><strong>DECISION</strong>: Decision Element.</li><li><strong>OPERATOR</strong>: Operator Element.</li><li><strong>MESSAGE</strong>: Message Element.</li><li><strong>DATABASE_SAVE</strong>: Database Save Element.</li><li><strong>DATABASE_LOAD</strong>: Database Load Element.</li><li><strong>DATABASE_DELETE</strong>: Database Delete Element.</li></ol></td>
+</tr>
+<tr>
+<td><strong>developerName</strong><br/>string</td>
+<td>The name for the Map Element. This is typically a helpful name to remind builders of the purpose of the Map Element.</td>
+</tr>
+<tr>
+<td><strong>developerSummary</strong><br/>string</td>
+<td>The summary for the Map Element. This is typically additional information that will help explain the purpose of the Map Element.</td>
+</tr>
+<tr>
+<td><strong>x</strong><br/>integer</td>
+<td>The X coordinate of the Map Element in the Flow diagram. If the Map Element is contained inside a Group Element, this the X coordinate in relation to the Group Element.</td>
+</tr>
+<tr>
+<td><strong>y</strong><br/>integer</td>
+<td>The Y coordinate of the Map Element in the Flow diagram. If the Map Element is contained inside a Group Element, this the Y coordinate in relation to the Group Element.</td>
+</tr>
+<tr>
+<td><strong>groupElementId</strong><br/>string</td>
+<td>The unique identifier for the Group Element that holds this Map Element. This identifier is only required for Map Elements that are in a Group Element. E.g. if a Map Element is in a Swimlane, this will be the unique identifier of the Swimlane Group Element that is in charge of restricting access to this step in the Flow.</td>
+</tr>
+<tr>
+<td><strong>pageElementId</strong><br/>string</td>
+<td>The unique identifier for the Page Element that is associated with this Map Element. This identifier is only required for Map Elements that will render a Page Layout. E.g. if a Map Element is a Page, this will be the unique identifier of the Page Layout that should be shown to the user at this step in the Flow.</td>
+</tr>
+<tr>
+<td><strong>clearNavigationOverrides</strong><br/>boolean</td>
+<td>If any Navigation Overrides have been applied to the Navigation of the running Flow, this step should clear all of the overrides.</td>
+</tr>
+<tr>
+<td><strong>postUpdateToStream</strong><br/>boolean</td>
+<td>If the Flow is associated with a Stream (E.g. a social feed in Chatter), this boolean indicates that the Map Element should automatically post to the stream when reached.</td>
+</tr>
+<tr>
+<td><strong>postUpdateWhenType</strong><br/>string</td>
+<td>If the postUpdateToStream key is set to true, this value tells the platform when to perform the actual update. Valid values are:<ol><li><strong>ON_LOAD</strong>: Post the update to the stream when the Map Element loads.</li><li><strong>ON_EXIT</strong>: Post the update to the stream when the Map Element is finished (i.e. by clicking on an Outcome that moves the Flow to the next step).</li></ol></td>
+</tr>
+<tr>
+<td><strong>postUpdateMessage</strong><br/>string</td>
+<td>If the postUpdateToStream key is set to true, this is the content of the message that will be posted to the stream.</td>
+</tr>
+<tr>
+<td><strong>statusMessage</strong><br/>string</td>
+<td>If the Flow is currently in a &ldquo;WAIT&rdquo; state as a result of a Message Action, this is the message that will be shown to the users while waiting. The status message can be overwritten by the Service at runtime.</td>
+</tr>
+<tr>
+<td><strong>notAuthorizedMessage</strong><br/>string</td>
+<td>If the running user(s) of the Flow does not have access to a particular section of the Flow (E.g. due to a Swimlane), this is the message that will be shown to the users who are not authorized to view the content or take action on a Map Element step.</td>
+</tr>
+<tr>
+<td><strong>userContent</strong><br/>string</td>
+<td>The content that should be displayed to the running user(s) of the Flow. This key is only used for Step Map Elements and is a quick way of building out content in a Flow without needing to build a Page Layout.</td>
+</tr>
+<tr>
+<td><strong>updateByName</strong><br/>boolean</td>
+<td>When working with Map Element objects through the modeling API, this setting should be set to true if you do not have a unique identifier for a Map Element but wish to update any Map Element in the system that has this same name. This key is typically only used when scripting updates to Flows as part of a migration tool.</td>
+</tr>
+<tr>
+<td><strong>viewMessageAction</strong><br/>string</td>
+<td>(reserved for future development)</td>
+</tr>
+</tbody></table>
+
+<h5 id="data-actions">Data Actions</h5>
+
+<blockquote>
+<p>Example dataActions JSON:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="w">  </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Save My Account"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"crudOperationType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SAVE"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"isSmartSave"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"order"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"valueElementToReferenceId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;id&gt;"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"typeElementPropertyId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;id&gt;"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nt">"valueElementToApplyId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;id&gt;"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"typeElementPropertyId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;id&gt;"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nt">"objectDataRequest"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"typeElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;id&gt;"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"typeElementBindingId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;id&gt;"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"listFilter"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"filterId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;id&gt;"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"typeElementPropertyId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;id&gt;"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"comparisonType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AND"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"where"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+              </span><span class="nt">"columnTypeElementPropertyId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;id&gt;"</span><span class="p">,</span><span class="w">
+              </span><span class="nt">"criteriaType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EQUAL"</span><span class="p">,</span><span class="w">
+              </span><span class="nt">"valueElementToReferenceId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;id&gt;"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"typeElementPropertyId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;id&gt;"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+              </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+          </span><span class="p">],</span><span class="w">
+          </span><span class="nt">"orderByTypeElementPropertyId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;id&gt;"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"orderByDirectionType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DESC"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"limit"</span><span class="p">:</span><span class="w"> </span><span class="mi">250</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"filterByProvidedObjects"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"commandType"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"key1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"value1"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"key2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"value2"</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<p>A Data Action is used to perform create, read, update, or delete (CRUD) type operations on a Service. There are a number of features that make data actions particularly powerful:</p>
+
+<ol>
+<li>You do not need to manage INSERT vs UPDATE operations. We automatically track the objects in your Flow and know if it is a new object to be inserted or an update to an existing object. This is done using our &ldquo;SAVE&rdquo; operation. We do not separate INSERT and UPDATE.</li>
+<li>You can configure filters using our common metadata. This means you do not need to understand the query language of the underlying Service, you can create queries using a standard notation and we automatically translate this notation into SQL (RDBMS), SOQL (Salesforce), ZOQL (Zuora), etc.</li>
+<li>The Data Action automatically knows where the data needs to go. There is no need to map fields into the database as this is already configured in the Type. In addition, a number of Services also support &ldquo;smart save&rdquo; which does a smart merge of data collected/changed in the Flow with data already stored in the Service.</li>
+<li>If you need advanced data management capabilities such as summary roll-ups or joined tables, you can configure this using &ldquo;commands&rdquo; (as supported by the underlying Service implementation).</li>
+</ol>
+
+<aside class="notice">
+<b>Data Actions Support</b><br/>
+Map Elements that support Data Actions are:
+<ul>
+<li>Database Save</li>
+<li>Database Load</li>
+<li>Database Delete</li>
+</ul>
+</aside>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>developerName</strong><br/>string</td>
+<td>The name for the Data Action. This is typically a helpful name to remind builders of the purpose of the Data Action.</td>
+</tr>
+<tr>
+<td><strong>crudOperationType</strong><br/>string</td>
+<td>This is the type of operation being performed. Valid values are:<ul><li><strong>SAVE</strong>: Save the data in the referenced Value back to the Service. This is an create or update operation in CRUD.</li><li><strong>LOAD</strong>: Load data from the Service into the referenced Value. This is a read operation in CRUD.</li><li><strong>DELETE</strong>: Delete the data stored in the reference Value from the Service. This data action can only be performed in the Value was first loaded from the Service.</li></ul></td>
+</tr>
+<tr>
+<td><strong>isSmartSave</strong><br/>boolean</td>
+<td>Indicates if the data should saved using tracked changes in the data. Smart save must be supported in the underlying Service as the platform will only send changed data back to the Service rather than the complete Object or List.</td>
+</tr>
+<tr>
+<td><strong>order</strong><br/>integer</td>
+<td>The order in which the Data Action should be performed in relation to other Data Actions. The order must be greater than or equal to zero. If Data Actions have the same order, they will be performed in parallel to improve Flow performance.</td>
+</tr>
+<tr>
+<td><strong>valueElementToReferenceId</strong><br/>object</td>
+<td>The ValueElementId pointing to the Object or List Value that should be saved or deleted. This property is only needed for SAVE or DELETE operations or for LOAD operations where filterByProvidedObjects is true. E.g. which Object or List Value are you saving or deleting from the Service.</td>
+</tr>
+<tr>
+<td><strong>valueElementToApplyId</strong><br/>object</td>
+<td>The ValueElementId pointing to the Object or List Value that should be changed as a result of the Data Action. This property is only needed for SAVE or LOAD operations. E.g. which Object or List Value should be populated as a result of executing the save or load on the Service. When objects are saved, we send back the resulting data as it can often include additional information due to formula fields, triggers, etc.</td>
+</tr>
+<tr>
+<td><strong>objectDataRequest</strong><br/>object</td>
+<td>The configuration of the data operation being performed. See ObjectDataRequest for details.</td>
+</tr>
+</tbody></table>
+
+<h3 id="create-update-map-elements">Create/Update Map Elements</h3>
+
+<blockquote>
+<p>Example 200 OK Response</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"dateCreated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0001-01-01T00:00:00Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"dateModified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0001-01-01T00:00:00Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"whoCreated"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"whoModified"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"whoOwner"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"updateByName"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"groupElementId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"x"</span><span class="p">:</span><span class="w"> </span><span class="mi">170</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"y"</span><span class="p">:</span><span class="w"> </span><span class="mi">450</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"height"</span><span class="p">:</span><span class="w"> </span><span class="mi">250</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"width"</span><span class="p">:</span><span class="w"> </span><span class="mi">2480</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"authorization"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"serviceElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4d39d405-7eca-43f0-a4cb-419d55d8910c"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"globalAuthenticationType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SPECIFIED"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"streamBehaviourType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USE_EXISTING"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"groups"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"authenticationId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0F915000000TrafCAC"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"attribute"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MEMBERS"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"users"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"locations"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7f31a72e-eb11-4378-b9f8-ba70d334b789"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"elementType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SWIMLANE"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Compliance and Risk"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>Used to create new Group Element objects or update existing ones. The Group Element object represents any group or Element in your Flow diagram that can contain Map Elements.</p>
+
+<h4 id="http-request">HTTP Request</h4>
+
+<p><code class="prettyprint">POST /api/draw/1/{flow_id}/{editing_token}/group</code></p>
+
+<h4 id="parameters">Parameters</h4>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>flow_id</strong><br/>string</td>
+<td>Unique identifier for the Flow containing the Group Element</td>
+</tr>
+<tr>
+<td><strong>editing_token</strong><br/>string</td>
+<td>The active Editing Token for the Flow being edited</td>
+</tr>
+</tbody></table>
+
+<h4 id="body">Body</h4>
+
+<p>The raw JSON for the Group Element.</p>
+
+<aside class="notice">
+<b>Create vs Update</b><br/>
+If the &ldquo;id&rdquo; property is included in the request, the platform will update the Element with the matching unique identifier. If the &ldquo;updateByName&rdquo; property is set to true, the platform will update the Element with the matching &ldquo;developerName&rdquo; property.
+</aside>
+
+<h3 id="query-group-elements">Query Group Elements</h3>
+
+<blockquote>
+<p>Example 200 OK Response</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"dateCreated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0001-01-01T00:00:00Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"dateModified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0001-01-01T00:00:00Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"whoCreated"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"whoModified"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"whoOwner"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"updateByName"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"groupElementId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"x"</span><span class="p">:</span><span class="w"> </span><span class="mi">170</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"y"</span><span class="p">:</span><span class="w"> </span><span class="mi">450</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"height"</span><span class="p">:</span><span class="w"> </span><span class="mi">250</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"width"</span><span class="p">:</span><span class="w"> </span><span class="mi">2480</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"authorization"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"serviceElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4d39d405-7eca-43f0-a4cb-419d55d8910c"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"globalAuthenticationType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SPECIFIED"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"streamBehaviourType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USE_EXISTING"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"groups"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"authenticationId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0F915000000TrafCAC"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"attribute"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MEMBERS"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nt">"users"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"locations"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7f31a72e-eb11-4378-b9f8-ba70d334b789"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"elementType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SWIMLANE"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Compliance and Risk"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<p>Used to filter existing Group Element objects. The Group Element object represents any group or Element in your Flow diagram that can contain Map Elements.</p>
+
+<h4 id="http-request">HTTP Request</h4>
+
+<p><code class="prettyprint">GET /api/draw/1/{flow_id}/{editing_token}/group?filter={filter}</code></p>
+
+<h4 id="parameters">Parameters</h4>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>flow_id</strong><br/>string</td>
+<td>Unique identifier for the Flow containing the Group Element</td>
+</tr>
+<tr>
+<td><strong>editing_token</strong><br/>string</td>
+<td>The active Editing Token for the Flow being edited</td>
+</tr>
+<tr>
+<td><strong>filter</strong><br/>string</td>
+<td>The filter for querying Group Elements</td>
+</tr>
+</tbody></table>
+
+<h3 id="get-groupelement">Get GroupElement</h3>
+
+<blockquote>
+<p>Example 200 OK Response</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"dateCreated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0001-01-01T00:00:00Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"dateModified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0001-01-01T00:00:00Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"whoCreated"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"whoModified"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"whoOwner"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"updateByName"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"groupElementId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"x"</span><span class="p">:</span><span class="w"> </span><span class="mi">170</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"y"</span><span class="p">:</span><span class="w"> </span><span class="mi">450</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"height"</span><span class="p">:</span><span class="w"> </span><span class="mi">250</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"width"</span><span class="p">:</span><span class="w"> </span><span class="mi">2480</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"authorization"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"serviceElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4d39d405-7eca-43f0-a4cb-419d55d8910c"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"globalAuthenticationType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SPECIFIED"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"streamBehaviourType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USE_EXISTING"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"groups"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"authenticationId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0F915000000TrafCAC"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"attribute"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MEMBERS"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"users"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"locations"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7f31a72e-eb11-4378-b9f8-ba70d334b789"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"elementType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SWIMLANE"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Compliance and Risk"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>Used to get an existing Group Element object. The Group Element object represents any group or Element in your Flow diagram that can contain Map Elements.</p>
+
+<h4 id="http-request">HTTP Request</h4>
+
+<p><code class="prettyprint">GET /api/draw/1/{flow_id}/{editing_token}/group/{id}</code></p>
+
+<h4 id="parameters">Parameters</h4>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>flow_id</strong><br/>string</td>
+<td>Unique identifier for the Flow containing the Group Element</td>
+</tr>
+<tr>
+<td><strong>editing_token</strong><br/>string</td>
+<td>The active Editing Token for the Flow being edited</td>
+</tr>
+<tr>
+<td><strong>id</strong><br/>string</td>
+<td>The unique identifier for the Group Element</td>
+</tr>
+</tbody></table>
+
+<h3 id="delete-groupelement">Delete GroupElement</h3>
+
+<blockquote>
+<p>Success 204 No Content Response</p>
+</blockquote>
+
+<p>Used to delete an existing Group Element object. The Group Element object represents any group or Element in your Flow diagram that can contain Map Elements.</p>
+
+<h4 id="http-request">HTTP Request</h4>
+
+<p><code class="prettyprint">DELETE /api/draw/1/{flow_id}/{editing_token}/group/{id}</code></p>
+
+<h4 id="parameters">Parameters</h4>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>flow_id</strong><br/>string</td>
+<td>Unique identifier for the Flow containing the Group Element</td>
+</tr>
+<tr>
+<td><strong>editing_token</strong><br/>string</td>
+<td>The active Editing Token for the Flow being edited</td>
+</tr>
+<tr>
+<td><strong>id</strong><br/>string</td>
+<td>The unique identifier for the Group Element</td>
+</tr>
+</tbody></table>
+
           <h1 id="errors">Errors</h1>
 
 <aside class="notice">This error section is stored in a separate file in `includes/_errors.md`. Slate allows you to optionally separate out your docs into many files&hellip;just save them to the `includes` folder and add them to the top of your `index.md`&rsquo;s frontmatter. Files are included in the order listed.</aside>
@@ -338,6 +1336,7 @@ Remember — a happy kitten is an authenticated kitten!
       </div>
       <div class="dark-box">
           <div class="lang-selector">
+                <a href="#" data-language-name="json">json</a>
                 <a href="#" data-language-name="shell">shell</a>
                 <a href="#" data-language-name="ruby">ruby</a>
                 <a href="#" data-language-name="python">python</a>
