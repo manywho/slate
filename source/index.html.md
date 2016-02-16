@@ -2,6 +2,7 @@
 title: API Reference
 
 language_tabs:
+  - json
   - shell
   - ruby
   - python
@@ -11,6 +12,9 @@ toc_footers:
   - <a href='https://github.com/tripit/slate'>Documentation Powered by Slate</a>
 
 includes:
+  - drawapi
+  - groupelements
+  - mapelements
   - errors
 
 search: true
