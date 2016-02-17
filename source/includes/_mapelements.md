@@ -68,37 +68,37 @@ Key | Description
       "isSmartSave": true,
       "order": 0,
       "valueElementToReferenceId": {
-        "id": "<id>",
-        "typeElementPropertyId": "<id>",
+        "id": "{id}",
+        "typeElementPropertyId": "{id}",
         "command": null
       },
       "valueElementToApplyId": {
-        "id": "<id>",
-        "typeElementPropertyId": "<id>",
+        "id": "{id}",
+        "typeElementPropertyId": "{id}",
         "command": null
       },
       "objectDataRequest": {
-        "typeElementId": "<id>",
-        "typeElementBindingId": "<id>",
+        "typeElementId": "{id}",
+        "typeElementBindingId": "{id}",
         "listFilter": {
           "filterId": {
-            "id": "<id>",
-            "typeElementPropertyId": "<id>",
+            "id": "{id}",
+            "typeElementPropertyId": "{id}",
             "command": null
           },
           "comparisonType": "AND",
           "where": [
             {
-              "columnTypeElementPropertyId": "<id>",
+              "columnTypeElementPropertyId": "{id}",
               "criteriaType": "EQUAL",
               "valueElementToReferenceId": {
-                "id": "<id>",
-                "typeElementPropertyId": "<id>",
+                "id": "{id}",
+                "typeElementPropertyId": "{id}",
                 "command": null
               }
             }
           ],
-          "orderByTypeElementPropertyId": "<id>",
+          "orderByTypeElementPropertyId": "{id}",
           "orderByDirectionType": "DESC",
           "limit": 250,
           "filterByProvidedObjects": false
@@ -200,16 +200,16 @@ Key | Description
   [
     {
       "developerName": "Send Message",
-      "serviceElementId": "<id>",
+      "serviceElementId": "{id}",
       "uriPart": null,
       "inputs": [
         {
           "developerName": "Hello",
           "contentType": "ContentString",
-          "typeElementId": "<id>",
+          "typeElementId": "{id}",
           "valueElementToReferenceId": {
-            "id": "<id>",
-            "typeElementPropertyId": "<id>",
+            "id": "{id}",
+            "typeElementPropertyId": "{id}",
             "command": null
           },
           "order": 0
@@ -219,10 +219,10 @@ Key | Description
         {
           "developerName": "World",
           "contentType": "ContentString",
-          "typeElementId": "<id>",
+          "typeElementId": "{id}",
           "valueElementToApplyId": {
-            "id": "<id>",
-            "typeElementPropertyId": "<id>",
+            "id": "{id}",
+            "typeElementPropertyId": "{id}",
             "command": null
           },
           "order": 0
@@ -270,9 +270,9 @@ Key | Description
 ```json
   [
     {
-      "navigationElementId": "<id>",
-      "navigationItemId": "<id>",
-      "locationMapElementId": "<id>",
+      "navigationElementId": "{id}",
+      "navigationItemId": "{id}",
+      "locationMapElementId": "{id}",
       "isEnabled": false,
       "isVisible": true
     }
@@ -305,16 +305,16 @@ Key | Description
   [
     {
       "valueElementToApplyId": {
-        "id": "<id>",
-        "typeElementPropertyId": "<id>",
+        "id": "{id}",
+        "typeElementPropertyId": "{id}",
         "command": null
       },
       "valueElementToReferenceId": {
-        "id": "<id>",
-        "typeElementPropertyId": "<id>",
+        "id": "{id}",
+        "typeElementPropertyId": "{id}",
         "command": null
       },
-      "macroElementToExecuteId": "<id>",
+      "macroElementToExecuteId": "{id}",
       "order": 0
     }
   ]
@@ -354,25 +354,25 @@ Key | Description
       "developerName": "Next",
       "developerSummary": null,
       "label": "Next",
-      "nextMapElementId": "<id>",
+      "nextMapElementId": "{id}",
       "pageActionType": "SAVE",
       "isBulkAction": false,
       "pageActionBindingType": "EDIT",
-      "pageObjectBindingId": "<id>",
+      "pageObjectBindingId": "{id}",
       "order": 0,
       "comparison": {
         "comparisonType": "AND",
         "rules": [
           {
             "leftValueElementToReferenceId": {
-              "id": "<id>",
-              "typeElementPropertyId": "<id>",
+              "id": "{id}",
+              "typeElementPropertyId": "{id}",
               "command": null
             },
             "criteriaType": "EQUAL_TO",
             "rightValueElementToReferenceId": {
-              "id": "<id>",
-              "typeElementPropertyId": "<id>",
+              "id": "{id}",
+              "typeElementPropertyId": "{id}",
               "command": null
             }
           }
@@ -382,22 +382,22 @@ Key | Description
       },
       "flowOut": {
         "valueElementStateId": {
-          "id": "<id>",
-          "typeElementPropertyId": "<id>",
+          "id": "{id}",
+          "typeElementPropertyId": "{id}",
           "command": null
         },
         "valueElementFlowId": {
-          "id": "<id>",
-          "typeElementPropertyId": "<id>",
+          "id": "{id}",
+          "typeElementPropertyId": "{id}",
           "command": null
         },
         "flowId": {
-          "id": "<id>",
-          "versionId": "<id>"
+          "id": "{id}",
+          "versionId": "{id}"
         },
         "valueElementExternalIdentifierId": {
-          "id": "<id>",
-          "typeElementPropertyId": "<id>",
+          "id": "{id}",
+          "typeElementPropertyId": "{id}",
           "command": null
         }
       },
@@ -638,7 +638,7 @@ Key | Description
 **filter**<br/>string | The filter for querying Map Elements
 
 
-### Get MapElement
+### Get Map Element
 
 > Example 200 OK Response
 
@@ -708,7 +708,7 @@ Key | Description
 **id**<br/>string | The unique identifier for the Map Element
 
 
-### Delete MapElement
+### Delete Map Element
 
 > Success 204 No Content Response
 

@@ -11,6 +11,12 @@ includes:
   - drawapi
   - groupelements
   - mapelements
+  - navigationelements
+  - pageelements
+  - tagelements
+  - valueelements
+  - typeelements
+  - commonobjects
 
 search: true
 ---

@@ -43,7 +43,7 @@ Group Elements are used to add additional behavior to Map Elements in your Flow.
 <b>SWIMLANES</b><br/>It's important to note that the Swimlane Group Element assigns a new authorization context to the Map Elements it holds. This authorization context is passed up the stack to any integrated Services that can leverage this information to provide additional features. For example, the Salesforce Service uses the Swimlane information to determine the percentage of running users that have voted. It also uses this context to determine who should be notified or emailed.
 </aside>
 
-#### Object
+#### Group Element
 
 Key | Description
 --- | -----------
@@ -175,7 +175,7 @@ Key | Description
 **filter**<br/>string | The filter for querying Group Elements
 
 
-### Get GroupElement
+### Get Group Element
 
 > Example 200 OK Response
 
@@ -227,7 +227,7 @@ Key | Description
 **id**<br/>string | The unique identifier for the Group Element
 
 
-### Delete GroupElement
+### Delete Group Element
 
 > Success 204 No Content Response
 
