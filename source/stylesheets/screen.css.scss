@@ -564,6 +564,11 @@ html, body {
 	  border-left: 4px solid #50af51;
       background-color: $aside-success-bg;
     }
+    
+    &.error {
+      border-left: 4px solid #d9534f;
+      background-color: $aside-error-bg;
+    }
   }
 
   aside:before {

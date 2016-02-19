@@ -8,6 +8,7 @@ toc_footers:
   - <a href='#'>Sign Up for an Account</a>
 
 includes:
+  - adminapi
   - drawapi
   - groupelements
   - mapelements
