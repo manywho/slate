@@ -10,6 +10,7 @@ toc_footers:
 includes:
   - conceptual/sharedelements
   - conceptual/mapelements
+  - adminapi
   - drawapi
   - groupelements
   - mapelements
