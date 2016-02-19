@@ -11,19 +11,19 @@ includes:
   - conceptual/sharedelements
   - conceptual/mapelements
   - adminapi
-  - provisioningapi
-  - tenantsapi
-  - usersapi
-  - statesapi
+  - adminapi/provisioning
+  - adminapi/tenants
+  - adminapi/users
+  - adminapi/states
   - drawapi
-  - groupelements
-  - mapelements
-  - navigationelements
-  - pageelements
-  - tagelements
-  - valueelements
-  - typeelements
-  - commonobjects
+  - drawapi/groupelements
+  - drawapi/mapelements
+  - drawapi/navigationelements
+  - drawapi/pageelements
+  - drawapi/tagelements
+  - drawapi/valueelements
+  - drawapi/typeelements
+  - drawapi/commonobjects
   - translateapi
 
 search: true
