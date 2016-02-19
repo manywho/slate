@@ -9,6 +9,10 @@ toc_footers:
 
 includes:
   - adminapi
+  - provisioningapi
+  - tenantsapi
+  - usersapi
+  - statesapi
   - drawapi
   - groupelements
   - mapelements
@@ -18,6 +22,7 @@ includes:
   - valueelements
   - typeelements
   - commonobjects
+  - translateapi
 
 search: true
 ---
