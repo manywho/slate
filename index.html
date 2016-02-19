@@ -120,6 +120,1046 @@
 
 <p>Some stuff about ManyWho.</p>
 
+          <h1 id="admin-api">Admin API</h1>
+
+<h2 id="provisioning-and-flow-builders">Provisioning and Flow Builders</h2>
+
+<h3 id="provisioning">Provisioning</h3>
+
+<blockquote>
+<p>Tenant Registration Request JSON:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"firstName"</span><span class="p">:</span><span class="s2">"Paul"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"lastName"</span><span class="p">:</span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"password"</span><span class="p">:</span><span class="s2">"pa$$word"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"email"</span><span class="p">:</span><span class="s2">"paul.smith@mycompany.com"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"username"</span><span class="p">:</span><span class="s2">"paul.smith@mycompany.manywho.com"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"subdomain"</span><span class="p">:</span><span class="s2">"mycompany"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"notification"</span><span class="p">:{</span><span class="w">
+    </span><span class="nt">"reason"</span><span class="p">:</span><span class="s2">"My Company Tenant"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"redirectUrl"</span><span class="p">:</span><span class="s2">"https://flow.manywho.com/draw"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"notificationMessages"</span><span class="p">:</span><span class="w">
+    </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"mediaType"</span><span class="p">:</span><span class="s2">"text/plain"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"message"</span><span class="p">:</span><span class="s2">"Username is paul.smith@mycompany.manywho.com, password is: pa$$word. Click here to complete: VERIFY_URL_HERE. You can login to the tooling here: https://manywho.com/log-in"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><em>Create new Tenants and provision the first Flow Builder in a single request</em></p>
+
+<p>When you provision a new tenant in ManyWho, there are a few things you need to be aware of:</p>
+
+<ol>
+<li>If the email and username are the same, the Platform will provision the Tenant as a Domain Tenant. This means that additional Flow Builders can only be provisioned into this Tenant if they have the same email domain (e.g. @mycompany.com). In addition, the default permissions of the Tenant will allow any other Flow Builders from that same email domain to provision themselves, or self provision, into your Domain Tenant without permission from you. They are part of your email domain and therefore we do not impose restrictions on them gaining access independently.</li>
+<li>If the email is different from the username, the username must follow the format: @{tenant name}.manywho.com (as shown in the example to the right). Using this format allows Flow Builders with the same email address to provision as many tenants as they like - as long as the {tenant name} is unique. In addition, the default permissions of the Tenant will not allow further Flow Builders to self provision. Any additional Flow Builders must be added by the first Flow builder that provisioned the Tenant or other Flow Builders that have an active account in that Tenant.</li>
+</ol>
+
+<p>Once a tenant is provisioned, the Flow builder provisioning options can be changed. Please have a look at the Tenant API in this documentation for details. Further to this, each Tenant can have any number of sub-Tenants. The benefit of sub-Tenants is that a Flow builder can move between Tenants more easily using single sign-on. Please have a look at the Sub-Tenant API in this documentation for details.</p>
+
+<p>If the type Tenant User Registration Settings (in the Tenant API) is set to MANUAL or SPECIFIC, this API will only work with a valid Flow builder Authorization header.</p>
+
+<h4 id="http-request">HTTP Request</h4>
+
+<p><code class="prettyprint">POST api/admin/1/provisioning</code></p>
+
+<h4 id="body">Body</h4>
+
+<p>The raw JSON for the Tenant Registration Request:</p>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>firstName</strong><br/>string</td>
+<td>The first name of the user registering the Tenant.</td>
+</tr>
+<tr>
+<td><strong>lastName</strong><br/>string</td>
+<td>The last name of the user registering the Tenant.</td>
+</tr>
+<tr>
+<td><strong>email</strong><br/>string</td>
+<td>The email of the user registering the Tenant.</td>
+</tr>
+<tr>
+<td><strong>username</strong><br/>string</td>
+<td>The chosen username for the user registering the Tenant. The username will determine the name of the tenant and further builder user provisioning.</td>
+</tr>
+<tr>
+<td><strong>password</strong><br/>string</td>
+<td>The chosen password fo the user registering the Tenant.</td>
+</tr>
+<tr>
+<td><strong>subdomain</strong><br/>string</td>
+<td>The optional subdomain being reserved for this Tenant. The subdomain must be globally unique.</td>
+</tr>
+<tr>
+<td><strong>notification</strong><br/>object</td>
+<td>The notification that should be sent as part of this Tenant registration. The notification will be sent to the user being registered.<br/><br/><strong>reason</strong> (string): The reason for the notification. For email, this will be the email subject.<br/><br/><strong>redirectUrl</strong> (string): The Url that the user should be redirected to when clicking on the verification Url.<br/><br/><strong>notificationMessages</strong> (array): The list of notification messages (by media type) that should be sent to the user. Each Notification Message entry has the following keys:<ul><li><strong>mediaType</strong> (string): The media type for the notification message. Currently supported values are &ldquo;text/html&rdquo; and &ldquo;text/plain&rdquo;.</li><li><strong>message</strong> (string): The message to be sent to the user. For email, this is the email body. To add the verification Url, simply add VERIFY_URL_HERE to the content of the message and the Platform will replace this with the actual verification callback Url which will then forward to the redirectUrl.</li></ul></td>
+</tr>
+</tbody></table>
+
+<h3 id="resetting-a-flow-builder-password">Resetting a Flow Builder Password</h3>
+
+<p>The password reset API is only applicable to Flow Builders. For running users, the user identity is managed by the underlying Service (e.g. Salesforce, Box, Google), and therefore user resets should be performed on the underlying system, not within ManyWho. The password reset API requires two separate API calls to complete. The first API call sends the user the password reset notification. The second API call performs the actual password change, based on the token provided in the notification.</p>
+
+<h4 id="perform-the-password-reset-request">Perform the Password Reset Request</h4>
+
+<blockquote>
+<p>Notification Request JSON:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"reason"</span><span class="p">:</span><span class="s2">"Password Reset Request!"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"redirectUrl"</span><span class="p">:</span><span class="s2">"https://mysite.com/passwordreset?result={0}&amp;callbackUri={1}&amp;token=abcd"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"notificationMessages"</span><span class="p">:</span><span class="w">
+  </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"mediaType"</span><span class="p">:</span><span class="s2">"text/html"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"message"</span><span class="p">:</span><span class="s2">"&lt;html&gt;&lt;body&gt;&lt;p&gt;Hi Paul,&lt;br/&gt;&lt;br/&gt;To reset your password, please click on the link below:&lt;br/&gt;&lt;br/&gt;PASSWORD_URL_HERE&lt;br/&gt;&lt;br/&gt;All the best,&lt;br/&gt;&lt;br/&gt;ManyWho&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h4 id="http-request">HTTP Request</h4>
+
+<p><code class="prettyprint">POST api/admin/1/directory/{tenant_domain}/user/password?username={username}</code></p>
+
+<h4 id="parameters">Parameters</h4>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>tenant_domain</strong><br/>string</td>
+<td>The domain provided for the tenant. This is the domain part of any username used to login to the tenant. For example, for a username of: paul.smith@mycompany.manywho.com, the tenant_domain would be: @mycompany.manywho.com</td>
+</tr>
+<tr>
+<td><strong>username</strong><br/>string</td>
+<td>The username associated with the password. Following on from the example above, this would be: paul.smith@mycompany.manywho.com. It&rsquo;s important to note that this is not necessarily the users&rsquo; email as a builder user can belong to more than one tenant.</td>
+</tr>
+</tbody></table>
+
+<h4 id="body">Body</h4>
+
+<p>The raw JSON for the Notification Request (optional):</p>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>reason</strong><br/>string</td>
+<td>The reason for the notification. For email, this will be the email subject.</td>
+</tr>
+<tr>
+<td><strong>redirectUrl</strong><br/>string</td>
+<td>The Url that the user should be redirected to when clicking on the password verification Url. The redirectUrl should include two parameters in the string for the notification result {0} and the password reset token {1}. The platform will automatically parse the notification result and callbackUri values at these positions in the redirection string. An example of this is: https://mysite.com/passwordreset?result={0}&amp;callbackUri={1}&amp;token=someothertoken. The result parameter has the following possible values:<ul><li><strong>OK</strong>: The password reset was correctly processed.</li><li><strong>ALREADY_PROCESSED</strong>: The password reset token has already been processed by the Platform and the user is re-using the link.</li></ul></td>
+</tr>
+<tr>
+<td><strong>notificationMessages</strong><br/>array</td>
+<td>The list of notification messages (by media type) that should be sent to the user. Each Notification Message entry has the following keys:<br/><br/><strong>mediaType</strong> (string): The media type for the notification message. Currently supported values are &ldquo;text/html&rdquo; and &ldquo;text/plain&rdquo;.<br/><br/><strong>message</strong> (string): The message to be sent to the user. For email, this is the email body. To add the password verification Url, simply add PASSWORD_URL_HERE to the content of the message and the Platform will replace this with the actual verification callback Url which will then forward to the redirectUrl.</td>
+</tr>
+</tbody></table>
+
+<h4 id="apply-the-password-change">Apply the Password Change</h4>
+
+<blockquote>
+<p>Password Request JSON:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"password"</span><span class="p">:</span><span class="s2">"nottellin"</span><span class="p">,</span><span class="w">
+</span><span class="err">}</span><span class="w">
+</span></code></pre>
+
+<h4 id="http-request">HTTP Request</h4>
+
+<p><code class="prettyprint">POST /api/admin/1/directory/{tenant_domain}/user/credential/{token}</code></p>
+
+<h4 id="parameters">Parameters</h4>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>tenant_domain</strong><br/>string</td>
+<td>The domain provided for the tenant. This is the domain part of any username used to login to the tenant. For example, for a username of: paul.smith@mycompany.manywho.com, the tenant_domain would be: @mycompany.manywho.com</td>
+</tr>
+<tr>
+<td><strong>token</strong><br/>string</td>
+<td>The token that was provided to the user as part of the notification callback. The token is not provided in the email, but rather the token is provided after the user clicks on the notification email link. The token will either be parsed into the provided redirectUrl (if specified) or provided in the REST response from a GET request to the notification callback Url provided in the email.</td>
+</tr>
+</tbody></table>
+
+<h4 id="body">Body</h4>
+
+<p>The raw JSON for the Password Request:</p>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>password</strong><br/>string</td>
+<td>The new password to be applied to the Flow Builder account.</td>
+</tr>
+</tbody></table>
+
+<h2 id="tenants-and-sub-tenants">Tenants and Sub-Tenants</h2>
+
+<blockquote>
+<p>Tenant JSON:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"@mycompany.manywho.com"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"subTenants"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"@staging+mycompany.manywho.com"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"subTenants"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"securitySettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"subdomain"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mycompany-staging"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"stateSettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"tenantSettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"@production+mycompany.manywho.com"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"subTenants"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"securitySettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"subdomain"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mycompany-production"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"stateSettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"tenantSettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">"My root Tenant for building Flow templates"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"securitySettings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"isAdminRestrictedByIPRange"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"authorizedAdminIPRanges"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="s2">"developerName"</span><span class="err">:</span><span class="w"> </span><span class="s2">"Interal Network"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"developerSummary"</span><span class="err">:</span><span class="w"> </span><span class="s2">"Only allow access when inside the company firewall."</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"startIPAddress"</span><span class="err">:</span><span class="w"> </span><span class="s2">"195.3.5.56"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"endIPAddress"</span><span class="err">:</span><span class="w"> </span><span class="s2">"195.3.5.58"</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"isPackagingRestrictedByIPRange"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"authorizedPackagingIPRanges"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"isDrawRestrictedByIPRange"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"authorizedDrawIPRanges"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"isRunRestrictedByIPRange"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"authorizedRunIPRanges"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"isServiceRestrictedByRemoteSites"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"authorizedServiceRemoteSites"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="s2">"developerName"</span><span class="err">:</span><span class="w"> </span><span class="s2">"Salesforce Service"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"developerSummary"</span><span class="err">:</span><span class="w"> </span><span class="s2">"Only allow access to the production Salesforce Service."</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"uri"</span><span class="err">:</span><span class="w"> </span><span class="s2">"https://salesforce.manywho.com"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"disableProtocolSecurity"</span><span class="err">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"userRegistrationSettings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MANUAL"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"notify"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ALL"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"notificationWhoId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"subdomain"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mycompany"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"stateSettings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"endpoint"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://mycompany.com/api/report"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"persistToDatabase"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><em>The Tenant provides a central place for Flow Builders to build, manage and deploy Flows.</em></p>
+
+<p>Once a Tenant has been provisioned, there are various settings available to ensure security is correctly configured and data is properly managed for reporting purposes. The APIs below work for both Tenants and sub-Tenants. The only difference between a Tenant and and sub-Tenant is that Flow Builders can move between them using single sign-on and the Tenants are grouped together to ease management.</p>
+
+<h4 id="tenant">Tenant</h4>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>id</strong><br/>string</td>
+<td>A unique identifier assigned by the Platform.</td>
+</tr>
+<tr>
+<td><strong>developerName</strong><br/>string</td>
+<td>The name for the Tenant. This will be based on the username of the first provisioned Flow Builder. For example, for a username of: paul.smith@mycompany.manywho.com, the developerName would be: @mycompany.manywho.com</td>
+</tr>
+<tr>
+<td><strong>developerSummary</strong><br/>string</td>
+<td>The summary for the Tenant. This is typically additional information that will help explain the purpose of the Tenant.</td>
+</tr>
+<tr>
+<td><strong>subTenants</strong><br/>array</td>
+<td>The array of sub-Tenants (showing just the root properties of the Tenant object.</td>
+</tr>
+<tr>
+<td><strong>securitySettings</strong><br/>object</td>
+<td>The Security Settings that should be applied to this Tenant (not including sub-Tenants). The Security Settings object has the following keys:<br/><br/><strong>isAdminRestrictedByIPRange</strong> (boolean):<br/>Indicates that the Admin APIs should be protected by the provided IP range in authorizedAdminIPRanges. Setting this to false will not remove the list of IP Range entries and will simply disable IP range restrictions.<br/><br/><strong>authorizedAdminIPRanges</strong> (array):<br/>The array of IP Range entries that will be allowed to access the Admin APIs. The configuration of the IP Range object is provided in the section below.<br/><br/><strong>isPackagingRestrictedByIPRange</strong> (boolean):<br/>Indicates that the Packaging APIs should be protected by the provided IP range in authorizedPackagingIPRanges. Setting this to false will not remove the list of IP Range entries and will simply disable IP range restrictions.<br/><br/><strong>authorizedPackagingIPRanges</strong> (array):<br/>The array of IP Range entries that will be allowed to access the Packaging APIs. The configuration of the IP Range object is provided in the section below.<br/><br/><strong>isDrawRestrictedByIPRange</strong> (boolean):<br/>Indicates that the Draw APIs should be protected by the provided IP range in authorizedDrawIPRanges. Setting this to false will not remove the list of IP Range entries and will simply disable IP range restrictions.<br/><br/><strong>authorizedDrawIPRanges</strong> (array):<br/>The array of IP Range entries that will be allowed to access the Draw APIs. The configuration of the IP Range object is provided in the section below.<br/><br/><strong>isRunRestrictedByIPRange</strong> (boolean):<br/>Indicates that the Run APIs should be protected by the provided IP range in authorizedRunIPRanges. Setting this to false will not remove the list of IP Range entries and will simply disable IP range restrictions.<br/><br/><strong>authorizedRunIPRanges</strong> (array):<br/>The array of IP Range entries that will be allowed to access the Run APIs. The configuration of the IP Range object is provided in the section below.<br/><br/><strong>isServiceRestrictedByRemoteSites</strong> (boolean):<br/>Indicates that Service Elements only be allowed to be installed and used based on Remote Site settings outlined in the authorizedServiceRemoteSites property. Setting this to false will not remove the existing Remote Site settings.<br/><br/><strong>authorizedServiceRemoteSites</strong> (array):<br/>The array of Remote Site entries that will be allowed when installing and using Service Elements. Each Remote Site setting entry has the following keys:<ul><li><strong>developerName</strong> (string): The name for the Remote Site. This is typically a helpful name to remind administrators of the purpose of the Remote Site.</li><li><strong>developerSummary</strong> (string): The summary for the Remote Site. This is typically additional information that will help explain the purpose of the Remote Site.</li><li><strong>uri</strong> (string): The Uri for the allowed Remote Site. This should be the base Uri allowed.</li><li><strong>disableProtocolSecurity</strong> (string): Indicates if the Remote site can be accessed without encryption (SSL).</li></ul><br/><strong>userRegistrationSettings</strong> (object):<br/>The Flow Builder registration settings that should be applied when provisioning. The User Registration Settings object has the following keys:<ul><li><strong>type</strong> (string): The registration type determines how new Flow Builders are provisioned and the notifications that occur when that happens. Valid values are:</li><ul><li><strong>MANUAL</strong>: Indicates that all Flow Builders must be provisioned manually by another Flow Builder (authenticated). This is the default setting for Domain Tenants that use the @{tenant name}.manywho.com notation for the username.</li><li><strong>REQUEST</strong>: Indicates that all Flow Builders must be provisioned manually by another Flow Builder, however, existing Flow Builders will be notified that another Flow Builder is requesting access.</li><li><strong>SELF</strong>: Indicates that all Flow Builders can self provision if their email and username match with the existing Tenant. This is the default setting for Domain Tenants that use the email to determine tenancy.</li></ul><li><strong>notify</strong> (string): The notification settings for any Flow Builder provisioning requests. Valid values are:</li><ul><li><strong>ALL</strong>: Indicates that all Flow Builders will be notified when another Flow Builders is requesting access to the Tenant.</li><li><strong>NONE</strong>: Indicates that no Flow Builders will be notified if another Flow Builder is requesting access to the Tenant.</li><li><strong>SPECIFIC</strong>: Indicates that a specific Flow Builder should be notified when another Flow Builder is requesting access to the Tenant. The Flow Builder being notified is specified in the notificationWhoId property.</li></ul><li><strong>notificationWhoId</strong> (string): The unique identifier for the User on the Platform. This user will receive notifications when new Flow Builders are provisioned and the notify property is set to SPECIFIC.</li></ul></td>
+</tr>
+<tr>
+<td><strong>reportSettings</strong><br/>string</td>
+<td>(deprecated)</td>
+</tr>
+<tr>
+<td><strong>subdomain</strong><br/>string</td>
+<td>The requested subdomain to register for this tenant. The subdomain can be null, but if provided must be unique for the entire Platform.</td>
+</tr>
+<tr>
+<td><strong>stateSettings</strong><br/>object</td>
+<td>The settings for State persistence and storage. The State Settings object has the following keys:<br/><br/><strong>endpoint</strong> (string):<br/>The Uri for the State persistence implementation. This endpoint must implement our Reporting API interface. More details on that can be found on GitHub here: https://github.com/manywho/reporting<br/><br/><strong>persistToDatabase</strong> (boolean):<br/>Indicates if the Tenant should retain any State data to disk. If this property is set to false, States will only be persisted in memory/cache. For long running Flow States, this should typically be set to true as the Platform memory is not guaranteed storage.</td>
+</tr>
+</tbody></table>
+
+<h4 id="ip-range">IP Range</h4>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>developerName</strong><br/>string</td>
+<td>The name for the IP Range. This is typically a helpful name to remind builders of the purpose of the IP Range.</td>
+</tr>
+<tr>
+<td><strong>developerSummary</strong><br/>string</td>
+<td>The summary for the IP Range. This is typically additional information that will help explain the purpose of the IP Range.</td>
+</tr>
+<tr>
+<td><strong>startIPAddress</strong><br/>string</td>
+<td>The valid start IP address.</td>
+</tr>
+<tr>
+<td><strong>endIPAddress</strong><br/>string</td>
+<td>The valid end IP address.</td>
+</tr>
+</tbody></table>
+
+<h3 id="get-tenant">Get Tenant</h3>
+
+<blockquote>
+<p>Example 200 OK Response</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"80c1a97a-e31c-4ab1-a279-9742af17f31d"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"@mycompany.manywho.com"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"subTenants"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"daa15237-bfd3-44b6-b5c4-68f31c448312"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"@staging+mycompany.manywho.com"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"subTenants"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"securitySettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"reportSettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"subdomain"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"stateSettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"tenantSettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6a1a6c4d-ecb5-44a1-aab3-489cde964686"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"@production+mycompany.manywho.com"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"subTenants"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"securitySettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"reportSettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"subdomain"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"stateSettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"tenantSettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"securitySettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"reportSettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"subdomain"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"stateSettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+</span><span class="err">}</span><span class="w">
+</span></code></pre>
+
+<p>Used to get the Tenant object for the current Tenant. The Tenant provides a central place for Flow Builders to build, manage and deploy Flows.</p>
+
+<h4 id="http-request">HTTP Request</h4>
+
+<p><code class="prettyprint">GET /api/admin/1/tenant</code></p>
+
+<h3 id="set-tenant">Set Tenant</h3>
+
+<blockquote>
+<p>Example 200 OK Response</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"80c1a97a-e31c-4ab1-a279-9742af17f31d"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"@mycompany.manywho.com"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"subTenants"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"securitySettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"reportSettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"subdomain"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mycompany"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"stateSettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>Used to set the Tenant object for the current Tenant. The Tenant provides a central place for Flow Builders to build, manage and deploy Flows.</p>
+
+<h4 id="http-request">HTTP Request</h4>
+
+<p><code class="prettyprint">POST /api/admin/1/tenant</code></p>
+
+<h4 id="body">Body</h4>
+
+<p>The raw JSON for the Tenant.</p>
+
+<h3 id="delete-tenant-data">Delete Tenant Data</h3>
+
+<blockquote>
+<p>Success 204 No Content Response</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"flows"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"pageLayouts"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"values"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"types"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"services"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"tags"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"snapshots"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"states"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<aside class="error">
+<b>Careful!</b><br/>
+Use this API with extreme caution. Though we do keep backups of Tenant data, recovering from Tenant delete operations takes time and is chargeable. A request to delete Tenant data does require verification via email before the actual delete is performed. However, make sure you check your settings carefully as dependency validations are ignored. You have been warned!
+</aside>
+
+<h4 id="http-request">HTTP Request</h4>
+
+<p><code class="prettyprint">POST /api/admin/1/tenant/data</code></p>
+
+<h4 id="body">Body</h4>
+
+<p>The raw JSON for the Tenant Delete Request.</p>
+
+<h4 id="tenant-delete-request">Tenant Delete Request</h4>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>flows</strong><br/>boolean</td>
+<td>Indicates if all Flow models should be deleted.</td>
+</tr>
+<tr>
+<td><strong>pages</strong><br/>boolean</td>
+<td>Indicates if all Page Elements should be deleted.</td>
+</tr>
+<tr>
+<td><strong>values</strong><br/>boolean</td>
+<td>Indicates if all Value Elements should be deleted.</td>
+</tr>
+<tr>
+<td><strong>types</strong><br/>boolean</td>
+<td>Indicates if all Type Elements should be deleted.</td>
+</tr>
+<tr>
+<td><strong>services</strong><br/>boolean</td>
+<td>Indicates if all Service Elements should be deleted.</td>
+</tr>
+<tr>
+<td><strong>tags</strong><br/>boolean</td>
+<td>Indicates if all Tag Elements should be deleted.</td>
+</tr>
+<tr>
+<td><strong>snapshots</strong><br/>boolean</td>
+<td>Indicates if all Flow snapshots should be deleted.</td>
+</tr>
+<tr>
+<td><strong>states</strong><br/>boolean</td>
+<td>Indicates if all Flow States should be deleted.</td>
+</tr>
+</tbody></table>
+
+<h2 id="users">Users</h2>
+
+<blockquote>
+<p>User JSON:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Paul"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"paul.smith@mycompany.com"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"paul.smith@mycompany.manywho.com"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"verified"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><em>The User object provides basic information about Flow Builders and running users for the Tenant.</em></p>
+
+<p>Users on the Platform are identified via their email. As a result, the email address determines &ldquo;who&rdquo; the user is. The email address is the unique identifier across the entire platform. When running users access a Flow, a User is provisioned into the Tenant on-demand. In addition, Flow Builders are included in the User listing. As a single running user can login to multiple Services, a User entry will be provided for each Service being logged into. As a result, the username parameter is used to load an individual User record for a particular Service. Currently it is assumed that the username will be unique for each Service. Please contact the ManyWho team if this causes issues with User management.</p>
+
+<h3 id="get-users">Get Users</h3>
+
+<blockquote>
+<p>Example 200 OK Response</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"914e2919-4c72-4b75-853e-84e060d49380"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Paul"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"paul.smith@mycompany.com"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"paul.smith@mycompany.manywho.com"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"verified"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4bb15de8-427c-4b8b-b853-bffafbc553a1"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Etienne"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Dubois"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"edubois@enduser.com"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"username"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"verified"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<p>Used to get the list of Users. The User object provides basic information about Flow Builders and running users for the Tenant.</p>
+
+<h4 id="http-request">HTTP Request</h4>
+
+<p><code class="prettyprint">GET /api/admin/1/directory/{tenant_domain}/user</code></p>
+
+<h4 id="parameters">Parameters</h4>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>tenant_domain</strong><br/>string</td>
+<td>The domain provided for the tenant. This is the domain part of any username used to login to the tenant. For example, for a username of: paul.smith@mycompany.manywho.com, the tenant_domain would be: @mycompany.manywho.com</td>
+</tr>
+</tbody></table>
+
+<h3 id="get-user">Get User</h3>
+
+<blockquote>
+<p>Example 200 OK Response</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"914e2919-4c72-4b75-853e-84e060d49380"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Paul"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"paul.smith@mycompany.com"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"paul.smith@mycompany.manywho.com"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"verified"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>Used to get an individual User object for a Service or Flow Builder. The User object provides basic information about Flow Builders and running users for the Tenant.</p>
+
+<h4 id="http-request">HTTP Request</h4>
+
+<p><code class="prettyprint">GET /api/admin/1/directory/{tenant_domain}/user?username={username}</code></p>
+
+<h4 id="parameters">Parameters</h4>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>tenant_domain</strong><br/>string</td>
+<td>The domain provided for the tenant. This is the domain part of any username used to login to the tenant. For example, for a username of: paul.smith@mycompany.manywho.com, the tenant_domain would be: @mycompany.manywho.com</td>
+</tr>
+<tr>
+<td><strong>username</strong><br/>string</td>
+<td>The username associated for the User record.</td>
+</tr>
+</tbody></table>
+
+<h3 id="set-user">Set User</h3>
+
+<blockquote>
+<p>Example 200 OK Response</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"914e2919-4c72-4b75-853e-84e060d49380"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Paul"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"paul.smith@mycompany.com"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"paul.smith@mycompany.manywho.com"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"verified"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>Used to set an individual User object for a Service or Flow Builder. The User object provides basic information about Flow Builders and running users for the Tenant.</p>
+
+<h4 id="http-request">HTTP Request</h4>
+
+<p><code class="prettyprint">POST /api/admin/1/directory/{tenant_domain}/user</code></p>
+
+<h4 id="body">Body</h4>
+
+<p>The raw JSON for the User.</p>
+
+<h3 id="delete-user">Delete User</h3>
+
+<blockquote>
+<p>Success 204 No Content Response</p>
+</blockquote>
+
+<p>Used to delete an individual User object for a Service or Flow Builder. This will not delete the User record entirely from the Platform as the User object is an aggregate object and a single User object can exist across multiple Tenants.</p>
+
+<h4 id="http-request">HTTP Request</h4>
+
+<p><code class="prettyprint">DELETE /api/admin/1/directory/{tenant_domain}/user?username={username}</code></p>
+
+<h4 id="parameters">Parameters</h4>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>tenant_domain</strong><br/>string</td>
+<td>The domain provided for the tenant. This is the domain part of any username used to login to the tenant. For example, for a username of: paul.smith@mycompany.manywho.com, the tenant_domain would be: @mycompany.manywho.com</td>
+</tr>
+<tr>
+<td><strong>username</strong><br/>string</td>
+<td>The username associated for the User record.</td>
+</tr>
+</tbody></table>
+
+<h2 id="flow-states">Flow States</h2>
+
+<blockquote>
+<p>Flow State JSON:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"parentId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"dateCreated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0001-01-00T00:00:00Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"dateModified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0001-01-01T00:00:00Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"currentFlowId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"versionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"currentFlowDeveloperName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Customer Application"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"currentMapElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"currentMapElementDeveloperName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Reviewing Application"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"currentStreamId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"currentRunningUserId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"currentRunningUserEmail"</span><span class="p">:</span><span class="w"> </span><span class="s2">"paul.smith@mycompany.com"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"externalIdentifier"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"manywhoTenantId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"annotations"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"stateEntries"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"precommitStateEntry"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"flowId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"versionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"flowDeveloperName"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"mapElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"mapElementDeveloperName"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"dateCommitted"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0001-01-01T00:00:00Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"values"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"userInteractions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"manywhoUserId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"latitude"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"longitude"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"accuracy"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"altitude"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"altitudeAccuracy"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"heading"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"speed"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0001-01-01T00:00:00Z"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"values"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"authorizationHeader"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"isDone"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"log"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><em>The Flow State object provides data about a specific instance of a running Flow.</em></p>
+
+<p>The Flow State provides in-depth information about how Users have interacted with the Flow, from the data that has been collected in Values, to the path of Map Elements that were travelled, to the users who have interacted with the Flow at the various stages of its execution. This Flow State data is only available for active Flows that have not yet completed. This API should also not be used for reporting purposes as we have a separate reporting API and reporting infrastructure.</p>
+
+<h3 id="get-flow-states">Get Flow States</h3>
+
+<blockquote>
+<p>Example 200 OK Response</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"_meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">269</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"pageSize"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"page"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"previous"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"next"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/api/admin/1/states/?page=2"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"first"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/api/admin/1/states/?page=1"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"last"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/api/admin/1/states/?page=27"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0128d523-1001-450d-ae1c-38f4aee01158"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"parentId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"dateCreated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-10-23T10:44:44Z"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"dateModified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-10-23T10:44:47Z"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"currentFlowId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fb382ebd-6560-424d-bfe2-b718680d71ec"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"versionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fbb83828-e5ec-4e63-aed4-45d0f838bd94"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nt">"currentFlowDeveloperName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Customer Application"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"currentMapElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6531a010-503f-4479-bbce-e39c05db314f"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"currentMapElementDeveloperName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Reviewing Application"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"currentStreamId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"currentRunningUserId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"52df1a90-3826-4508-b7c2-cde8aa5b72cf"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"currentRunningUserEmail"</span><span class="p">:</span><span class="w"> </span><span class="s2">"paul.smith@mycompany.com"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"externalIdentifier"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"manywhoTenantId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a692def4-5aba-49e4-b07d-cb32ed72c414"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"annotations"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"stateEntries"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"precommitStateEntry"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"e98ea86e-f090-4c7d-bef8-293209f45799"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"flowId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fb382ebd-6560-424d-bfe2-b718680d71ec"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"versionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fbb83828-e5ec-4e63-aed4-45d0f838bd94"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"flowDeveloperName"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"mapElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6531a010-503f-4479-bbce-e39c05db314f"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"mapElementDeveloperName"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"dateCommitted"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0001-01-01T00:00:00Z"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"values"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"userInteractions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+          </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"manywhoUserId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"52df1a90-3826-4508-b7c2-cde8aa5b72cf"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"latitude"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"longitude"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"accuracy"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"altitude"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"altitudeAccuracy"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"heading"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"speed"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-10-23T10:44:47Z"</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nt">"values"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"authorizationHeader"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"isDone"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"log"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>Used to get the list of all persisted Flow States for the Tenant.</p>
+
+<h4 id="http-request">HTTP Request</h4>
+
+<p><code class="prettyprint">GET /api/admin/1/states?pageSize=10&amp;page=1</code></p>
+
+<h4 id="parameters">Parameters</h4>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>pageSize</strong><br/>integer</td>
+<td>The number of Flow State records to return in this request.</td>
+</tr>
+<tr>
+<td><strong>page</strong><br/>integer</td>
+<td>The current page of Flow State records.</td>
+</tr>
+</tbody></table>
+
+<h3 id="get-flow-states-by-flow">Get Flow States by Flow</h3>
+
+<blockquote>
+<p>Example 200 OK Response</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"_meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">269</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"pageSize"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"page"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"previous"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"next"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/api/admin/1/states/?page=2"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"first"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/api/admin/1/states/?page=1"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"last"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/api/admin/1/states/?page=27"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0128d523-1001-450d-ae1c-38f4aee01158"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"parentId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"dateCreated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-10-23T10:44:44Z"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"dateModified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-10-23T10:44:47Z"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"currentFlowId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fb382ebd-6560-424d-bfe2-b718680d71ec"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"versionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fbb83828-e5ec-4e63-aed4-45d0f838bd94"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nt">"currentFlowDeveloperName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Customer Application"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"currentMapElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6531a010-503f-4479-bbce-e39c05db314f"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"currentMapElementDeveloperName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Reviewing Application"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"currentStreamId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"currentRunningUserId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"52df1a90-3826-4508-b7c2-cde8aa5b72cf"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"currentRunningUserEmail"</span><span class="p">:</span><span class="w"> </span><span class="s2">"paul.smith@mycompany.com"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"externalIdentifier"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"manywhoTenantId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a692def4-5aba-49e4-b07d-cb32ed72c414"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"annotations"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"stateEntries"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"precommitStateEntry"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"e98ea86e-f090-4c7d-bef8-293209f45799"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"flowId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fb382ebd-6560-424d-bfe2-b718680d71ec"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"versionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fbb83828-e5ec-4e63-aed4-45d0f838bd94"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"flowDeveloperName"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"mapElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6531a010-503f-4479-bbce-e39c05db314f"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"mapElementDeveloperName"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"dateCommitted"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0001-01-01T00:00:00Z"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"values"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"userInteractions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+          </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"manywhoUserId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"52df1a90-3826-4508-b7c2-cde8aa5b72cf"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"latitude"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"longitude"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"accuracy"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"altitude"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"altitudeAccuracy"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"heading"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"speed"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-10-23T10:44:47Z"</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nt">"values"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"authorizationHeader"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"isDone"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"log"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>Used to get the list of all persisted Flow States for the Tenant and specific Flow.</p>
+
+<h4 id="http-request">HTTP Request</h4>
+
+<p><code class="prettyprint">GET /api/admin/1/states/flow/{flow_id}/{flow_version_id}?pageSize=10&amp;page=1</code></p>
+
+<h4 id="parameters">Parameters</h4>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>flow_id</strong><br/>string</td>
+<td>Unique identifier for the Flow.</td>
+</tr>
+<tr>
+<td><strong>flow_version_id</strong><br/>string</td>
+<td>Unique identifier for the Flow Version. If this part of the path is not included, Flow States for all versions will be returned.</td>
+</tr>
+<tr>
+<td><strong>pageSize</strong><br/>integer</td>
+<td>The number of Flow State objects to return in this request.</td>
+</tr>
+<tr>
+<td><strong>page</strong><br/>integer</td>
+<td>The current page of Flow State objects.</td>
+</tr>
+</tbody></table>
+
+<h3 id="get-flow-state">Get Flow State</h3>
+
+<blockquote>
+<p>Example 200 OK Response</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0128d523-1001-450d-ae1c-38f4aee01158"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"parentId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"dateCreated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-10-23T10:44:44Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"dateModified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-10-23T10:44:47Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"currentFlowId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fb382ebd-6560-424d-bfe2-b718680d71ec"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"versionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fbb83828-e5ec-4e63-aed4-45d0f838bd94"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"currentFlowDeveloperName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Customer Application"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"currentMapElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6531a010-503f-4479-bbce-e39c05db314f"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"currentMapElementDeveloperName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Reviewing Application"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"currentStreamId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"currentRunningUserId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"52df1a90-3826-4508-b7c2-cde8aa5b72cf"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"currentRunningUserEmail"</span><span class="p">:</span><span class="w"> </span><span class="s2">"paul.smith@mycompany.com"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"externalIdentifier"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"manywhoTenantId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a692def4-5aba-49e4-b07d-cb32ed72c414"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"annotations"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"stateEntries"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"precommitStateEntry"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"e98ea86e-f090-4c7d-bef8-293209f45799"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"flowId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fb382ebd-6560-424d-bfe2-b718680d71ec"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"versionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fbb83828-e5ec-4e63-aed4-45d0f838bd94"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"flowDeveloperName"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"mapElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6531a010-503f-4479-bbce-e39c05db314f"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"mapElementDeveloperName"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"dateCommitted"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0001-01-01T00:00:00Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"values"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"userInteractions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"manywhoUserId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"52df1a90-3826-4508-b7c2-cde8aa5b72cf"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"latitude"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"longitude"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"accuracy"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"altitude"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"altitudeAccuracy"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"heading"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"speed"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-10-23T10:44:47Z"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"values"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"authorizationHeader"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"isDone"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"log"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>Used to get an individual Flow State object.</p>
+
+<h4 id="http-request">HTTP Request</h4>
+
+<p><code class="prettyprint">GET /api/admin/1/states/{id}</code></p>
+
+<h4 id="parameters">Parameters</h4>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>id</strong><br/>string</td>
+<td>Unique identifier for the State.</td>
+</tr>
+</tbody></table>
+
+<h3 id="delete-flow-state">Delete Flow State</h3>
+
+<blockquote>
+<p>Success 204 No Content Response</p>
+</blockquote>
+
+<p>Used to delete an individual State object.</p>
+
+<h4 id="http-request">HTTP Request</h4>
+
+<p><code class="prettyprint">DELETE /api/admin/1/states/{id}</code></p>
+
+<h4 id="parameters">Parameters</h4>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>id</strong><br/>string</td>
+<td>Unique identifier for the Flow State.</td>
+</tr>
+</tbody></table>
+
+<h3 id="delete-multiple-flow-states">Delete Multiple Flow States</h3>
+
+<blockquote>
+<p>Flow State Identifiers array JSON:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">[</span><span class="w">
+  </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<p>Used to delete multiple Flow State objects.</p>
+
+<h4 id="http-request">HTTP Request</h4>
+
+<p><code class="prettyprint">DELETE /api/admin/1/states</code></p>
+
+<h4 id="body">Body</h4>
+
+<p>The raw JSON for the array of Flow State identifiers.</p>
+
+<h4 id="flow-state-identifiers-array">Flow State Identifiers array</h4>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>id</strong><br/>array</td>
+<td>An array of unique identifiers for each Flow State.</td>
+</tr>
+</tbody></table>
+
           <h1 id="draw-api">Draw API</h1>
 
           <h2 id="group-element">Group Element</h2>
