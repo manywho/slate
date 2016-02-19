@@ -120,9 +120,327 @@
 
 <p>Some stuff about ManyWho.</p>
 
+          <h2 id="shared-elements">Shared Elements</h2>
+
+<h3 id="flows">Flows</h3>
+
+<p>A Flow is an implementation of a process on the ManyWho platform. It will contain 1 or more <a href="http://google.com">Map Elements</a>
+and <a href="http://google.com">Outcomes</a> that determines what happens and in what order.</p>
+
+<h4 id="flow-url-39-s">Flow URL&rsquo;s</h4>
+
+<p>When you run a Flow a url is generated that you can use to share your Flow, for example:</p>
+
+<p>https://flow.manywho.com/ba986a91-a39c-46db-91fd-14aa0545546f/play/default?flow-id=4003a819-e167-417f-a48e-fa7456d284d1&amp;flow-version-id=d240fd97-4c96-4cfe-9cf6-f70eac0a97c2&amp;navigation-element-id=b4d908e9-36fa-43a9-ab5f-f9af71d72fbf</p>
+
+<p>This breaks down to:</p>
+
+<table><thead>
+<tr>
+<th>URL Part</th>
+<th>Description</th>
+<th>Optional</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>https://flow.manywho.com/</td>
+<td>Platform</td>
+<td>No</td>
+</tr>
+<tr>
+<td>ba986a91-a39c-46db-91fd-14aa0545546f</td>
+<td>Tenant Id</td>
+<td>No</td>
+</tr>
+<tr>
+<td>play</td>
+<td>Tell ManyWho that we are running a flow</td>
+<td>No</td>
+</tr>
+<tr>
+<td>default</td>
+<td>The name of the player being used to run your Flow</td>
+<td>No</td>
+</tr>
+<tr>
+<td>flow-id=4003a819-e167-417f-a48e-fa7456d284d1</td>
+<td>The Id of the Flow to run</td>
+<td>No</td>
+</tr>
+<tr>
+<td>flow-version-id=d240fd97-4c96-4cfe-9cf6-f70eac0a97c2</td>
+<td>The version Id of the Flow to run</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>navigation-element-id=b4d908e9-36fa-43a9-ab5f-f9af71d72fbf</td>
+<td>The Id of the navigation element to include in the Flow</td>
+<td>Yes</td>
+</tr>
+</tbody></table>
+
+<h4 id="activating-amp-versioning">Activating &amp; Versioning</h4>
+
+<p>When you run a Flow it will include a version ID <code class="prettyprint">flow-version-id</code>. Each time you run a Flow all the elements in the Flow are &ldquo;snapshotted&rdquo; to a specific version.</p>
+
+<p>Activating a Flow performs the same snapshotting as running a Flow however it also sets this latest version as the <strong>default</strong> version.
+The default version will be run when you open a Flow via a url that doesn&rsquo;t contain a version ID e.g. https://flow.manywho.com/<tenant-id>/default/play/<flow-id></p>
+
+<p>If you don&rsquo;t specify the version ID in your url then you can consider activating a Flow the same as &ldquo;Go Live&rdquo; button.</p>
+
+<h4 id="shared-elements">Shared Elements</h4>
+
+<p>Values, Types, Page Layouts, Services &amp; Tags are shared and can be used in multiple Flows.</p>
+
+<p>When you activate a Flow a snapshot of the shared elements is taken, after this any changes made to the shared elements won&rsquo;t affect the activated version of the Flow.</p>
+
+<h3 id="services">Services</h3>
+
+<p>Services allow you to interact with the world outside of your Flow. Services add a variety of functionality when added to your flow, including:</p>
+
+<table><thead>
+<tr>
+<th>Functionality</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Database</td>
+<td>Saving, Loading &amp; Deleting data</td>
+</tr>
+<tr>
+<td>Actions</td>
+<td>Perform one or more operations in the 3rd party service i.e. send a text message</td>
+</tr>
+<tr>
+<td>Authorization</td>
+<td>Gate your flows using Username &amp; Password or OAuth2</td>
+</tr>
+<tr>
+<td>Files</td>
+<td>Upload &amp; Download Files</td>
+</tr>
+<tr>
+<td>Voting</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<aside class="notice">
+Services are implemented outside of ManyWho, available services can be found here:
+More information on creating your own Service can be found here:
+</aside>
+
+<h3 id="types">Types</h3>
+
+<p>Types allow you define the &ldquo;shape&rdquo; of a complex value by defining what properties (which can be thought of sub-values) are available.</p>
+
+<p>Types can be thought of as Interfaces if you are familiar with programming.</p>
+
+<aside class="notice">
+Types on their own don&rsquo;t do anything. To use a Type you will need to create an Object Value.
+</aside>
+
+<h3 id="values">Values</h3>
+
+<p>Values are used to hold your data while a Flow is running e.g. load customer info from Salesforce into a Value, edit the Value in your Flow, save the Value back to Salesforce.</p>
+
+<p>Values are split into 3 basic categories:</p>
+
+<h4 id="primitive">Primitive</h4>
+
+<p>Primitive Values hold simple content only, including:</p>
+
+<table><thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>String</td>
+<td>Basic Text</td>
+</tr>
+<tr>
+<td>Number</td>
+<td>Digits 0-9</td>
+</tr>
+<tr>
+<td>DateTime</td>
+<td></td>
+</tr>
+<tr>
+<td>Password</td>
+<td></td>
+</tr>
+<tr>
+<td>Content</td>
+<td>Rich Text i.e. formatting, images, etc</td>
+</tr>
+</tbody></table>
+
+<h4 id="objects">Objects</h4>
+
+<p>Object values are values that are linked to a specific Type. When a value is an Object of a specific Type then the value will have all the properties of that Type.</p>
+
+<h4 id="lists">Lists</h4>
+
+<p>Lists can hold 1 or more values of a specific type e.g. String, Number, Object, etc.</p>
+
+<aside class="notice">
+Values that are created as a List are still a single Value. Although they can contain multiple &ldquo;values&rdquo; i.e. &ldquo;list item1&rdquo;, &ldquo;list item2&rdquo;, &ldquo;list item3&rdquo;, it will still have a single ID and Name.
+</aside>
+
+<h3 id="pages">Pages</h3>
+
+          <h2 id="map-elements">Map Elements</h2>
+
+<p>Map Elements are the individual steps in your Flow that perform various actions e.g. displaying a form, saving &amp; loading data, creating an item in Salesforce, etc.</p>
+
+<p>You can edit an existing Map Element in your Flow by double-clicking on it in the Flow editor. The Map Element Config panel will then slide in from the right of the screen.</p>
+
+<p>You can add a new Map Element into your Flow by dragging &amp; dropping a Map Element from the palette sidebar on the left.</p>
+
+<h3 id="step">Step</h3>
+
+<p><img alt="Step" src="images/step.jpg" /></p>
+
+<p>Steps should be used when you want to display rich text content including:</p>
+
+<ul>
+<li>Images</li>
+<li>Videos</li>
+<li>Lists</li>
+<li>Links</li>
+<li>Tables</li>
+<li>Formatted Text (headings, bold, italics, alignment, etc)</li>
+</ul>
+
+<p>Outcomes will be displayed as buttons below your content.</p>
+
+<h3 id="page">Page</h3>
+
+<p><img alt="Page" src="images/page.jpg" /></p>
+
+<p>Pages will display the content of a previously created Page Layout.</p>
+
+<p>Page Layouts allow you to define complex layouts and can contain components to accept user input.</p>
+
+<p>In the Map Element Config panel you can select to use and existing Page Layout from the dropdown, <strong>Edit</strong> the selected Page Layout, or create a <strong>New</strong> Page Layout.
+Clicking either the <strong>Edit</strong> or <strong>New</strong> buttons will open the Page Layout in the Page Layout editor tab.</p>
+
+<h3 id="operator">Operator</h3>
+
+<p><img alt="Operator" src="images/operator.jpg" /></p>
+
+<p>Operators allow you to manipulate Values when your Flow is running by defining one or more operations. For example you could set a date/time Value to now, or assign an object Value&rsquo;s property.</p>
+
+<p>You can add an operation by clicking the <strong>New</strong> button under the <strong>Operations</strong> tab. Existing operations can be edited or deleted by clicking the relevant buttons next to the relevant operation.</p>
+
+<h4 id="configuring-an-operation">Configuring an Operation</h4>
+
+<ul>
+<li>Select a value that you want to operate on (<strong>Value</strong>)</li>
+<li>Select what type of operation you want to perform (<strong>Operation</strong>)
+
+<ul>
+<li>Set Equal To</li>
+<li>Empty: Remove any existing content or items</li>
+<li>Create New</li>
+<li>Update: Add an item to a List or update an existing item in the List</li>
+<li>Remove: Remove an item from a List</li>
+</ul></li>
+<li>Select what command to use (<strong>Command</strong>)
+
+<ul>
+<li>Value Of</li>
+<li>Length Of: Use the length of a List as the value</li>
+<li>First Record From: Use the first item of a List as the value</li>
+<li>Last Record From: Use the last item of a List as the value</li>
+</ul></li>
+<li>Select the Value that you want to get the value from (<strong>Reference</strong>)</li>
+</ul>
+
+<p>For example:</p>
+
+<ul>
+<li>Value: My Value</li>
+<li>Operation: Set Equal To</li>
+<li>Command: Value Of</li>
+<li>Reference: My Other Value</li>
+</ul>
+
+<p>Can be read as &ldquo;My Value = My Other Value&rdquo; or &ldquo;Set My Value to be equal to My Other Value&rdquo;</p>
+
+<h4 id="ordering">Ordering</h4>
+
+<p>Each operation can be given a specific Order value (from 0 to infinity). This number will determine the order in which the operations will be run. Operations with the same order will be execute simultaneously.</p>
+
+<h3 id="decision">Decision</h3>
+
+<p><img alt="Decision" src="images/decision.jpg" /></p>
+
+<p>Decisions allow you to execute an outcome based of one or more conditions in your flow.</p>
+
+<h3 id="message">Message</h3>
+
+<p><img alt="Message" src="images/message.jpg" /></p>
+
+<p>Messages allow you to interact with systems outside of ManyWho via Services (more information on services can be found here: ). For example sending a text message using the Twilio service.</p>
+
+<p>You can define one or more Actions on a single Message Element. You can add an Action by clicking the New button under the General tab. Existing Actions can be edited or deleted by clicking the relevant buttons next to the relevant operation.</p>
+
+<h4 id="anatomy-of-a-message-action">Anatomy of a Message Action</h4>
+
+<h5 id="inputs">Inputs</h5>
+
+<p>A Message Action can define zero or more inputs that may or may not be required. Each Input will have a name and a type (String, Number, etc).</p>
+
+<p>For example the &ldquo;Send Text Message&rdquo; Action in the Twilio Service has three Inputs: To, From &amp; Message.</p>
+
+<h4 id="outputs">Outputs</h4>
+
+<p>A Message Action can define zero or more outputs. Like Inputs each Output will have a name and a type.</p>
+
+<p>For example the &ldquo;Send Text Message&rdquo; Action in Twilio Service has one Output: Reply</p>
+
+<h4 id="configuring-an-action">Configuring an Action</h4>
+
+<ul>
+<li>Select the Service that contains the Action that you want to execute</li>
+<li>Select the Action that you want to execute</li>
+<li>Click <strong>Save</strong></li>
+<li>Give your Action a name</li>
+<li>For each Input for this Action select a Value to use as the Input (for non-required Inputs this is optional)</li>
+<li>For each Output for this Action select a Value that will hold the value returned by the service (this is optional)</li>
+<li>Click <strong>Save</strong></li>
+</ul>
+
+<h4 id="ordering">Ordering</h4>
+
+<p>Each Action can be given a specific Order value (from 0 to infinity). This number will determine the order in which the Actions will be run. Actions with the same order will be grouped together and executed simultaneously.</p>
+
+<p>For example if you four Actions, two with an order of 1 and two with an order of 2, the Actions with order 1 will execute first simultaneously. After they have both completed the other two Actions with an order of 2 will then execute simultaneously</p>
+
+<h3 id="load">Load</h3>
+
+<p>Loads allow you to fetch data from an external source via a Service into a value (either a single item or a list of items). More information on Saving, Loading &amp; Deleting can be found here:</p>
+
+<h3 id="save">Save</h3>
+
+<p>Saves allow you to send data back to an external source via a Service. More information on Saving, Loading &amp; Deleting can be found here:</p>
+
+<h3 id="delete">Delete</h3>
+
+<p>Deletes allow you to delete an item or multiple items from an external source via a Service. More information on Saving, Loading &amp; Deleting can be found here:</p>
+
+<h3 id="swimlane">Swimlane</h3>
+
+<p>Swimlanes allow you to partition a section of your flow to use different authentication. For example you put a section of a flow into a Swimlane that only users in the Managers group have permissions to view. Users who aren&rsquo;t authorized to enter the Swimlane will see a message.</p>
+
           <h1 id="admin-api">Admin API</h1>
 
-<h2 id="provisioning-and-flow-builders">Provisioning and Flow Builders</h2>
+          <h2 id="provisioning-and-flow-builders">Provisioning and Flow Builders</h2>
 
 <h3 id="provisioning">Provisioning</h3>
 
@@ -165,7 +483,7 @@
 
 <h4 id="http-request">HTTP Request</h4>
 
-<p><code class="prettyprint">POST api/admin/1/provisioning</code></p>
+<p><code class="prettyprint">POST /api/admin/1/provisioning</code></p>
 
 <h4 id="body">Body</h4>
 
@@ -231,7 +549,7 @@
 
 <h4 id="http-request">HTTP Request</h4>
 
-<p><code class="prettyprint">POST api/admin/1/directory/{tenant_domain}/user/password?username={username}</code></p>
+<p><code class="prettyprint">POST /api/admin/1/directory/{tenant_domain}/user/password?username={username}</code></p>
 
 <h4 id="parameters">Parameters</h4>
 
@@ -281,8 +599,8 @@
 <p>Password Request JSON:</p>
 </blockquote>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"password"</span><span class="p">:</span><span class="s2">"nottellin"</span><span class="p">,</span><span class="w">
-</span><span class="err">}</span><span class="w">
+  </span><span class="nt">"password"</span><span class="p">:</span><span class="s2">"nottellin"</span><span class="w">
+</span><span class="p">}</span><span class="w">
 </span></code></pre>
 
 <h4 id="http-request">HTTP Request</h4>
@@ -323,7 +641,7 @@
 </tr>
 </tbody></table>
 
-<h2 id="tenants-and-sub-tenants">Tenants and Sub-Tenants</h2>
+          <h2 id="tenants-and-sub-tenants">Tenants and Sub-Tenants</h2>
 
 <blockquote>
 <p>Tenant JSON:</p>
@@ -357,10 +675,12 @@
   </span><span class="nt">"securitySettings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nt">"isAdminRestrictedByIPRange"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
     </span><span class="nt">"authorizedAdminIPRanges"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-      </span><span class="s2">"developerName"</span><span class="err">:</span><span class="w"> </span><span class="s2">"Interal Network"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"developerSummary"</span><span class="err">:</span><span class="w"> </span><span class="s2">"Only allow access when inside the company firewall."</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"startIPAddress"</span><span class="err">:</span><span class="w"> </span><span class="s2">"195.3.5.56"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"endIPAddress"</span><span class="err">:</span><span class="w"> </span><span class="s2">"195.3.5.58"</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Interal Network"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Only allow access when inside the company firewall."</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"startIPAddress"</span><span class="p">:</span><span class="w"> </span><span class="s2">"195.3.5.56"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"endIPAddress"</span><span class="p">:</span><span class="w"> </span><span class="s2">"195.3.5.58"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
     </span><span class="p">],</span><span class="w">
     </span><span class="nt">"isPackagingRestrictedByIPRange"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
     </span><span class="nt">"authorizedPackagingIPRanges"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
@@ -370,10 +690,12 @@
     </span><span class="nt">"authorizedRunIPRanges"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
     </span><span class="nt">"isServiceRestrictedByRemoteSites"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
     </span><span class="nt">"authorizedServiceRemoteSites"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-      </span><span class="s2">"developerName"</span><span class="err">:</span><span class="w"> </span><span class="s2">"Salesforce Service"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"developerSummary"</span><span class="err">:</span><span class="w"> </span><span class="s2">"Only allow access to the production Salesforce Service."</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"uri"</span><span class="err">:</span><span class="w"> </span><span class="s2">"https://salesforce.manywho.com"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"disableProtocolSecurity"</span><span class="err">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Salesforce Service"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Only allow access to the production Salesforce Service."</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"uri"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://salesforce.manywho.com"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"disableProtocolSecurity"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+      </span><span class="p">}</span><span class="w">
     </span><span class="p">],</span><span class="w">
     </span><span class="nt">"userRegistrationSettings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MANUAL"</span><span class="p">,</span><span class="w">
@@ -467,38 +789,38 @@
 <p>Example 200 OK Response</p>
 </blockquote>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
-    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"80c1a97a-e31c-4ab1-a279-9742af17f31d"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"@mycompany.manywho.com"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"subTenants"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"daa15237-bfd3-44b6-b5c4-68f31c448312"</span><span class="p">,</span><span class="w">
-            </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"@staging+mycompany.manywho.com"</span><span class="p">,</span><span class="w">
-            </span><span class="nt">"subTenants"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-            </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-            </span><span class="nt">"securitySettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-            </span><span class="nt">"reportSettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-            </span><span class="nt">"subdomain"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-            </span><span class="nt">"stateSettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-            </span><span class="nt">"tenantSettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6a1a6c4d-ecb5-44a1-aab3-489cde964686"</span><span class="p">,</span><span class="w">
-            </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"@production+mycompany.manywho.com"</span><span class="p">,</span><span class="w">
-            </span><span class="nt">"subTenants"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-            </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-            </span><span class="nt">"securitySettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-            </span><span class="nt">"reportSettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-            </span><span class="nt">"subdomain"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-            </span><span class="nt">"stateSettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-            </span><span class="nt">"tenantSettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-    </span><span class="p">],</span><span class="w">
-    </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"securitySettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"reportSettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"subdomain"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"stateSettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-</span><span class="err">}</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"80c1a97a-e31c-4ab1-a279-9742af17f31d"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"@mycompany.manywho.com"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"subTenants"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"daa15237-bfd3-44b6-b5c4-68f31c448312"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"@staging+mycompany.manywho.com"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"subTenants"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"securitySettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"reportSettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"subdomain"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"stateSettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"tenantSettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6a1a6c4d-ecb5-44a1-aab3-489cde964686"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"@production+mycompany.manywho.com"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"subTenants"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"securitySettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"reportSettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"subdomain"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"stateSettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"tenantSettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"securitySettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"reportSettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"subdomain"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"stateSettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+</span><span class="p">}</span><span class="w">
 </span></code></pre>
 
 <p>Used to get the Tenant object for the current Tenant. The Tenant provides a central place for Flow Builders to build, manage and deploy Flows.</p>
@@ -513,14 +835,14 @@
 <p>Example 200 OK Response</p>
 </blockquote>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
-    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"80c1a97a-e31c-4ab1-a279-9742af17f31d"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"@mycompany.manywho.com"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"subTenants"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"securitySettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"reportSettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"subdomain"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mycompany"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"stateSettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"80c1a97a-e31c-4ab1-a279-9742af17f31d"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"@mycompany.manywho.com"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"subTenants"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"securitySettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"reportSettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"subdomain"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mycompany"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"stateSettings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
@@ -606,7 +928,7 @@ Use this API with extreme caution. Though we do keep backups of Tenant data, rec
 </tr>
 </tbody></table>
 
-<h2 id="users">Users</h2>
+          <h2 id="users">Users</h2>
 
 <blockquote>
 <p>User JSON:</p>
@@ -764,7 +1086,7 @@ Use this API with extreme caution. Though we do keep backups of Tenant data, rec
 </tr>
 </tbody></table>
 
-<h2 id="flow-states">Flow States</h2>
+          <h2 id="flow-states">Flow States</h2>
 
 <blockquote>
 <p>Flow State JSON:</p>
@@ -1161,6 +1483,249 @@ Use this API with extreme caution. Though we do keep backups of Tenant data, rec
 </tbody></table>
 
           <h1 id="draw-api">Draw API</h1>
+
+<p>// Draw
+            config.Routes.MapHttpRoute(
+                name: &ldquo;DrawLogin&rdquo;,
+                routeTemplate: &ldquo;api/draw/1/authentication&rdquo;,
+                defaults: new
+                {
+                    controller = &ldquo;Draw&rdquo;,
+                    action = &ldquo;Login&rdquo;
+                }
+            );</p>
+
+<p>config.Routes.MapHttpRoute(
+                name: &ldquo;DrawSetFlowActivationAndDefault&rdquo;,
+                routeTemplate: &ldquo;api/draw/1/flow/activation/{flowId}/{flowVersionId}/{isDefault}/{isActivated}&rdquo;,
+                defaults: new
+                {
+                    controller = &ldquo;Draw&rdquo;,
+                    action = &ldquo;SetFlowActivationAndDefault&rdquo;,
+                    flowId = RouteParameter.Optional,
+                    flowVersionId = RouteParameter.Optional,
+                    isDefault = RouteParameter.Optional,
+                    isActivated = RouteParameter.Optional
+                }
+            );</p>
+
+<p>config.Routes.MapHttpRoute(
+                name: &ldquo;DrawSnapShotFlow&rdquo;,
+                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Post) },
+                routeTemplate: &ldquo;api/draw/1/flow/snap/{flowId}&rdquo;,
+                defaults: new
+                {
+                    controller = &ldquo;Draw&rdquo;,
+                    action = &ldquo;SnapShotFlow&rdquo;,
+                    flowId = RouteParameter.Optional
+                }
+            );</p>
+
+<p>config.Routes.MapHttpRoute(
+                name: &ldquo;DrawGetFlowSnapShotImageVersions&rdquo;,
+                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Get) },
+                routeTemplate: &ldquo;api/draw/1/flow/snap/{flowId}&rdquo;,
+                defaults: new
+                {
+                    controller = &ldquo;Draw&rdquo;,
+                    action = &ldquo;GetFlowSnapShotImageVersions&rdquo;,
+                    flowId = RouteParameter.Optional
+                }
+            );</p>
+
+<p>config.Routes.MapHttpRoute(
+                name: &ldquo;DrawGetFlowSnapShotImage&rdquo;,
+                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Get) },
+                routeTemplate: &ldquo;api/draw/1/flow/snap/{flowId}/{flowVersionId}&rdquo;,
+                defaults: new
+                {
+                    controller = &ldquo;Draw&rdquo;,
+                    action = &ldquo;GetFlowSnapShotImage&rdquo;,
+                    flowId = RouteParameter.Optional,
+                    flowVersionId = RouteParameter.Optional
+                }
+            );</p>
+
+<p>config.Routes.MapHttpRoute(
+                name: &ldquo;DrawSaveFlowGraph&rdquo;,
+                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Post) },
+                routeTemplate: &ldquo;api/draw/1/graph/flow&rdquo;,
+                defaults: new
+                {
+                    controller = &ldquo;Draw&rdquo;,
+                    action = &ldquo;SaveFlowGraph&rdquo;
+                }
+            );</p>
+
+<p>config.Routes.MapHttpRoute(
+                name: &ldquo;DrawLoadFlowGraph&rdquo;,
+                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Get) },
+                routeTemplate: &ldquo;api/draw/1/graph/flow/{flowId}&rdquo;,
+                defaults: new
+                {
+                    controller = &ldquo;Draw&rdquo;,
+                    action = &ldquo;LoadFlowGraph&rdquo;,
+                    flowId = RouteParameter.Optional
+                }
+            );</p>
+
+<p>config.Routes.MapHttpRoute(
+                name: &ldquo;DrawFlowGraphChangeAvailable&rdquo;,
+                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Get) },
+                routeTemplate: &ldquo;api/draw/1/graph/ping/flow/{flowId}/{editingToken}&rdquo;,
+                defaults: new
+                {
+                    controller = &ldquo;Draw&rdquo;,
+                    action = &ldquo;FlowGraphChangeAvailable&rdquo;,
+                    flowId = RouteParameter.Optional,
+                    editingToken = RouteParameter.Optional
+                }
+            );</p>
+
+<p>config.Routes.MapHttpRoute(
+                            name: &ldquo;DrawRevertFlow&rdquo;,
+                            constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Post) },
+                            routeTemplate: &ldquo;api/draw/1/flow/revert/{flowId}/{flowVersionId}&rdquo;,
+                            defaults: new
+                            {
+                                controller = &ldquo;Draw&rdquo;,
+                                action = &ldquo;RevertFlow&rdquo;,
+                                flowId = RouteParameter.Optional,
+                                flowVersionId = RouteParameter.Optional
+                            }
+            );</p>
+
+<p>config.Routes.MapHttpRoute(
+                name: &ldquo;DrawRemoveElementFromFlow&rdquo;,
+                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Delete) },
+                routeTemplate: &ldquo;api/draw/1/element/flow/{flowId}/{elementType}/{elementId}&rdquo;,
+                defaults: new
+                {
+                    controller = &ldquo;Draw&rdquo;,
+                    action = &ldquo;RemoveElementFromFlow&rdquo;,
+                    flowId = RouteParameter.Optional,
+                    elementType = RouteParameter.Optional,
+                    elementId = RouteParameter.Optional
+                }
+            );</p>
+
+<p>config.Routes.MapHttpRoute(
+                name: &ldquo;DeleteDuplicateTypesFromService&rdquo;,
+                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Delete) },
+                routeTemplate: &ldquo;api/draw/1/element/service/{serviceElementId}/duplicateTypes&rdquo;,
+                defaults: new
+                {
+                    controller = &ldquo;Draw&rdquo;,
+                    action = &ldquo;DeleteDuplicateTypesFromService&rdquo;,
+                    serviceElementId = RouteParameter.Optional
+                }
+            );</p>
+
+<p>config.Routes.MapHttpRoute(
+                name: &ldquo;DrawLoadSharedElementReferences&rdquo;,
+                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Get) },
+                routeTemplate: &ldquo;api/draw/1/element/value/reference&rdquo;,
+                defaults: new
+                {
+                    controller = &ldquo;Draw&rdquo;,
+                    action = &ldquo;LoadSharedElementReferences&rdquo;,
+                    filter = RouteParameter.Optional
+                }
+            );</p>
+
+<p>config.Routes.MapHttpRoute(
+                name: &ldquo;DrawLoadMacroElements&rdquo;,
+                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Get) },
+                routeTemplate: &ldquo;api/draw/1/element/macro&rdquo;,
+                defaults: new
+                {
+                    controller = &ldquo;Draw&rdquo;,
+                    action = &ldquo;LoadMacroElements&rdquo;,
+                    filter = RouteParameter.Optional
+                }
+            );</p>
+
+<p>config.Routes.MapHttpRoute(
+                name: &ldquo;DrawSaveMacroElement&rdquo;,
+                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Post) },
+                routeTemplate: &ldquo;api/draw/1/element/macro&rdquo;,
+                defaults: new
+                {
+                    controller = &ldquo;Draw&rdquo;,
+                    action = &ldquo;SaveMacroElement&rdquo;
+                }
+            );</p>
+
+<p>config.Routes.MapHttpRoute(
+                name: &ldquo;DrawDeleteMacroElement&rdquo;,
+                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Delete) },
+                routeTemplate: &ldquo;api/draw/1/element/macro/{macroElementId}&rdquo;,
+                defaults: new
+                {
+                    controller = &ldquo;Draw&rdquo;,
+                    action = &ldquo;DeleteMacroElement&rdquo;,
+                    macroElementId = RouteParameter.Optional
+                }
+            );</p>
+
+<p>config.Routes.MapHttpRoute(
+                name: &ldquo;DrawLoadMacroElement&rdquo;,
+                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Get) },
+                routeTemplate: &ldquo;api/draw/1/element/macro/{macroElementId}&rdquo;,
+                defaults: new
+                {
+                    controller = &ldquo;Draw&rdquo;,
+                    action = &ldquo;LoadMacroElement&rdquo;,
+                    macroElementId = RouteParameter.Optional
+                }
+            );</p>
+
+<p>config.Routes.MapHttpRoute(
+                name: &ldquo;DrawGetFlows&rdquo;,
+                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Get) },
+                routeTemplate: &ldquo;api/draw/1/flow&rdquo;,
+                defaults: new
+                {
+                    controller = &ldquo;Draw&rdquo;,
+                    action = &ldquo;GetFlows&rdquo;,
+                    filter = RouteParameter.Optional
+                }
+            );</p>
+
+<p>config.Routes.MapHttpRoute(
+                name: &ldquo;DrawGetLatestFlow&rdquo;,
+                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Get) },
+                routeTemplate: &ldquo;api/draw/1/flow/{flowId}&rdquo;,
+                defaults: new
+                {
+                    controller = &ldquo;Draw&rdquo;,
+                    action = &ldquo;GetLatestFlow&rdquo;,
+                    flowId = RouteParameter.Optional
+                }
+            );</p>
+
+<p>config.Routes.MapHttpRoute(
+                name: &ldquo;DrawDeleteFlow&rdquo;,
+                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Delete) },
+                routeTemplate: &ldquo;api/draw/1/flow/{flowId}&rdquo;,
+                defaults: new
+                {
+                    controller = &ldquo;Draw&rdquo;,
+                    action = &ldquo;DeleteFlow&rdquo;,
+                    flowId = RouteParameter.Optional
+                }
+            );</p>
+
+<p>config.Routes.MapHttpRoute(
+                name: &ldquo;DrawSaveFlow&rdquo;,
+                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Post) },
+                routeTemplate: &ldquo;api/draw/1/flow&rdquo;,
+                defaults: new
+                {
+                    controller = &ldquo;Draw&rdquo;,
+                    action = &ldquo;SaveFlow&rdquo;
+                }
+            );</p>
 
           <h2 id="group-element">Group Element</h2>
 
@@ -5411,6 +5976,180 @@ If the &ldquo;id&rdquo; property is included in the request, the platform will u
 <td>As part of referencing or applying an operation to a Value, it is sometimes necessary to perform a command on that Value. Supported commands are:<ul><li><strong>ADD</strong>: Adds an Object to a List Value. If the Object exists in the List, the Object is updated. If it is not already in the List, it&rsquo;s added.</li><li><strong>REMOVE</strong>: Removes an Object from a List Value.</li><li><strong>GET_FIRST</strong>: Gets the first Object from a List Value.</li><li><strong>GET_NEXT</strong>: Gets the next Object from a List Value. List Values maintain a &ldquo;pointer&rdquo; so that each time the GET_NEXT command is executed in the Flow, the List Value remembers which is the next Value.</li><li><strong>FILTER</strong>: Executes a filter on a List Value. For the FILTER command to execute correctly, additional properties must be provided.</li><li><strong>GET_LENGTH</strong>: Gets the length of a List Value.</li><li><strong>NEW</strong>: Creates a new instance of the Value.</li><li><strong>EMPTY</strong>: Sets the Value equal to nothing.</li><li><strong>DETACH</strong>: Removes the external identifier from the root Object so that it will not be &ldquo;remembered&rdquo; when updating Lists or saving back to a remote Service.</li></ul></td>
 </tr>
 </tbody></table>
+
+          <h1 id="translate-api">Translate API</h1>
+
+<p>// Translate
+            config.Routes.MapHttpRoute(
+                name: &ldquo;TranslateGetFlows&rdquo;,
+                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Get) },
+                routeTemplate: &ldquo;api/translate/1/flow&rdquo;,
+                defaults: new
+                {
+                    controller = &ldquo;Translate&rdquo;,
+                    action = &ldquo;GetFlows&rdquo;,
+                    filter = RouteParameter.Optional
+                }
+            );</p>
+
+<p>config.Routes.MapHttpRoute(
+                name: &ldquo;TranslateGetFlowTranslationImage&rdquo;,
+                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Get) },
+                routeTemplate: &ldquo;api/translate/1/flow/{flowId}&rdquo;,
+                defaults: new
+                {
+                    controller = &ldquo;Translate&rdquo;,
+                    action = &ldquo;GetFlowTranslationImage&rdquo;,
+                    flowId = RouteParameter.Optional
+                }
+            );</p>
+
+<p>config.Routes.MapHttpRoute(
+                name: &ldquo;TranslateLoadContentValueCultures&rdquo;,
+                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Get) },
+                routeTemplate: &ldquo;api/translate/1/culture&rdquo;,
+                defaults: new
+                {
+                    controller = &ldquo;Translate&rdquo;,
+                    action = &ldquo;LoadContentValueCultures&rdquo;,
+                    filter = RouteParameter.Optional
+                }
+            );</p>
+
+<p>config.Routes.MapHttpRoute(
+                name: &ldquo;TranslateLoadContentValueCulture&rdquo;,
+                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Get) },
+                routeTemplate: &ldquo;api/translate/1/culture/{cultureId}&rdquo;,
+                defaults: new
+                {
+                    controller = &ldquo;Translate&rdquo;,
+                    action = &ldquo;LoadContentValueCulture&rdquo;,
+                    cultureId = RouteParameter.Optional
+                }
+            );</p>
+
+<p>config.Routes.MapHttpRoute(
+                name: &ldquo;TranslateDeleteContentValueCulture&rdquo;,
+                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Delete) },
+                routeTemplate: &ldquo;api/translate/1/culture/{cultureId}&rdquo;,
+                defaults: new
+                {
+                    controller = &ldquo;Translate&rdquo;,
+                    action = &ldquo;DeleteContentValueCulture&rdquo;,
+                    cultureId = RouteParameter.Optional
+                }
+            );</p>
+
+<p>config.Routes.MapHttpRoute(
+                name: &ldquo;TranslateSaveContentValueCulture&rdquo;,
+                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Post) },
+                routeTemplate: &ldquo;api/translate/1/culture&rdquo;,
+                defaults: new
+                {
+                    controller = &ldquo;Translate&rdquo;,
+                    action = &ldquo;SaveContentValueCulture&rdquo;
+                }
+            );</p>
+
+<p>config.Routes.MapHttpRoute(
+                name: &ldquo;TranslateSaveValueElementTranslation&rdquo;,
+                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Post) },
+                routeTemplate: &ldquo;api/translate/1/element/value&rdquo;,
+                defaults: new
+                {
+                    controller = &ldquo;Translate&rdquo;,
+                    action = &ldquo;SaveValueElementTranslation&rdquo;
+                }
+            );</p>
+
+<p>config.Routes.MapHttpRoute(
+                name: &ldquo;TranslateLoadValueElementTranslation&rdquo;,
+                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Get) },
+                routeTemplate: &ldquo;api/translate/1/element/value/{valueElementId}&rdquo;,
+                defaults: new
+                {
+                    controller = &ldquo;Translate&rdquo;,
+                    action = &ldquo;LoadValueElementTranslation&rdquo;,
+                    valueElementId = RouteParameter.Optional
+                }
+            );</p>
+
+<p>config.Routes.MapHttpRoute(
+                name: &ldquo;TranslateSavePageElementTranslation&rdquo;,
+                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Post) },
+                routeTemplate: &ldquo;api/translate/1/element/page&rdquo;,
+                defaults: new
+                {
+                    controller = &ldquo;Translate&rdquo;,
+                    action = &ldquo;SavePageElementTranslation&rdquo;
+                }
+            );</p>
+
+<p>config.Routes.MapHttpRoute(
+                name: &ldquo;TranslateLoadPageElementTranslation&rdquo;,
+                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Get) },
+                routeTemplate: &ldquo;api/translate/1/element/page/{pageElementId}&rdquo;,
+                defaults: new
+                {
+                    controller = &ldquo;Translate&rdquo;,
+                    action = &ldquo;LoadPageElementTranslation&rdquo;,
+                    pageElementId = RouteParameter.Optional
+                }
+            );</p>
+
+<p>config.Routes.MapHttpRoute(
+                name: &ldquo;TranslateSaveMapElementTranslation&rdquo;,
+                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Post) },
+                routeTemplate: &ldquo;api/translate/1/flow/{flowId}/{editingToken}/element/map&rdquo;,
+                defaults: new
+                {
+                    controller = &ldquo;Translate&rdquo;,
+                    action = &ldquo;SaveMapElementTranslation&rdquo;,
+                    flowId = RouteParameter.Optional,
+                    editingToken = RouteParameter.Optional
+                }
+            );</p>
+
+<p>config.Routes.MapHttpRoute(
+                name: &ldquo;TranslateLoadMapElementTranslation&rdquo;,
+                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Get) },
+                routeTemplate: &ldquo;api/translate/1/flow/{flowId}/{editingToken}/element/map/{id}&rdquo;,
+                defaults: new
+                {
+                    controller = &ldquo;Translate&rdquo;,
+                    action = &ldquo;LoadMapElementTranslation&rdquo;,
+                    id = RouteParameter.Optional,
+                    flowId = RouteParameter.Optional,
+                    editingToken = RouteParameter.Optional
+                }
+            );</p>
+
+<p>config.Routes.MapHttpRoute(
+                name: &ldquo;TranslateSaveNavigationElementTranslation&rdquo;,
+                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Post) },
+                routeTemplate: &ldquo;api/translate/1/flow/{flowId}/{editingToken}/element/navigation&rdquo;,
+                defaults: new
+                {
+                    controller = &ldquo;Translate&rdquo;,
+                    action = &ldquo;SaveNavigationElementTranslation&rdquo;,
+                    flowId = RouteParameter.Optional,
+                    editingToken = RouteParameter.Optional
+                }
+            );</p>
+
+<p>config.Routes.MapHttpRoute(
+                name: &ldquo;TranslateLoadNavigationElementTranslation&rdquo;,
+                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Get) },
+                routeTemplate: &ldquo;api/translate/1/flow/{flowId}/{editingToken}/element/navigation/{id}&rdquo;,
+                defaults: new
+                {
+                    controller = &ldquo;Translate&rdquo;,
+                    action = &ldquo;LoadNavigationElementTranslation&rdquo;,
+                    id = RouteParameter.Optional,
+                    flowId = RouteParameter.Optional,
+                    editingToken = RouteParameter.Optional
+                }
+            );</p>
 
       </div>
       <div class="dark-box">
