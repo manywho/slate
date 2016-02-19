@@ -8,6 +8,8 @@ toc_footers:
   - <a href='#'>Sign Up for an Account</a>
 
 includes:
+  - conceptual/sharedelements
+  - conceptual/mapelements
   - adminapi
   - provisioningapi
   - tenantsapi
