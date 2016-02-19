@@ -151,7 +151,13 @@ Used to create new Type Element objects or update existing ones. The Type Elemen
 
 #### HTTP Request
 
-`POST /api/draw/1/element/type`
+`POST /api/draw/1/element/type?overrideService={true/false}`
+
+#### Parameters
+
+Key | Description
+--- | -----------
+**overrideService**<br/>boolean | If the Type Element is associated with a Service Element, it cannot be updated without setting this parameter to true.
 
 #### Body
 
@@ -170,6 +176,22 @@ Used to import an existing Type Element object into a Flow. The Type Element obj
 #### HTTP Request
 
 `POST /api/draw/1/element/flow/{flow_id}/type/{id}`
+
+#### Parameters
+
+Key | Description
+--- | -----------
+**flow_id**<br/>string | Unique identifier for the Flow
+**id**<br/>string | The unique identifier for the Type Element
+
+
+### Remove Type Element
+
+Used to remove an existing Type Element object from a Flow. This is not the same as deleting the Type Element as it will still exist in the Tenant, but just not referenced in the Flow. The Type Element object stores data collected in the Flow State.
+
+#### HTTP Request
+
+`DELETE /api/draw/1/element/flow/{flow_id}/type/{id}`
 
 #### Parameters
 
@@ -209,6 +231,12 @@ Used to filter existing Type Element objects. The Type Element object defines th
 Key | Description
 --- | -----------
 **filter**<br/>string | The filter for querying Type Elements
+
+<aside class="notice">
+<b>Filter</b><br/>
+The filter can take the following formats:
+<ul><li><b>developerName eq '{developer_name}'</b>: Filter the list of Elements where the "developerName" property exactly matches the provided developer name (case insensitive)</li><li><b>substringof(developerName, '{developer_name}')</b>: Filter the list of Elements where the "developerName" property partially matches the provided developer name (case insensitive)</li></ul>
+</aside>
 
 
 ### Get Type Element
@@ -295,3 +323,20 @@ Used to delete an existing Type Element object. The Type Element object defines 
 Key | Description
 --- | -----------
 **id**<br/>string | The unique identifier for the Type Element
+
+
+### Delete Duplicate Type Elements
+
+> Success 204 No Content Response
+
+Used to delete an existing Type Element object. The Type Element object defines the structure of Objects and Lists in the Flow.
+
+#### HTTP Request
+
+`DELETE /api/draw/1/element/service/{service_element_id}/duplicateTypes`
+
+#### Parameters
+
+Key | Description
+--- | -----------
+**service_element_id**<br/>string | The unique identifier for the Service Element that has the duplicate Types.

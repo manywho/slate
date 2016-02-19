@@ -16,6 +16,10 @@ includes:
   - adminapi/users
   - adminapi/states
   - drawapi
+  - drawapi/authentication
+  - drawapi/flow
+  - drawapi/flowgraph
+  - drawapi/flowsnapshot
   - drawapi/groupelements
   - drawapi/mapelements
   - drawapi/navigationelements
@@ -25,6 +29,14 @@ includes:
   - drawapi/typeelements
   - drawapi/commonobjects
   - translateapi
+  - packageapi
+  - playapi
+  - runapi
+  - socialapi
+  - serviceapi
+  - logapi
+  - reportapi
+
 
 search: true
 ---

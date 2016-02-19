@@ -7,6 +7,7 @@
   "id": null,
   "developerName": "My Map Element",
   "developerSummary": "An example Map Element configuration",
+  "elementType": "STEP",
   "x": 250,
   "y": 350,
   "groupElementId": "{id}",
@@ -636,6 +637,12 @@ Key | Description
 **flow_id**<br/>string | Unique identifier for the Flow containing the Map Element
 **editing_token**<br/>string | The active Editing Token for the Flow being edited
 **filter**<br/>string | The filter for querying Map Elements
+
+<aside class="notice">
+<b>Filter</b><br/>
+The filter can take the following formats:
+<ul><li><b>developerName eq '{developer_name}'</b>: Filter the list of Elements where the "developerName" property exactly matches the provided developer name (case insensitive)</li><li><b>substringof(developerName, '{developer_name}')</b>: Filter the list of Elements where the "developerName" property partially matches the provided developer name (case insensitive)</li></ul>
+</aside>
 
 
 ### Get Map Element

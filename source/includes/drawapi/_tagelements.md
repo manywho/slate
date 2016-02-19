@@ -84,6 +84,22 @@ Key | Description
 **id**<br/>string | The unique identifier for the Tag Element
 
 
+### Remove Tag Element
+
+Used to remove an existing Tag Element object from a Flow. This is not the same as deleting the Tag Element as it will still exist in the Tenant, but just not referenced in the Flow. The Tag Element object stores data collected in the Flow State.
+
+#### HTTP Request
+
+`DELETE /api/draw/1/element/flow/{flow_id}/tag/{id}`
+
+#### Parameters
+
+Key | Description
+--- | -----------
+**flow_id**<br/>string | Unique identifier for the Flow
+**id**<br/>string | The unique identifier for the Tag Element
+
+
 ### Query Tag Elements
 
 > Example 200 OK Response
@@ -118,6 +134,12 @@ Used to filter existing Tag Element objects. The Tag Element object provides add
 Key | Description
 --- | -----------
 **filter**<br/>string | The filter for querying Tag Elements
+
+<aside class="notice">
+<b>Filter</b><br/>
+The filter can take the following formats:
+<ul><li><b>developerName eq '{developer_name}'</b>: Filter the list of Elements where the "developerName" property exactly matches the provided developer name (case insensitive)</li><li><b>substringof(developerName, '{developer_name}')</b>: Filter the list of Elements where the "developerName" property partially matches the provided developer name (case insensitive)</li></ul>
+</aside>
 
 
 ### Get Tag Element

@@ -960,6 +960,22 @@ Key | Description
 **id**<br/>string | The unique identifier for the Page Element
 
 
+### Remove Page Element
+
+Used to remove an existing Page Element object from a Flow. This is not the same as deleting the Page Element as it will still exist in the Tenant, but just not referenced in the Flow. The Page Element object stores data collected in the Flow State.
+
+#### HTTP Request
+
+`DELETE /api/draw/1/element/flow/{flow_id}/page/{id}`
+
+#### Parameters
+
+Key | Description
+--- | -----------
+**flow_id**<br/>string | Unique identifier for the Flow
+**id**<br/>string | The unique identifier for the Page Element
+
+
 ### Query Page Elements
 
 > Example 200 OK Response
@@ -1000,6 +1016,11 @@ Key | Description
 --- | -----------
 **filter**<br/>string | The filter for querying Page Elements
 
+<aside class="notice">
+<b>Filter</b><br/>
+The filter can take the following formats:
+<ul><li><b>developerName eq '{developer_name}'</b>: Filter the list of Elements where the "developerName" property exactly matches the provided developer name (case insensitive)</li><li><b>substringof(developerName, '{developer_name}')</b>: Filter the list of Elements where the "developerName" property partially matches the provided developer name (case insensitive)</li></ul>
+</aside>
 
 ### Get Page Element
 
