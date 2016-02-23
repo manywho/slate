@@ -1,84 +1,69 @@
 # Service API
 
+## Requests
 
-            // Service Invoker
-            config.Routes.MapHttpRoute("ServiceRequestsList", "api/service/1/requests", new
-            {
-                controller = "ServiceRequests",
-                action = "List"
-            });
+### Get Requests
 
-            config.Routes.MapHttpRoute("ServiceRequestsGet", "api/service/1/requests/{id}", new
-            {
-                controller = "ServiceRequests",
-                action = "Get"
-            });
+#### HTTP Request
 
-            config.Routes.MapHttpRoute("ServiceRequestsRetrySingle", "api/service/1/requests/{id}/retry", new
-            {
-                controller = "ServiceRequests",
-                action = "RetrySingle"
-            });
+`GET /api/service/1/requests`
 
-            config.Routes.MapHttpRoute("ServiceRequestsListByFlow", "api/service/1/requests/flow/{flowId}", new
-            {
-                controller = "ServiceRequests",
-                action = "ListByFlow"
-            });
+### Get Request
 
-            config.Routes.MapHttpRoute("ServiceRequestsListByFlowVersion", "api/service/1/requests/flow/{flowId}/{flowVersionId}", new
-            {
-                controller = "ServiceRequests",
-                action = "ListByFlowVersion"
-            });
+#### HTTP Request
 
-            config.Routes.MapHttpRoute("ServiceRequestsListByState", "api/service/1/requests/state/{stateId}", new
-            {
-                controller = "ServiceRequests",
-                action = "ListByState"
-            });
+`GET /api/service/1/requests/{id}`
 
-            // Object Data
-            config.Routes.MapHttpRoute(
-                name: "ObjectDataLoad",
-                routeTemplate: "api/service/1/data",
-                defaults: new
-                {
-                    controller = "ObjectData",
-                    action = "Load"
-                }
-            );
+### Get Requests by Flow
 
-            // File Data
-            config.Routes.MapHttpRoute(
-                name: "FileDataLoadFiles",
-                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Post) },
-                routeTemplate: "api/service/1/file",
-                defaults: new
-                {
-                    controller = "FileData",
-                    action = "LoadFiles"
-                }
-            );
+#### HTTP Request
 
-            config.Routes.MapHttpRoute(
-                name: "FileDataDeleteFile",
-                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Post) },
-                routeTemplate: "api/service/1/file/delete",
-                defaults: new
-                {
-                    controller = "FileData",
-                    action = "DeleteFile"
-                }
-            );
+`GET /api/service/1/requests/flow/{flow_id}`
 
-            config.Routes.MapHttpRoute(
-                name: "FileDataUploadFile",
-                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Post) },
-                routeTemplate: "api/service/1/file/content",
-                defaults: new
-                {
-                    controller = "FileData",
-                    action = "UploadFile"
-                }
-            );
+### Get Requests by Flow Version
+
+#### HTTP Request
+
+`GET /api/service/1/requests/flow/{flow_id}/{flow_version_id}`
+
+### Get Requests by Flow State
+
+#### HTTP Request
+
+`GET /api/service/1/requests/state/{state_id}`
+
+### Retry Request
+
+#### HTTP Request
+
+`POST /api/service/1/requests/{id}/retry`
+
+
+## Data
+
+### Get Data from Service
+
+#### HTTP Request
+
+`POST /api/service/1/data`
+
+
+## Files
+
+### Get Files from Service
+
+#### HTTP Request
+
+`POST /api/service/1/file`
+
+### Upload File to Service
+
+#### HTTP Request
+
+`POST /api/service/1/file/content`
+
+### Delete File from Service
+
+#### HTTP Request
+
+`POST /api/service/1/file/delete`

@@ -1,149 +1,81 @@
 # Social API
 
+## Stream
 
-            // Social
-            config.Routes.MapHttpRoute(
-                name: "SocialCreateStream",
-                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Post) },
-                routeTemplate: "api/social/1/{serviceElementId}",
-                defaults: new
-                {
-                    controller = "Social",
-                    action = "CreateStream",
-                    serviceElementId = RouteParameter.Optional
-                }
-            );
+### Create Stream
 
-            config.Routes.MapHttpRoute(
-                name: "SocialGetCurrentUserInfo",
-                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Get) },
-                routeTemplate: "api/social/1/stream/{streamId}/user/me",
-                defaults: new
-                {
-                    controller = "Social",
-                    action = "GetCurrentUserInfo",
-                    streamId = RouteParameter.Optional
-                }
-            );
+#### HTTP Request
 
-            config.Routes.MapHttpRoute(
-                name: "SocialGetUserInfo",
-                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Get) },
-                routeTemplate: "api/social/1/stream/{streamId}/user",
-                defaults: new
-                {
-                    controller = "Social",
-                    streamId = RouteParameter.Optional,
-                }
-            );
+`POST /api/social/1/{service_element_id}`
 
-            config.Routes.MapHttpRoute(
-                name: "SocialGetStreamFollowers",
-                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Get) },
-                routeTemplate: "api/social/1/stream/{streamId}/follower",
-                defaults: new
-                {
-                    controller = "Social",
-                    action = "GetStreamFollowers",
-                    streamId = RouteParameter.Optional
-                }
-            );
+### Follow Stream
 
-            config.Routes.MapHttpRoute(
-                name: "SocialShareMessage",
-                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Post) },
-                routeTemplate: "api/social/1/stream/{streamId}/share",
-                defaults: new
-                {
-                    controller = "Social",
-                    action = "ShareMessage",
-                    streamId = RouteParameter.Optional
-                }
-            );
+#### HTTP Request
 
-            config.Routes.MapHttpRoute(
-                name: "SocialPostNewMessage",
-                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Post) },
-                routeTemplate: "api/social/1/stream/{streamId}/message",
-                defaults: new
-                {
-                    controller = "Social",
-                    action = "PostNewMessage",
-                    streamId = RouteParameter.Optional
-                }
-            );
+`POST /api/social/1/stream/{stream_id}`
 
-            config.Routes.MapHttpRoute(
-                name: "SocialLikeMessage",
-                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Post) },
-                routeTemplate: "api/social/1/stream/{streamId}/message/{messageId}",
-                defaults: new
-                {
-                    controller = "Social",
-                    action = "LikeMessage",
-                    streamId = RouteParameter.Optional,
-                    messageId = RouteParameter.Optional
-                }
-            );
+### Post Message to Stream
 
-            config.Routes.MapHttpRoute(
-                name: "SocialDeleteMessage",
-                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Delete) },
-                routeTemplate: "api/social/1/stream/{streamId}/message/{messageId}",
-                defaults: new
-                {
-                    controller = "Social",
-                    action = "DeleteMessage",
-                    streamId = RouteParameter.Optional,
-                    messageId = RouteParameter.Optional
-                }
-            );
+#### HTTP Request
 
-            config.Routes.MapHttpRoute(
-                name: "SocialUploadFile",
-                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Post) },
-                routeTemplate: "api/social/1/stream/{streamId}/file",
-                defaults: new
-                {
-                    controller = "Social",
-                    action = "UploadFile",
-                    streamId = RouteParameter.Optional
-                }
-            );
+`POST /api/social/1/stream/{stream_id}/message`
 
-            config.Routes.MapHttpRoute(
-                name: "SocialDeleteUploadedFile",
-                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Delete) },
-                routeTemplate: "api/social/1/stream/{streamId}/file/{fileId}",
-                defaults: new
-                {
-                    controller = "Social",
-                    action = "DeleteUploadedFile",
-                    streamId = RouteParameter.Optional,
-                    fileId = RouteParameter.Optional
-                }
-            );
+### Get Stream Messages
 
-            config.Routes.MapHttpRoute(
-                name: "SocialFollowStream",
-                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Post) },
-                routeTemplate: "api/social/1/stream/{streamId}",
-                defaults: new
-                {
-                    controller = "Social",
-                    action = "FollowStream",
-                    streamId = RouteParameter.Optional,
-                }
-            );
+#### HTTP Request
 
-            config.Routes.MapHttpRoute(
-                name: "SocialGetStreamMessages",
-                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Get) },
-                routeTemplate: "api/social/1/stream/{streamId}",
-                defaults: new
-                {
-                    controller = "Social",
-                    action = "GetStreamMessages",
-                    streamId = RouteParameter.Optional
-                }
-            );
+`GET /api/social/1/stream/{stream_id}`
+
+### Like Stream Message
+
+#### HTTP Request
+
+`POST /api/social/1/stream/{stream_id}/message`
+
+### Delete Stream Message
+
+#### HTTP Request
+
+`DELETE /api/social/1/stream/{stream_id}/message/{message_id}`
+
+### Upload File to Stream
+
+#### HTTP Request
+
+`POST /api/social/1/stream/{stream_id}/file`
+
+### Delete Uploaded File
+
+#### HTTP Request
+
+`DELETE /api/social/1/stream/{stream_id}/file/{file_id}`
+
+
+## User Info
+
+### Get Current User Info
+
+#### HTTP Request
+
+`GET /api/social/1/stream/{stream_id}/user/me`
+
+### Get User Info
+
+#### HTTP Request
+
+`GET /api/social/1/stream/{stream_id}/user/{id}`
+
+### Get Stream Followers
+
+#### HTTP Request
+
+`GET /api/social/1/stream/{stream_id}/follower`
+
+
+## Share
+
+### Flow Link
+
+#### HTTP Request
+
+`POST /api/social/1/stream/{stream_id}/share`

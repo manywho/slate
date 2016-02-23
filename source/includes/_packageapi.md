@@ -1,42 +1,22 @@
 # Package API
 
-            config.Routes.MapHttpRoute(
-                name: "GetLatestFlowPackagePackage",
-                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Get) },
-                routeTemplate: "api/package/1/flow/{flowId}",
-                defaults: new
-                {
-                    controller = "Package",
-                    action = "GetLatestFlowPackage",
-                    flowId = RouteParameter.Optional,
-                    nullPasswords = RouteParameter.Optional
-                }
-            );
 
-            config.Routes.MapHttpRoute(
-                name: "ExportFlowPackagePackage",
-                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Get) },
-                routeTemplate: "api/package/1/flow/{flowId}/{flowVersionId}",
-                defaults: new
-                {
-                    controller = "Package",
-                    action = "ExportFlowPackage",
-                    flowId = RouteParameter.Optional,
-                    flowVersionId = RouteParameter.Optional,
-                    nullPasswords = RouteParameter.Optional
-                }
-            );
+## Export Latest Version
 
-            config.Routes.MapHttpRoute(
-                name: "ImportFlowPackagePackage",
-                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Post) },
-                routeTemplate: "api/package/1/flow",
-                defaults: new
-                {
-                    controller = "Package",
-                    action = "ImportFlowPackage",
-                    isActive = RouteParameter.Optional,
-                    isDefault = RouteParameter.Optional,
-                    uriMapping = RouteParameter.Optional
-                }
-            );
+#### HTTP Request
+
+`GET /api/package/1/flow/{id}?nullPasswords={nullPasswords}`
+
+
+## Export Specific Version
+
+#### HTTP Request
+
+`GET /api/package/1/flow/{id}/{version_id}?nullPasswords={nullPasswords}`
+
+
+## Import
+
+#### HTTP Request
+
+`POST /api/package/1/flow/{id}/{version_id}?isActive={isActive}&isDefault={isDefault}&uriMapping[n][from]={from}&uriMapping[n][to]={to}`
