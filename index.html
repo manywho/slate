@@ -7717,18 +7717,13 @@ The filter can take the following formats:
 
 <p><code class="prettyprint">GET /api/log/{flow_id}/{state_id}</code></p>
 
-          <p># Report API</p>
+          <h1 id="report-api">Report API</h1>
 
-<p>// Report
-            config.Routes.MapHttpRoute(
-                name: &ldquo;ReportStates&rdquo;,
-                routeTemplate: &ldquo;api/report/1/states&rdquo;,
-                defaults: new
-                {
-                    controller = &ldquo;Report&rdquo;,
-                    action = &ldquo;States&rdquo;
-                }
-            );</p>
+<h2 id="receive-report">Receive Report</h2>
+
+<h4 id="http-request">HTTP Request</h4>
+
+<p><code class="prettyprint">POST /api/report/1/states</code></p>
 
       </div>
       <div class="dark-box">
