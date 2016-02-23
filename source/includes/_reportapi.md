@@ -1,13 +1,7 @@
- # Report API
+# Report API
 
+## Receive Report
 
-            // Report
-            config.Routes.MapHttpRoute(
-                name: "ReportStates",
-                routeTemplate: "api/report/1/states",
-                defaults: new
-                {
-                    controller = "Report",
-                    action = "States"
-                }
-            );
+#### HTTP Request
+
+`POST /api/report/1/states`
