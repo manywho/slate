@@ -36,6 +36,11 @@ includes:
   - serviceapi
   - logapi
   - reportapi
+  - uiframework/_intro.md
+  - uiframework/_components.md
+  - uiframework/_customcomponents.md
+  - uiframework/_componentstate.md
+  - uiframework/_debugging.md
 
 
 search: true
