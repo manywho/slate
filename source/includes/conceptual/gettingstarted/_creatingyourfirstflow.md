@@ -12,10 +12,16 @@ This tutorial assumes that you have already registered with ManyWho and that you
 For now select **ManyWho Identity** and click **Next**
 3. By default new Flows will be publically accessible and won't display a social feed (this can be changed at any time). Click **Save & Open** to open the Flow to edit.
 
+#### Flow Editor
+![Flow Editor](images/flow-editor.png "Flow Editor")
+
+1. The tab bar along the top of the Flow Editor displays the currently open Flows. You can switch between each one by clicking on the tab.
+2. Return to the Admin view
+3. Toolbox bar displays all the available Map Elements you can add to a Flow. Hover for more information about each Map Element. Click the chevron at the top to expand & collapse the toolbox.
+4. Various actions for a Flow. Hover for more information about each action.
+5. Canvas that displays the Flow, drop Map Elements from the Toolbox to add them to your Flow.
+
 ### Adding a Map Element to your Flow
-
-IMAGE here
-
 A Flow must contain 1 or more Map Elements that will define what the Flow will do. We are going to add a Step to the Flow that will display some text. You can add a Step by dragging & dropping the Step element from the toolbox bar onto the canvas.
 
 After you drop the Step element onto the canvas the element configuration panel will slide in from the right of the Flow graph.
