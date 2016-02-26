@@ -10,3 +10,5 @@ is built upon some standard front end technologies including:
 | [LogLevel](https://github.com/pimterry/loglevel) | Logging |
 | [Moment](https://momentjs.com/) | Date & Time manipulation |
 | [Socket.io](http://socket.io/) | Real-time collaboration |
+
+The HTML5 Player code is licensed as shared source, you can find the source code for the player here: [https://github.com/manywho/ManyWho_HTML5_Players2](https://github.com/manywho/ManyWho_HTML5_Players2)

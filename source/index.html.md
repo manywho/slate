@@ -8,6 +8,7 @@ toc_footers:
   - <a href='#'>Sign Up for an Account</a>
 
 includes:
+  - conceptual/gettingstarted/_creatingyourfirstflow.md
   - conceptual/sharedelements
   - conceptual/mapelements
   - adminapi

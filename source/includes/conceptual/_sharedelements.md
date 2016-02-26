@@ -86,3 +86,10 @@ Values that are created as a List are still a single Value. Although they can co
 </aside>
 
 ### Pages
+
+### Players
+A Player is the "renderer" for your Flows that is used to display an executing Flow to the end user. By default Flows will be displayed using the "default" HTML5 Player, this will display your Flows in a browser and supports all the functionality provided by the ManyWho platform.
+
+You can edit this player and / or create new HTML5 based players in ManyWho by selecting the **Players** menu option.
+
+More information on the default HTML5 player and the UI framework in general can be found [here](#ui-framework) 

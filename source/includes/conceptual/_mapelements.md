@@ -114,3 +114,14 @@ Deletes allow you to delete an item or multiple items from an external source vi
 
 ### Swimlane
 Swimlanes allow you to partition a section of your flow to use different authentication. For example you put a section of a flow into a Swimlane that only users in the Managers group have permissions to view. Users who aren't authorized to enter the Swimlane will see a message.
+
+### Outcomes
+Outcomes are the lines that connect the map elements together in your Flow and define the execution path through your Flow.
+
+You can create an Outcome in your Flow by dragging and dropping from the source map element to the target map element (via the orange circular handle in the center of the source map element). A single map element can have any number of Outcomes going to and from it.
+
+<aside class="notice">
+A Flow won't be valid and will fail to run until you connect the Start element to another map element in your flow
+</aside>
+
+Step & Page Layout elements will display Outcomes as buttons that users running your Flow can click to determine which Outcome will be followed.
