@@ -120,6 +120,54 @@
 
 <p>Some stuff about ManyWho.</p>
 
+          <h2 id="creating-your-first-flow">Creating Your First Flow</h2>
+
+<p>This tutorial will guide you through the process of creating a Flow on ManyWho. More specific details on what a Flow is can be found (here)[#flows],
+for the purposes of this tutorial all you need to know is that a Flow is a series of steps that you have defined that users can execute through.</p>
+
+<aside class="notice">
+This tutorial assumes that you have already registered with ManyWho and that you have logged in to the Draw tool: https://flow.manywho.com/draw
+</aside>
+
+<h3 id="create-a-new-flow">Create a New flow</h3>
+
+<ol>
+<li>You can create a new Flow by selecting the <strong>Flows</strong> menu item then click the <strong>New</strong> button.</li>
+<li>Decide how you will want users running your Flow to authenticate with the Flow. For example you may want to restrict access to your Flow to only users in a specific Salesforce group.
+For now select <strong>ManyWho Identity</strong> and click <strong>Next</strong></li>
+<li>By default new Flows will be publically accessible and won&rsquo;t display a social feed (this can be changed at any time). Click <strong>Save &amp; Open</strong> to open the Flow to edit.</li>
+</ol>
+
+<h4 id="flow-editor">Flow Editor</h4>
+
+<p><img title="Flow Editor" alt="Flow Editor" src="images/flow-editor.png" /></p>
+
+<ol>
+<li>The tab bar along the top of the Flow Editor displays the currently open Flows. You can switch between each one by clicking on the tab.</li>
+<li>Return to the Admin view</li>
+<li>Toolbox bar displays all the available Map Elements you can add to a Flow. Hover for more information about each Map Element. Click the chevron at the top to expand &amp; collapse the toolbox.</li>
+<li>Various actions for a Flow. Hover for more information about each action.</li>
+<li>Canvas that displays the Flow, drop Map Elements from the Toolbox to add them to your Flow.</li>
+</ol>
+
+<h3 id="adding-a-map-element-to-your-flow">Adding a Map Element to your Flow</h3>
+
+<p>A Flow must contain 1 or more Map Elements that will define what the Flow will do. We are going to add a Step to the Flow that will display some text. You can add a Step by dragging &amp; dropping the Step element from the toolbox bar onto the canvas.</p>
+
+<p>After you drop the Step element onto the canvas the element configuration panel will slide in from the right of the Flow graph.</p>
+
+<p>Give your Step a name and some content that you want it to display then hit the <strong>Save</strong> button.</p>
+
+<h3 id="connecting-the-start-element">Connecting the Start Element</h3>
+
+<p>For a Flow to be valid the Start Map Element must be connected to one Map Element via an (Outcome)[#outcome].</p>
+
+<p>You can create an Outcome between Start and the new Step by dragging from the orange drag handle in the center of the Start element and dropping onto the Step. This will display the Outcome configuration panel, give your Outcome a name and label and hit the <strong>Save</strong> button.</p>
+
+<h3 id="running-the-flow">Running the Flow</h3>
+
+<p>Now that you have created a Flow you can run it by clicking on the <strong>Run</strong> button in the toolbox bar, this will display the Run dialog, in here click the <strong>Run</strong> button and your Flow will open in a new tab.</p>
+
           <h2 id="shared-elements">Shared Elements</h2>
 
 <h3 id="flows">Flows</h3>
@@ -127,7 +175,7 @@
 <p>A Flow is an implementation of a process on the ManyWho platform. It will contain 1 or more <a href="http://google.com">Map Elements</a>
 and <a href="http://google.com">Outcomes</a> that determines what happens and in what order.</p>
 
-<h4 id="flow-url-39-s">Flow URL&rsquo;s</h4>
+<h4 id="flow-urls">Flow URLs</h4>
 
 <p>When you run a Flow a url is generated that you can use to share your Flow, for example:</p>
 
@@ -293,6 +341,14 @@ Values that are created as a List are still a single Value. Although they can co
 
 <h3 id="pages">Pages</h3>
 
+<h3 id="players">Players</h3>
+
+<p>A Player is the &ldquo;renderer&rdquo; for your Flows that is used to display an executing Flow to the end user. By default Flows will be displayed using the &ldquo;default&rdquo; HTML5 Player, this will display your Flows in a browser and supports all the functionality provided by the ManyWho platform.</p>
+
+<p>You can edit this player and / or create new HTML5 based players in ManyWho by selecting the <strong>Players</strong> menu option.</p>
+
+<p>More information on the default HTML5 player and the UI framework in general can be found <a href="#ui-framework">here</a> </p>
+
           <h2 id="map-elements">Map Elements</h2>
 
 <p>Map Elements are the individual steps in your Flow that perform various actions e.g. displaying a form, saving &amp; loading data, creating an item in Salesforce, etc.</p>
@@ -437,6 +493,52 @@ Clicking either the <strong>Edit</strong> or <strong>New</strong> buttons will o
 <h3 id="swimlane">Swimlane</h3>
 
 <p>Swimlanes allow you to partition a section of your flow to use different authentication. For example you put a section of a flow into a Swimlane that only users in the Managers group have permissions to view. Users who aren&rsquo;t authorized to enter the Swimlane will see a message.</p>
+
+<h3 id="outcomes">Outcomes</h3>
+
+<p>Outcomes are the lines that connect the map elements together in your Flow and define the execution path through your Flow.</p>
+
+<p>You can create an Outcome in your Flow by dragging and dropping from the source map element to the target map element (via the orange circular handle in the center of the source map element). A single map element can have any number of Outcomes going to and from it.</p>
+
+<aside class="notice">
+A Flow won&rsquo;t be valid and will fail to run until you connect the Start element to another map element in your flow
+</aside>
+
+<p>Step &amp; Page Layout elements will display Outcomes as buttons that users running your Flow can click to determine which Outcome will be followed.</p>
+
+          <h2 id="states">States</h2>
+
+<p><strong>States</strong> are running instances of a flow. They contain a lot of useful data, like all the values and the current step that a user is on.</p>
+
+<h4 id="lifetime">Lifetime</h4>
+
+<p>States are persisted in the platform in two ways - ephemerally and permanently, depending on your requirements.</p>
+
+<h5 id="ephemeral-states">Ephemeral States</h5>
+
+<aside class="success">Recommended for use in <strong>Development, Testing & Staging</strong></aside>
+
+<aside class="notice">Created when using <strong>Run</strong> in the Draw Tool</aside>
+
+<p>Ephemeral states are states that are stored in our cache, but have no guarantees on their lifetime. They will only be available to join or use until our cache cluster needs to reclaim space for newer states, which could be at any time.</p>
+
+<p>This type of state is fine for using while you are building or testing flows, as they&rsquo;re only short-term and will be automatically cleaned up.</p>
+
+<h5 id="permanent-states">Permanent States</h5>
+
+<aside class="success">Recommended for use in <strong>Production</strong></aside>
+
+<aside class="notice">Created when using <strong>Publish</strong> in the Draw Tool</aside>
+
+<p>Permanent states are states that are saved in our database for longer-term storage. While the state is still in progress and hasn&rsquo;t reached it&rsquo;s final step, it will be available for joining. Once a state has reached it&rsquo;s final step, it is considered &ldquo;done&rdquo; and the state will then be deleted after 3 days.</p>
+
+<h4 id="expiration">Expiration</h4>
+
+<p>States can be set to expire, either in the Draw Tool or the Build Tool. After a state expires, anyone who tries to join or progress through it will receive the message <em>&ldquo;The state with ID 12345 has now expired&rdquo;</em> and will no longer be able to interact with or view it.</p>
+
+<h5 id="setting-an-expiration">Setting an Expiration</h5>
+
+<p>When creating a new flow or editing an existing one, you can set the <strong>Expire After</strong> field to the number of seconds that the state should last for.</p>
 
           <h1 id="admin-api">Admin API</h1>
 
@@ -7724,6 +7826,295 @@ The filter can take the following formats:
 <h4 id="http-request">HTTP Request</h4>
 
 <p><code class="prettyprint">POST /api/report/1/states</code></p>
+
+          <h1 id="ui-framework">UI Framework</h1>
+
+<p>The ManyWho HTML5 UI framework will handle all the user interaction and rendering of Flows in a browser. The framework
+is built upon some standard front end technologies including:</p>
+
+<table><thead>
+<tr>
+<th>Library</th>
+<th></th>
+</tr>
+</thead><tbody>
+<tr>
+<td><a href="https://facebook.github.io/react/">React</a></td>
+<td>Rendering of the various UI components &amp; containers</td>
+</tr>
+<tr>
+<td><a href="https://getbootstrap.com/">Bootstrap</a></td>
+<td>Styling and some component behavior e.g. tabs</td>
+</tr>
+<tr>
+<td><a href="https://bootswatch.com/">Bootswatch</a></td>
+<td>Themes</td>
+</tr>
+<tr>
+<td><a href="https://github.com/pimterry/loglevel">LogLevel</a></td>
+<td>Logging</td>
+</tr>
+<tr>
+<td><a href="https://momentjs.com/">Moment</a></td>
+<td>Date &amp; Time manipulation</td>
+</tr>
+<tr>
+<td><a href="http://socket.io/">Socket.io</a></td>
+<td>Real-time collaboration</td>
+</tr>
+</tbody></table>
+
+<p>The HTML5 Player code is licensed as shared source, you can find the source code for the player here: <a href="https://github.com/manywho/ManyWho_HTML5_Players2">https://github.com/manywho/ManyWho_HTML5_Players2</a></p>
+
+          <h2 id="available-components">Available components</h2>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Available In Page Layout Editor</th>
+<th>Notes</th>
+<th>Supported Attributes</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Content</td>
+<td>Richtext WYWIWYG editor</td>
+<td>Yes</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>File Upload</td>
+<td>Allows the user to upload files</td>
+<td>No</td>
+<td></td>
+<td><ul><li>isAutoUpload: true to upload immediately after selecting file(s)</li></ul></td>
+</tr>
+<tr>
+<td>Flip</td>
+<td>Container that displays 2 children and animates between them</td>
+<td>No</td>
+<td>Supports only 2 child items. Default width and height are 250px, you can override this by adding a custom style: .mw-flip.flip-container, .mw-flip.front, .mw-flip.back</td>
+<td></td>
+</tr>
+<tr>
+<td>Group</td>
+<td>Container that displays it&rsquo;s children in a set of tabs</td>
+<td>Yes</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Hidden</td>
+<td>Does not display anything</td>
+<td>No</td>
+<td>Useful for when you need a value to exist on a page for validation</td>
+<td></td>
+</tr>
+<tr>
+<td>Horizontal</td>
+<td>Container that displays its children horizontally</td>
+<td>Yes</td>
+<td>Based on a 12 column grid, children are divided equally</td>
+<td></td>
+</tr>
+<tr>
+<td>IFrame</td>
+<td>Embedded browser window</td>
+<td>No</td>
+<td>Web content is loaded from the imageUri metadata property</td>
+<td></td>
+</tr>
+<tr>
+<td>Image</td>
+<td>Displays an image</td>
+<td>No</td>
+<td>Image is displayed via the imageUri metadata property</td>
+<td></td>
+</tr>
+<tr>
+<td>Inline</td>
+<td>Container that displays its children horizontally inline</td>
+<td>Yes</td>
+<td>Children are displayed side by side and will wrap</td>
+<td></td>
+</tr>
+<tr>
+<td>Input</td>
+<td>Accept input from a user</td>
+<td>Yes</td>
+<td>Supports: text, boolean, date, password, number</td>
+<td><ul><li>dateTimeFormat: format string for displaying datetimes</li></ul></td>
+</tr>
+<tr>
+<td>List</td>
+<td>Bullet or numbered list</td>
+<td>No</td>
+<td></td>
+<td><ul><li>ordered: true to display as a numbered list</li></ul></td>
+</tr>
+<tr>
+<td>Presentation</td>
+<td>Displays richtext content</td>
+<td>Yes</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Radio</td>
+<td>Mutually exclusive list selection</td>
+<td>No</td>
+<td></td>
+<td><ul><li>multiselect: true to display a list of checkboxes</li></ul></td>
+</tr>
+<tr>
+<td>Select</td>
+<td>Displays a combobox</td>
+<td>Yes</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Table</td>
+<td>Displays a table</td>
+<td>Yes</td>
+<td></td>
+<td><ul><li>borderless: true to remove the table-bordered style</li><li>striped: true to add the table-striped style</li><li>radio: true to display radio button selection in a prepended column</li><li>pagination: true to enable pagination on a table bound to a list</li><li>classes: string of class names that will be added to the table-container element</li><li>outcomes: icons to display outcomes as icons only</li></ul></td>
+</tr>
+<tr>
+<td>Textarea</td>
+<td>Accept multiline text input from the user</td>
+<td>Yes</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Vertical</td>
+<td>Container that displays its children vertically</td>
+<td>Yes</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+
+          <h2 id="creating-a-custom-component">Creating a Custom Component</h2>
+
+<p>A UI component consists of at least one React component and potentially some optional CSS.</p>
+<pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">myComponent</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span>
+
+    <span class="na">render</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+
+        <span class="kd">var</span> <span class="nx">model</span> <span class="o">=</span> <span class="nx">manywho</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">getContainer</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">flowKey</span><span class="p">);</span>
+        <span class="kd">var</span> <span class="nx">classes</span> <span class="o">=</span> <span class="nx">manywho</span><span class="p">.</span><span class="nx">styling</span><span class="p">.</span><span class="nx">getClasses</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">parentId</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span> <span class="s1">'component_name'</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">flowKey</span><span class="p">);</span>
+        <span class="kd">var</span> <span class="nx">children</span> <span class="o">=</span> <span class="nx">manywho</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">getChildren</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">flowKey</span><span class="p">);</span>
+
+        <span class="k">return</span> <span class="nx">React</span><span class="p">.</span><span class="nx">DOM</span><span class="p">.</span><span class="nx">div</span><span class="p">({</span> <span class="na">className</span><span class="p">:</span> <span class="nx">classes</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s1">' '</span><span class="p">),</span> <span class="na">id</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">id</span> <span class="p">},</span> <span class="p">[</span>
+            <span class="nx">React</span><span class="p">.</span><span class="nx">DOM</span><span class="p">.</span><span class="nx">p</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="s1">'My Component!'</span><span class="p">),</span>
+            <span class="nx">manywho</span><span class="p">.</span><span class="nx">component</span><span class="p">.</span><span class="nx">getChildComponents</span><span class="p">(</span><span class="nx">children</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">flowKey</span><span class="p">)</span>      
+        <span class="p">]);</span>
+
+    <span class="p">}</span>
+
+<span class="p">});</span>
+
+<span class="nx">manywho</span><span class="p">.</span><span class="nx">component</span><span class="p">.</span><span class="nx">register</span><span class="p">(</span><span class="s1">'component_name'</span><span class="p">,</span> <span class="nx">myComponent</span><span class="p">);</span>
+
+<span class="nx">manywho</span><span class="p">.</span><span class="nx">styling</span><span class="p">.</span><span class="nx">registerContainer</span><span class="p">(</span><span class="s1">'component_name'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">item</span><span class="p">,</span> <span class="nx">container</span><span class="p">)</span> <span class="p">{</span>      
+    <span class="k">return</span> <span class="p">[];</span>
+<span class="p">});</span>
+</code></pre>
+
+<h4 id="id-parentid-amp-flowkey">Id, ParentId &amp; FlowKey</h4>
+
+<p>To ensure that each component can address it&rsquo;s model it is important to pass <strong>this.props.id</strong> into <strong>component.getChildComponents</strong> at this point the UI framework will take care of setting <strong>this.props.id</strong> to the relevant id.</p>
+
+<p><strong>this.props.flowKey</strong> is used to identify the flow that this component belongs too, this exists to support running multiple flows on the same page simultaneously. You won&rsquo;t need to do administer flowKey however it is important that it is passed into the relevant functions (e.g. getContainer, getClasses, getChildren, getChildComponents, etc).</p>
+
+<h4 id="render-required">render (required)</h4>
+
+<ul>
+<li>model.GetContainer: returns the model object for the container that was fetched from ManyWho</li>
+<li>styling.getClasses: returns classes that may have been defined by the parent container that should be applied to this container / component</li>
+<li>model.getChildren: returns the child model objects for this container</li>
+<li>component.getChildComponents: returns the React components for the various child containers / components for this container</li>
+</ul>
+
+<h4 id="manywho-component-register-required">manywho.component.Register (required)</h4>
+
+<p>Register the component with the framework, this will ensure that you&rsquo;re component will be rendered.</p>
+
+<h4 id="manywho-styling-registercontainer-optional">manywho.styling.registerContainer (optional)</h4>
+
+<p>Register styling information that should be applied to any child components when they are being rendered. This should return either an empty array or an array of class names.
+<strong>item</strong> will be the model of the child being rendered and <strong>container</strong> will be the model of the container that contains <strong>item</strong>. An example of this being used can be found
+here: https://github.com/manywho/ManyWho_HTML5_Players2/blob/master/runtime/js/components/horizontal.js#L54</p>
+
+          <h2 id="component-state-local-state-and-remote-state">Component State, Local State and Remote State</h2>
+
+<p>When working with custom components there are 3 types of state that you should be aware of:</p>
+
+<h3 id="component-state">Component State</h3>
+
+<p>This is the regular React component state which can be accessed by this.state. Documentation about React component state can be found here: https://facebook.github.io/react/docs/getting-started.html</p>
+
+<h3 id="local-state">Local State</h3>
+
+<p>This is the ManyWho flow state that currently exists in your browser session. The flow state contains a snapshot of the current state (values, selections, etc) of the flow.</p>
+<pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">state</span> <span class="o">=</span> <span class="nx">manywho</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">getComponent</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">flowKey</span><span class="p">);</span>
+</code></pre>
+
+<h3 id="remote-state">Remote State</h3>
+
+<p>This is the same as the local state however it exists in the ManyWho cloud. The only important distinction is that the local state may be &ldquo;out of sync&rdquo; with the remote state periodically i.e. a user running a flow enters some values into some inputs on a page, these values only exist in the local state until the UI informs ManyWho to sync (usually via an outcome on the page).</p>
+
+<h3 id="which-state-should-i-use-in-my-components">Which state should I use in my components?</h3>
+
+<p>Component state should be used when you need to track changes that only affect the UI and don&rsquo;t need to be synced to the flow e.g. dropdown toggling, switching between tabs.</p>
+
+<p>Local State should be used when you do care about syncing changes back to ManyWho e.g. values entered into an input. Generally when rendering a component you will want to check if the state has a value to be displayed then fallback to the model to get a value, then in the components event handler call manywho.state.setComponent to put the updated value into the local state.</p>
+
+<p>Remote state is taken care of for you, if you want your component to trigger events in the flow e.g. this combobox should sync with the remote state when the value changes as other components will update based on the selected value in the combobox, then you should call manywho.component.handleEvent in your components change handler(s).</p>
+
+          <h2 id="debugging-the-html5-player-locally">Debugging the HTML5 Player Locally</h2>
+
+<p>When creating custom components you may need to debug the existing HTML5 player code in its un-compiled format:</p>
+<pre class="highlight javascript"><code><span class="nx">manywho</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">initialize</span><span class="p">({</span>
+    <span class="na">adminTenantId</span><span class="p">:</span> <span class="s1">'da497693-4d02-45db-bc08-8ea16d2ccbdf'</span><span class="p">,</span>
+    <span class="na">playerUrl</span><span class="p">:</span> <span class="p">[</span> <span class="nx">location</span><span class="p">.</span><span class="nx">protocol</span><span class="p">,</span> <span class="s1">'//'</span><span class="p">,</span> <span class="nx">location</span><span class="p">.</span><span class="nx">host</span><span class="p">,</span> <span class="nx">location</span><span class="p">.</span><span class="nx">pathname</span> <span class="p">].</span><span class="nx">join</span><span class="p">(</span><span class="s1">''</span><span class="p">),</span>
+    <span class="na">joinUrl</span><span class="p">:</span> <span class="p">[</span><span class="nx">location</span><span class="p">.</span><span class="nx">protocol</span><span class="p">,</span> <span class="s1">'//'</span><span class="p">,</span> <span class="nx">location</span><span class="p">.</span><span class="nx">host</span><span class="p">,</span> <span class="nx">location</span><span class="p">.</span><span class="nx">pathname</span><span class="p">].</span><span class="nx">join</span><span class="p">(</span><span class="s1">''</span><span class="p">),</span>
+    <span class="na">platform</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">uri</span><span class="p">:</span> <span class="s1">'https://flow.manywho.com'</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</code></pre>
+
+<ol>
+<li>Clone the HTML5 PLayers2 repo: https://github.com/manywho/ManyWho_HTML5_Players2</li>
+<li>open <code class="prettyprint">runtime\default.html</code> and edit <code class="prettyprint">manywho.settings.initialize</code></li>
+<li>Open a the command line, cd into the repro directory and run gulp refresh</li>
+<li>You can debug a production flow by adding the tenant-id, flow-id &amp; flow-version-id query parameters in the browser (join query parameter is also supported) e.g. <code class="prettyprint">http://localhost:3000?tenant-id=mytenantid&amp;flow-id=myflowid&amp;flow-version-id=myflowversionid</code></li>
+</ol>
+
+          <h1 id="reporting">Reporting</h1>
+
+<p>States can be set to send reporting data to an external endpoint that adheres to our Reporting API interface (a supported implementation is available <a href="https://github.com/manywho/reporting">on GitHub</a>). This allows you to gain a greater insight into how and when flows are being uses, as well as the values being used inside a state.</p>
+
+<aside class="notice">Reporting only works with <strong>Permanent States</strong></aside>
+
+<h3 id="setting-your-endpoint">Setting your Endpoint</h3>
+
+<p>The endpoint for reporting can be set in the Draw Tool, under <strong>Tenant -&gt; Reporting -&gt; URI</strong>. The endpoint must adhere to our Reporting API interface.</p>
+
+<h3 id="enabling">Enabling</h3>
+
+<p>Inside your player, set <code class="prettyprint">manywho[&quot;options&quot;][&quot;reportingMode&quot;]</code> to one of the following:</p>
+
+<ul>
+<li><strong>PATH</strong> - report only the information in the State that pertains to the path the user/users took through the Flow, including location information if provided</li>
+<li><strong>PATH_AND_VALUES</strong> - report both <strong><em>PATH</em></strong> and <strong><em>VALUES</em></strong> information</li>
+<li><strong>VALUES</strong> - report only the Values collected in the State as the user went through the Flow</li>
+</ul>
 
       </div>
       <div class="dark-box">
