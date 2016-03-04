@@ -11,6 +11,7 @@ includes:
   - conceptual/gettingstarted/_creatingyourfirstflow.md
   - conceptual/sharedelements
   - conceptual/mapelements
+  - conceptual/states
   - adminapi
   - adminapi/provisioning
   - adminapi/tenants
@@ -42,6 +43,7 @@ includes:
   - uiframework/_customcomponents.md
   - uiframework/_componentstate.md
   - uiframework/_debugging.md
+  - reporting
 
 
 search: true
