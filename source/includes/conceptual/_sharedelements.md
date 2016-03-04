@@ -4,7 +4,7 @@
 A Flow is an implementation of a process on the ManyWho platform. It will contain 1 or more [Map Elements](http://google.com)
 and [Outcomes](http://google.com) that determines what happens and in what order.
 
-#### Flow URL's
+#### Flow URLs
 When you run a Flow a url is generated that you can use to share your Flow, for example:
 
 https://flow.manywho.com/ba986a91-a39c-46db-91fd-14aa0545546f/play/default?flow-id=4003a819-e167-417f-a48e-fa7456d284d1&flow-version-id=d240fd97-4c96-4cfe-9cf6-f70eac0a97c2&navigation-element-id=b4d908e9-36fa-43a9-ab5f-f9af71d72fbf
