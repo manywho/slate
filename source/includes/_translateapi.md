@@ -210,7 +210,7 @@ Key | Description
                 "translations": {
                     "<!-- Culture: United States of America -->": {
                         "contentValues": {
-                            "{idA}": "<p>Welcome to my Accounts Flow.</p>,
+                            "{idA}": "<p>Welcome to my Accounts Flow.</p>",
                             "{idB}": null,
                             "{idC}": null,
                             "{idD}": null,
