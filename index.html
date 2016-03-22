@@ -1841,6 +1841,12 @@ If the &ldquo;id&rdquo; property is included in the request, the platform will u
 </tr>
 </tbody></table>
 
+<aside class="notice">
+<b>Filter</b><br/>
+The filter can take the following formats:
+<ul><li><b>developerName eq &rsquo;{developer_name}&rsquo;</b>: Filter the list of Flows where the &ldquo;developerName&rdquo; property exactly matches the provided developer name (case insensitive)</li><li><b>substringof(developerName, &rsquo;{developer_name}&rsquo;)</b>: Filter the list of Flows where the &ldquo;developerName&rdquo; property partially matches the provided developer name (case insensitive)</li></ul>
+</aside>
+
 <h3 id="get-flow">Get Flow</h3>
 
 <blockquote>
@@ -7321,15 +7327,118 @@ The filter can take the following formats:
 
           <h1 id="translate-api">Translate API</h1>
 
+<p>When building Flows on the Platform, all &ldquo;content&rdquo; is automatically separated from &ldquo;logic&rdquo;. This means that all Flows are automatically ready for internationalization into other languages. The result being that you can write one Flow, but adjust the content accordingly for each Content Value Culture needed.</p>
+
+<p>The Translate APIs allow builders to manage content translations for all Flows and Elements.</p>
+
 <h2 id="content-value-cultures">Content Value Cultures</h2>
 
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"My Culture"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Support for my Culture"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"brand"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EN"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"UK"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"variant"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><em>The Content Value Culture object represents a language or brand supported by the Tenant.</em></p>
+
+<p>Content Value Cultures are used to specify the language/brand options that are available for the Tenant. By default all Tenants have a Content Value Culture for USA (English). However, for multi-national/language use-cases, others can be specified: E.g. Country: JP, Language: JP, Variant: (none). This follows the ISO conventions for language. However, the platform also supports a fourth variation on the standard ISO properties; this is Brand. As a result, Content Value Culture objects can also be used to specify white-labelling or single language variations on Flow content. </p>
+
+<h4 id="content-value-culture">Content Value Culture</h4>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>id</strong><br/>string</td>
+<td>A unique identifier field assigned by the platform. This value should not be included for new Content Value Cultures.</td>
+</tr>
+<tr>
+<td><strong>developerName</strong><br/>string</td>
+<td>The name for the Content Value Culture. This is typically a helpful name to remind builders of the purpose of the Content Value Culture.</td>
+</tr>
+<tr>
+<td><strong>developerSummary</strong><br/>string</td>
+<td>The summary for the Content Value Culture. This is typically additional information that will help explain the purpose of the Content Value Culture.</td>
+</tr>
+<tr>
+<td><strong>brand</strong><br/>string</td>
+<td>A value representing the Brand for this Content Value Culture.</td>
+</tr>
+<tr>
+<td><strong>country</strong><br/>string</td>
+<td>A value representing the Country for this Content Value Culture. This typically follows the ISO Internationalization conventions.</td>
+</tr>
+<tr>
+<td><strong>language</strong><br/>string</td>
+<td>A value representing the Language for this Content Value Culture. This typically follows the ISO Internationalization conventions.</td>
+</tr>
+<tr>
+<td><strong>variant</strong><br/>string</td>
+<td>A value representing the Variant for this Content Value Culture. This typically follows the ISO Internationalization contentions.</td>
+</tr>
+</tbody></table>
+
 <h3 id="create-update-content-value-culture">Create/Update Content Value Culture</h3>
+
+<blockquote>
+<p>Example 200 OK Response</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"709c586f-5112-41ab-8b68-9f796df7f708"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Japanese"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Support for Japanese"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"brand"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JP"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JP"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"variant"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>Used to create new Map Element objects or update existing ones. The Content Value Culture object represents a language or brand supported by the Tenant.</p>
 
 <h4 id="http-request">HTTP Request</h4>
 
 <p><code class="prettyprint">POST /api/translate/1/culture</code></p>
 
+<h4 id="body">Body</h4>
+
+<p>The raw JSON for the Content Value Culture.</p>
+
+<aside class="notice">
+<b>Create vs Update</b><br/>
+If the &ldquo;id&rdquo; property is included in the request, the platform will update the Content Value Culture with the matching unique identifier.
+</aside>
+
 <h3 id="get-content-value-cultures">Get Content Value Cultures</h3>
+
+<blockquote>
+<p>Example 200 OK Response</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"709c586f-5112-41ab-8b68-9f796df7f708"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"United States of America"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Created by system"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"brand"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EN"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USA"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"variant"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<p>Used to get existing Content Value Cultures. The Content Value Culture object represents a language or brand supported by the Tenant.</p>
 
 <h4 id="http-request">HTTP Request</h4>
 
@@ -7337,29 +7446,642 @@ The filter can take the following formats:
 
 <h3 id="get-content-value-culture">Get Content Value Culture</h3>
 
+<blockquote>
+<p>Example 200 OK Response</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"709c586f-5112-41ab-8b68-9f796df7f708"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Japanese"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Support for Japanese"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"brand"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JP"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JP"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"variant"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>Used to get an existing Content Value Culture. The Content Value Culture object represents a language or brand supported by the Tenant.</p>
+
 <h4 id="http-request">HTTP Request</h4>
 
 <p><code class="prettyprint">GET /api/translate/1/culture/{id}</code></p>
 
+<h4 id="parameters">Parameters</h4>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>id</strong><br/>string</td>
+<td>Unique identifier for the Content Value Culture</td>
+</tr>
+</tbody></table>
+
 <h3 id="delete-content-value-culture">Delete Content Value Culture</h3>
+
+<blockquote>
+<p>Success 204 No Content Response</p>
+</blockquote>
+
+<p>Used to delete an existing Content Value Culture. The Content Value Culture object represents a language or brand supported by the Tenant.</p>
 
 <h4 id="http-request">HTTP Request</h4>
 
 <p><code class="prettyprint">DELETE /api/translate/1/culture/{id}</code></p>
 
+<h4 id="parameters">Parameters</h4>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>id</strong><br/>string</td>
+<td>Unique identifier for the Content Value Culture</td>
+</tr>
+</tbody></table>
+
 <h2 id="flow-translation">Flow Translation</h2>
 
-<h3 id="get-flows-for-translation">Get Flows for Translation</h3>
+<blockquote>
+<p>Example Response:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"editingToken"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"My Flow"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A Flow that does a bunch of things."</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"startMapElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"navigationElements"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"labelContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{idA}"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"navigationItems"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"locationMapElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Home"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"labelContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{idB}"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"navigationItems"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"locationMapElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Accounts"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"labelContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{idC}"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"navigationItems"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"elementType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NAVIGATION"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"My Flow"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"contentValueDocument"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"translations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"&lt;!-- Culture: United States of America --&gt;"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                        </span><span class="nt">"contentValues"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                            </span><span class="nt">"{idA}"</span><span class="p">:</span><span class="w"> </span><span class="s2">"My App"</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"{idB}"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Home"</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"{idC}"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Accounts"</span><span class="w">
+                        </span><span class="p">}</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"mapElements"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"userContentContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{idA}"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"statusMessageContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{idB}"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"postUpdateMessageContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{idC}"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"notAuthorizedMessageContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{idD}"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"outcomes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"New"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"labelContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{idE}"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"nextMapElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"elementType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"step"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Home"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"contentValueDocument"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"translations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"&lt;!-- Culture: United States of America --&gt;"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                        </span><span class="nt">"contentValues"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                            </span><span class="nt">"{idA}"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;p&gt;Welcome to my Accounts Flow.&lt;/p&gt;,
+                            "</span><span class="p">{</span><span class="err">idB</span><span class="p">}</span><span class="s2">": null,
+                            "</span><span class="p">{</span><span class="err">idC</span><span class="p">}</span><span class="s2">": null,
+                            "</span><span class="p">{</span><span class="err">idD</span><span class="p">}</span><span class="s2">": null,
+                            "</span><span class="p">{</span><span class="err">idC</span><span class="p">}</span><span class="s2">": "</span><span class="err">New</span><span class="w"> </span><span class="err">Account</span><span class="s2">"
+                        }
+                    }
+                }
+            }
+        }
+    ],
+    "</span><span class="err">pageElements</span><span class="s2">": [
+        {
+            "</span><span class="err">labelContentValueId</span><span class="s2">": "</span><span class="p">{</span><span class="err">idA</span><span class="p">}</span><span class="s2">",
+            "</span><span class="err">pageContainers</span><span class="s2">": [
+                {
+                    "</span><span class="err">containerType</span><span class="s2">": "</span><span class="err">VERTICAL_FLOW</span><span class="s2">",
+                    "</span><span class="err">developerName</span><span class="s2">": "</span><span class="err">Root</span><span class="s2">",
+                    "</span><span class="err">labelContentValueId</span><span class="s2">": "</span><span class="p">{</span><span class="err">idB</span><span class="p">}</span><span class="s2">",
+                    "</span><span class="err">pageContainers</span><span class="s2">": null
+                }
+            ],
+            "</span><span class="err">pageComponents</span><span class="s2">": [
+                {
+                    "</span><span class="err">pageContainerDeveloperName</span><span class="s2">": "</span><span class="err">Root</span><span class="s2">",
+                    "</span><span class="err">developerName</span><span class="s2">": "</span><span class="err">Account</span><span class="w"> </span><span class="err">Name</span><span class="s2">",
+                    "</span><span class="err">componentType</span><span class="s2">": "</span><span class="err">INPUT</span><span class="s2">",
+                    "</span><span class="err">contentContentValueId</span><span class="s2">": {idC},
+                    "</span><span class="err">labelContentValueId</span><span class="s2">": {idD},
+                    "</span><span class="err">hintValueContentValueId</span><span class="s2">": {idE},
+                    "</span><span class="err">helpInfoContentValueId</span><span class="s2">": "</span><span class="p">{</span><span class="err">idF</span><span class="p">}</span><span class="s2">",
+                    "</span><span class="err">columns</span><span class="s2">": null
+                }
+            ],
+            "</span><span class="err">id</span><span class="s2">": "</span><span class="p">{</span><span class="err">id</span><span class="p">}</span><span class="s2">",
+            "</span><span class="err">elementType</span><span class="s2">": "</span><span class="err">PAGE_LAYOUT</span><span class="s2">",
+            "</span><span class="err">developerName</span><span class="s2">": "</span><span class="err">Account</span><span class="w"> </span><span class="err">Detail</span><span class="s2">",
+            "</span><span class="err">developerSummary</span><span class="s2">": "",
+            "</span><span class="err">contentValueDocument</span><span class="s2">": {
+                "</span><span class="err">translations</span><span class="s2">": {
+                    "</span><span class="err">&lt;!--</span><span class="w"> </span><span class="err">Culture:</span><span class="w"> </span><span class="err">United</span><span class="w"> </span><span class="err">States</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">America</span><span class="w"> </span><span class="err">--&gt;</span><span class="s2">": {
+                        "</span><span class="err">contentValues</span><span class="s2">": {
+                            "</span><span class="p">{</span><span class="err">idA</span><span class="p">}</span><span class="s2">": "</span><span class="err">Account</span><span class="w"> </span><span class="err">Detail</span><span class="s2">",
+                            "</span><span class="p">{</span><span class="err">idB</span><span class="p">}</span><span class="s2">": "</span><span class="err">Details</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">Account</span><span class="s2">",
+                            "</span><span class="p">{</span><span class="err">idC</span><span class="p">}</span><span class="s2">": null,
+                            "</span><span class="p">{</span><span class="err">idD</span><span class="p">}</span><span class="s2">": "</span><span class="err">Account</span><span class="w"> </span><span class="err">Name</span><span class="s2">",
+                            "</span><span class="p">{</span><span class="err">idE</span><span class="p">}</span><span class="s2">": "</span><span class="err">Enter</span><span class="w"> </span><span class="err">account</span><span class="w"> </span><span class="err">name</span><span class="s2">",
+                            "</span><span class="p">{</span><span class="err">idF</span><span class="p">}</span><span class="s2">": "</span><span class="err">Some</span><span class="w"> </span><span class="err">helpful</span><span class="w"> </span><span class="err">info</span><span class="s2">"
+                        }
+                    }
+                }
+            }
+        }
+    ],
+    "</span><span class="err">valueElements</span><span class="s2">": [
+        {
+            "</span><span class="err">contentType</span><span class="s2">": "</span><span class="err">ContentString</span><span class="s2">",
+            "</span><span class="err">contentFormatContentValueId</span><span class="s2">": null,
+            "</span><span class="err">defaultContentValueContentValueId</span><span class="s2">": "</span><span class="p">{</span><span class="err">idA</span><span class="p">}</span><span class="s2">",
+            "</span><span class="err">id</span><span class="s2">": "</span><span class="p">{</span><span class="err">id</span><span class="p">}</span><span class="s2">",
+            "</span><span class="err">elementType</span><span class="s2">": "</span><span class="err">VARIABLE</span><span class="s2">",
+            "</span><span class="err">developerName</span><span class="s2">": "</span><span class="err">My</span><span class="w"> </span><span class="err">Default</span><span class="w"> </span><span class="err">Account</span><span class="w"> </span><span class="err">Name</span><span class="s2">",
+            "</span><span class="err">developerSummary</span><span class="s2">": "",
+            "</span><span class="err">contentValueDocument</span><span class="s2">": {
+                "</span><span class="err">translations</span><span class="s2">": {
+                    "</span><span class="err">&lt;!--</span><span class="w"> </span><span class="err">Culture:</span><span class="w"> </span><span class="err">United</span><span class="w"> </span><span class="err">States</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">America</span><span class="w"> </span><span class="err">--&gt;</span><span class="s2">": {
+                        "</span><span class="err">contentValues</span><span class="s2">": {
+                            "</span><span class="p">{</span><span class="err">idA</span><span class="p">}</span><span class="s2">": "</span><span class="err">Account"</span><span class="w">
+                        </span><span class="p">}</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><em>The Flow Translation object provides all of the content Elements and properties in a Flow that can be translated.</em></p>
+
+<p>The Flow Translation object provides every Element in the Flow that is available for translation. It therefore provides all of the content in the Flow, regardless of whether or not the Elements are shared (such as Value and Page Elements) or specific to the Flow (such as Map or Navigation Elements). The Flow Translation object also includes additional properties to help translators identify the purpose/location of the content being translated.</p>
+
+<h4 id="flow-translation">Flow Translation</h4>
+
+<p>&ldquo;editingToken&rdquo;: &ldquo;{id}&rdquo;,
+    &ldquo;id&rdquo;: &ldquo;{id}&rdquo;,
+    &ldquo;developerName&rdquo;: &ldquo;My Flow&rdquo;,
+    &ldquo;developerSummary&rdquo;: &ldquo;A Flow that does a bunch of things.&rdquo;,
+    &ldquo;startMapElementId&rdquo;: &ldquo;{id}&rdquo;,</p>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>id</strong><br/>string</td>
+<td>A unique identifier field assigned by the platform for the Flow associated with this Flow Translation.</td>
+</tr>
+<tr>
+<td><strong>editingToken</strong><br/>string</td>
+<td>A unique identifier needed to perform any editing operations on a Flow or its contained Map, Group, or Navigation Elements.</td>
+</tr>
+<tr>
+<td><strong>developerName</strong><br/>string</td>
+<td>The name for the Flow associated with this Flow Translation. This is typically a helpful name to remind builders of the purpose of the Flow.</td>
+</tr>
+<tr>
+<td><strong>developerSummary</strong><br/>string</td>
+<td>The summary for the Flow associated with this Flow Translation. This is typically additional information that will help explain the purpose of the Flow.</td>
+</tr>
+<tr>
+<td><strong>startMapElementId</strong><br/>string</td>
+<td>The Map Element that should be used to start the Flow associated with this Flow Translation.</td>
+</tr>
+<tr>
+<td><strong>navigationElements</strong><br/>string</td>
+<td>The array of Navigation Element Translation objects associated with all of the Navigation Elements in the Flow.</td>
+</tr>
+<tr>
+<td><strong>mapElements</strong><br/>string</td>
+<td>The array of Map Element Translation objects associated with all of the Map Elements in the Flow.</td>
+</tr>
+<tr>
+<td><strong>pageElements</strong><br/>string</td>
+<td>The array of Page Element Translation objects associated with all of the Page Elements associated with the Flow.</td>
+</tr>
+<tr>
+<td><strong>valueElements</strong><br/>string</td>
+<td>The array of Value Element Translation objects associated with all of the Value Elements associated with the Flow.</td>
+</tr>
+</tbody></table>
+
+<h3 id="query-flows-for-translation">Query Flows for Translation</h3>
+
+<blockquote>
+<p>Example 200 OK Response</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"dateCreated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0001-01-00T00:00:00Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"dateModified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0001-01-00T00:00:00Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"whoCreated"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"whoModified"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"whoOwner"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"alertEmail"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"isActive"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"isDefault"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"comment"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"editingToken"</span><span class="p">:</span><span class="w"> </span><span class="s2">"19299bca-8a07-4b35-97f4-4cca598856d9"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b7e2a056-35dd-4973-b279-c85aeafb299c"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"versionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b6292dc0-ce7a-47de-bed8-7dd15e219e98"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Course Registration Flow"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">"This is a simple course registration flow."</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"startMapElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3a0498ad-bf4f-4bba-bd4c-6975cd5e1c2a"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"allowJumping"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"stateExpirationLength"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"authorization"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"serviceElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6388c4d1-cdae-4cc5-bb3b-a7083b71c8df"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"globalAuthenticationType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ALL_USERS"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"streamBehaviourType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USE_EXISTING"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"groups"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"users"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"locations"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<p>Used to filter existing Flow objects that are available for translation. The Flow Translation object provides all of the content Elements and properties in a Flow that can be translated.</p>
 
 <h4 id="http-request">HTTP Request</h4>
 
 <p><code class="prettyprint">GET /api/translate/1/flow?filter={filter}</code></p>
 
+<aside class="notice">
+<b>Filter</b><br/>
+The filter can take the following formats:
+<ul><li><b>developerName eq &rsquo;{developer_name}&rsquo;</b>: Filter the list of Flows where the &ldquo;developerName&rdquo; property exactly matches the provided developer name (case insensitive)</li><li><b>substringof(developerName, &rsquo;{developer_name}&rsquo;)</b>: Filter the list of Flows where the &ldquo;developerName&rdquo; property partially matches the provided developer name (case insensitive)</li></ul>
+</aside>
+
 <h3 id="get-flow-translation">Get Flow Translation</h3>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"editingToken"</span><span class="p">:</span><span class="w"> </span><span class="s2">"d547172e-226a-4589-8208-500531fc76ce"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"67f95ea6-c7b0-40d2-b773-2abe275e6f8e"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Course Registration App"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">"This is the base app for my course registrations."</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"startMapElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"62550650-7e26-4256-875f-e6c5f1cc3e01"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"navigationElements"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"mapElements"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"userContentContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0e84b98b-c9c9-4524-8540-c2e35970728f"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"statusMessageContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1c4e9f0a-854b-4d17-ae2d-9ee2f10e63bf"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"postUpdateMessageContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"02e73da3-60f5-4455-a595-358c79f8ae8a"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"notAuthorizedMessageContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"d43ef4f6-4eaa-4482-a717-aaa17c79f416"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"outcomes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Go"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"labelContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fc7f5f31-bbda-4aa9-9616-cc3a1da98322"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"nextMapElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"85fcd2c6-41f3-4e40-ab38-de74d4097a9e"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"62550650-7e26-4256-875f-e6c5f1cc3e01"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"elementType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"START"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Start"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"contentValueDocument"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"translations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"3ab44596-24eb-48a4-9cf6-480c332422ec"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                        </span><span class="nt">"contentValues"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                            </span><span class="nt">"1c4e9f0a-854b-4d17-ae2d-9ee2f10e63bf"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"d43ef4f6-4eaa-4482-a717-aaa17c79f416"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"02e73da3-60f5-4455-a595-358c79f8ae8a"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"0e84b98b-c9c9-4524-8540-c2e35970728f"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"fc7f5f31-bbda-4aa9-9616-cc3a1da98322"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Go"</span><span class="w">
+                        </span><span class="p">}</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"userContentContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6f017d91-cac2-426a-8b5b-333f9165cef7"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"statusMessageContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4250929c-6256-45a2-b9d5-4ee882a3c940"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"postUpdateMessageContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6caccd8a-f3cc-4d20-8133-7fb902ecbbe2"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"notAuthorizedMessageContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6eeefed3-8f32-405c-9a96-42fa4c403872"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"outcomes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"New"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"labelContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bfd17555-de0b-4919-b8b1-3468f9e827ff"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"nextMapElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"00000000-0000-0000-0000-000000000000"</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Edit"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"labelContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"e2439aea-33bf-4364-b5c0-b32c9e4fa82e"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"nextMapElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"00000000-0000-0000-0000-000000000000"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"85fcd2c6-41f3-4e40-ab38-de74d4097a9e"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"elementType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"input"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Course Registrations"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"contentValueDocument"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"translations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"3ab44596-24eb-48a4-9cf6-480c332422ec"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                        </span><span class="nt">"contentValues"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                            </span><span class="nt">"4250929c-6256-45a2-b9d5-4ee882a3c940"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"6eeefed3-8f32-405c-9a96-42fa4c403872"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"6caccd8a-f3cc-4d20-8133-7fb902ecbbe2"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"6f017d91-cac2-426a-8b5b-333f9165cef7"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"bfd17555-de0b-4919-b8b1-3468f9e827ff"</span><span class="p">:</span><span class="w"> </span><span class="s2">"New Course Registration"</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"e2439aea-33bf-4364-b5c0-b32c9e4fa82e"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Join"</span><span class="w">
+                        </span><span class="p">}</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"pageElements"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"labelContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7757d90f-2b85-4c86-b1be-85a75d2fb89e"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"pageContainers"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"containerType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"VERTICAL_FLOW"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Root"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"labelContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7939da52-beb7-4210-8217-1971a2b63588"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"pageContainers"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="nt">"pageComponents"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"pageContainerDeveloperName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Root"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"My States"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"componentType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TABLE"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"contentContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b9f2b150-faab-429f-a5ff-86e7361143e9"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"labelContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"f9906716-d28b-42e4-a3d1-95b610b08691"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"hintValueContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"861be88f-54b7-466f-8b29-5c615d2f4684"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"helpInfoContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"d1ebeec3-c3c2-42d7-b213-9ef6deb47913"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"columns"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                        </span><span class="p">{</span><span class="w">
+                            </span><span class="nt">"labelContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dc73e253-15c4-41ad-aae3-63f52898a28c"</span><span class="w">
+                        </span><span class="p">},</span><span class="w">
+                        </span><span class="p">{</span><span class="w">
+                            </span><span class="nt">"labelContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fd31b229-1214-4092-9808-bcf0326ba7ae"</span><span class="w">
+                        </span><span class="p">},</span><span class="w">
+                        </span><span class="p">{</span><span class="w">
+                            </span><span class="nt">"labelContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8414e42e-2581-4e2b-bbca-964b6df69824"</span><span class="w">
+                        </span><span class="p">},</span><span class="w">
+                        </span><span class="p">{</span><span class="w">
+                            </span><span class="nt">"labelContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"d8f46d74-1a82-444a-a392-fb1a68d5264a"</span><span class="w">
+                        </span><span class="p">}</span><span class="w">
+                    </span><span class="p">]</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"pageContainerDeveloperName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Root"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Intro"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"componentType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PRESENTATION"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"contentContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"41226e95-6d18-43e9-a9f3-8d988fea7201"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"labelContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9a25adc4-cd46-4d31-a03c-7059d82ed301"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"hintValueContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8947bdf4-2ec6-45d6-99bf-48963d47b752"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"helpInfoContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3ef081b1-9b81-467f-89b8-5ada78c357a6"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"columns"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"f308d950-a972-4d7a-9d8b-70f5bdfc3c2e"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"elementType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PAGE_LAYOUT"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"My Course Registrations"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"contentValueDocument"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"translations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"3ab44596-24eb-48a4-9cf6-480c332422ec"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                        </span><span class="nt">"contentValues"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                            </span><span class="nt">"7757d90f-2b85-4c86-b1be-85a75d2fb89e"</span><span class="p">:</span><span class="w"> </span><span class="s2">"My Course Registrations"</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"2123e514-b48a-4aa4-8bab-bcb7c11e1dee"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"48ab7fe7-2026-4958-9555-722b780bb919"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"036e20cc-0e6c-485b-a6c3-b923a072d562"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"d1f12d77-159f-4a19-86c4-001853e264ce"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"6030a4a7-4043-45b4-b6e7-9475e3c96acb"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;h1&gt;Course Registrations&lt;/h1&gt;\n&lt;p&gt;Below is the list of course registrations in flight:&lt;/p&gt;"</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"4f33f124-f246-417b-bd03-a392b7208bac"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"c0c4ccf8-f0d0-4b24-94a6-744280b44073"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"0c7d75ba-27c5-4d38-93de-8eebcf137ccb"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"19e90284-1232-49ea-be89-a3f1e1e5f45a"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"c85fbb1e-067d-4cc8-be94-d6f357eb2308"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"569396da-432b-4598-adf9-b8435ef74c3d"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;h1&gt;Course Registrations&lt;/h1&gt;\n&lt;p&gt;Below is the list of course registrations in flight:&lt;/p&gt;"</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"293afb8c-6ee9-4340-a5bb-ecf0bd4b924a"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"77b9bb54-0533-4deb-97ab-0567f7cd334e"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"7fc9ab7d-1e7f-47ac-b143-2f0000e64306"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"b9df8be6-1854-4b6f-9f78-9a4842107ad7"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"a6467ba2-298f-4c13-8425-f6d26bbcde47"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Owner First Name"</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"22948405-265c-474b-9398-0f80a7efd26e"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Owner Last Name"</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"01dbc0a3-d522-4321-af8b-9ee506046d6c"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Flow"</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"8343eab8-3c63-4e60-9e7f-72535ab6e8c5"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"bc1672a8-7059-48ec-ba5e-0f740a8752e7"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"bd793247-f318-4a58-8fa0-74639f5bf5d9"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"8026eb1c-4e6c-4327-9305-211b21b8995a"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"c53c5ac0-203a-40a8-99b9-1f390f5ecc1f"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"a8e03c35-8e21-4ffb-bbc6-65b52b491fc1"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"734f8012-3742-4196-8388-c50e6d21fd2b"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;h1&gt;Course Registrations&lt;/h1&gt;\n&lt;p&gt;Below is the list of course registrations in flight:&lt;/p&gt;"</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"c07373f9-af7e-4024-a2e4-74b855942ee9"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"fadf2aed-7f42-4b74-a019-34443f194939"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"7daf53db-c888-4792-bf5e-0c18170cf6d9"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"8e06c115-ab06-41b9-b0c8-4635901033eb"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"9b2a3add-eeb8-454d-99b1-383045667349"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Owner First Name"</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"52f2376e-e177-4e0e-b2bc-1d8e0b8ba106"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Owner Last Name"</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"8c7aed9d-a9ae-4abe-8041-80ca6002ff84"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Flow"</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"9d8348bb-a326-46c3-ba78-0ab824986299"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"1f2b0a90-cc2a-4bb6-a49b-f8818829332f"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"5e673572-9ebd-477c-9099-441f0ec4d0e6"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"13ffac75-4258-44c3-8981-037058273251"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"26bb76df-2202-429c-a370-a062486f8c93"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"c07d0288-ed7e-48f6-a22a-05f73f4664c4"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"810568c2-63b7-412e-8ef2-b76edfbaaf37"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Owner Last Name"</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"c226232e-c525-4874-b633-ceedc7e43c21"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Owner First Name"</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"2c1a9c67-d9b3-4480-a2cd-75a7ef39b198"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Flow"</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"0d80e6a1-3715-4258-878f-ba20142e497b"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"b1d0b1bb-fc0d-45f9-80ea-21379d701692"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"8cb0ebbe-c383-4685-bcbb-ddf5aec9cebf"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"83aac573-46f1-4172-b53f-4a6201c039d1"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"d3ee863f-7cce-439d-a55e-ea20cca020e5"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"a0b89080-2927-4290-baa0-2add15712247"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;h1&gt;Course Registrations&lt;/h1&gt;\n&lt;p&gt;Below is the list of course registrations in flight:&lt;/p&gt;"</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"0dd1e674-e9a6-4566-8730-46bc286a7b44"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"cb6c8513-13ca-48fe-a448-47314c1c3f24"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"63d91f37-970e-4793-9095-40ff0f4d1891"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"dec4a473-59a1-4610-b0ee-6dbf8ff3dcbe"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"76b601ad-715c-4782-a106-531c0dea16e1"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"1ff82d3e-7897-4db3-8674-065708179cad"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;h1&gt;Course Registrations&lt;/h1&gt;\n&lt;p&gt;Below is the list of course registrations in flight:&lt;/p&gt;"</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"830a2527-3a22-4ddd-95ee-a1336c0dd576"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"dfaee25a-a3b0-44f9-a60a-b8dbd351b1a2"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"23a8f222-3658-4664-84dd-41d032b7ac55"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"fb915f8f-63d5-4228-9676-f2cd49823969"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"8f6375b6-5d48-445d-b676-d5df76df0339"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Owner"</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"c58ae236-6383-4d37-87cc-d28be8a2250f"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Step"</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"b1a95d4a-4de8-4c19-9338-693925a927a9"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Flow"</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"348b8efe-e11e-478c-aabe-dbaba3fe22ec"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"4f89b8e5-1748-4c12-bc65-89058c95c892"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"82eabd90-3b19-4d3e-bfec-cdd3998a3ecf"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"32ad980e-a75b-49ce-861e-580b8e0d1186"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"7ec57ac0-8f0f-427f-bd61-4e770fdcd80f"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"53521a13-2ce1-440d-ac75-8f9b4137a723"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"82ecaf0f-10d6-4fe2-a7ea-52d6defcdb9d"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;h1&gt;Course Registrations&lt;/h1&gt;\n&lt;p&gt;Below is the list of course registrations in flight:&lt;/p&gt;"</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"3a90b14c-3b15-4fc0-b691-aba7dec8efc0"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"ae8e91a1-e2ea-44f7-92ba-67ada4dcd603"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"9f55591c-414e-42b4-b6e4-564834848dda"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"9666af0b-4161-4b26-ba81-39f7e50de7c5"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"95e5fbb6-aaf8-4cee-8b0e-986cd658d76d"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Owner"</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"422fa040-c8a6-4372-9bbe-98bea0a26d3b"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Step"</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"45511b20-8494-49fb-9023-051e0d0859f1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Flow"</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"9e5233e8-42bc-4bc6-bdfc-a7643cd04748"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Is Done"</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"0b26933c-a498-4381-b5eb-2feeea5bbe2e"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"eb0798b5-e72b-4105-886c-48216fc7fce2"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"7939da52-beb7-4210-8217-1971a2b63588"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"3ef081b1-9b81-467f-89b8-5ada78c357a6"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"8947bdf4-2ec6-45d6-99bf-48963d47b752"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"9a25adc4-cd46-4d31-a03c-7059d82ed301"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"41226e95-6d18-43e9-a9f3-8d988fea7201"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;h1&gt;Course Registrations Inbox&lt;/h1&gt;\n&lt;p&gt;Below is the list of course registrations in flight:&lt;/p&gt;"</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"170fec92-22d1-4fd9-bd1a-8dec6ebade37"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"d1ebeec3-c3c2-42d7-b213-9ef6deb47913"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"861be88f-54b7-466f-8b29-5c615d2f4684"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"f9906716-d28b-42e4-a3d1-95b610b08691"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"fd31b229-1214-4092-9808-bcf0326ba7ae"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Owner"</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"dc73e253-15c4-41ad-aae3-63f52898a28c"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Step"</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"8414e42e-2581-4e2b-bbca-964b6df69824"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Flow"</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"d8f46d74-1a82-444a-a392-fb1a68d5264a"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Is Done"</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"b9f2b150-faab-429f-a5ff-86e7361143e9"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"336de50b-1dd7-46c6-a170-263e4ded0dc9"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+                        </span><span class="p">}</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"valueElements"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"contentType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ContentPassword"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"contentFormatContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"defaultContentValueContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9adb70d4-be43-47e5-b39a-3994b7410544"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"24a4aae1-0dbc-4088-adf7-64f6f4ff680f"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"elementType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"VARIABLE"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Database Password"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"contentValueDocument"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"translations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"3ab44596-24eb-48a4-9cf6-480c332422ec"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                        </span><span class="nt">"contentValues"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                            </span><span class="nt">"9adb70d4-be43-47e5-b39a-3994b7410544"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+                        </span><span class="p">}</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"contentType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ContentString"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"contentFormatContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"defaultContentValueContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9dcca5a5-4b7c-4215-b776-3958dc27781e"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"45bc7a26-3fce-4fcf-b9b5-b58252528617"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"elementType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"VARIABLE"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Database Authentication Url"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"contentValueDocument"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"translations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"3ab44596-24eb-48a4-9cf6-480c332422ec"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                        </span><span class="nt">"contentValues"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                            </span><span class="nt">"9dcca5a5-4b7c-4215-b776-3958dc27781e"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://login.salesforce.com"</span><span class="w">
+                        </span><span class="p">}</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"contentType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ContentString"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"contentFormatContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"defaultContentValueContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"40bc708b-139a-44a4-bdd0-46d6f4eb76a1"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5779601d-1dea-45fd-9091-83a6885ee26c"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"elementType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"VARIABLE"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Database Username"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"contentValueDocument"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"translations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"3ab44596-24eb-48a4-9cf6-480c332422ec"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                        </span><span class="nt">"contentValues"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                            </span><span class="nt">"40bc708b-139a-44a4-bdd0-46d6f4eb76a1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user@database.demo"</span><span class="w">
+                        </span><span class="p">}</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"contentType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ContentObject"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"contentFormatContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"defaultContentValueContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b847a788-7764-42db-b577-2605666cd30b"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"85919867-5f4d-4644-89b4-575389576d45"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"elementType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"VARIABLE"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"My State"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"contentValueDocument"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"translations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"3ab44596-24eb-48a4-9cf6-480c332422ec"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                        </span><span class="nt">"contentValues"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                            </span><span class="nt">"b847a788-7764-42db-b577-2605666cd30b"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+                        </span><span class="p">}</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 
 <h4 id="http-request">HTTP Request</h4>
 
 <p><code class="prettyprint">GET /api/translate/1/flow/{id}</code></p>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>id</strong><br/>string</td>
+<td>The unique identifier for the Flow associated with this Flow Translation.</td>
+</tr>
+</tbody></table>
 
 <h2 id="page-element-translation">Page Element Translation</h2>
 
