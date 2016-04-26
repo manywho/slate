@@ -237,9 +237,9 @@ Key | Description
                     "pageContainerDeveloperName": "Root",
                     "developerName": "Account Name",
                     "componentType": "INPUT",
-                    "contentContentValueId": {idC},
-                    "labelContentValueId": {idD},
-                    "hintValueContentValueId": {idE},
+                    "contentContentValueId": "{idC}",
+                    "labelContentValueId": "{idD}",
+                    "hintValueContentValueId": "{idE}",
                     "helpInfoContentValueId": "{idF}",
                     "columns": null
                 }
@@ -293,13 +293,6 @@ The Flow Translation object provides every Element in the Flow that is available
 
 #### Flow Translation
 
-    "editingToken": "{id}",
-    "id": "{id}",
-    "developerName": "My Flow",
-    "developerSummary": "A Flow that does a bunch of things.",
-    "startMapElementId": "{id}",
-
-
 Key | Description
 --- | -----------
 **id**<br/>string | A unique identifier field assigned by the platform for the Flow associated with this Flow Translation.
@@ -310,8 +303,16 @@ Key | Description
 **navigationElements**<br/>string | The array of Navigation Element Translation objects associated with all of the Navigation Elements in the Flow.
 **mapElements**<br/>string | The array of Map Element Translation objects associated with all of the Map Elements in the Flow.
 **pageElements**<br/>string | The array of Page Element Translation objects associated with all of the Page Elements associated with the Flow.
+**typeElements**<br/>string | The array of Type Element Translation objects associated with all of the Type Elements associated with the Flow.
 **valueElements**<br/>string | The array of Value Element Translation objects associated with all of the Value Elements associated with the Flow.
 
+#### Content Value Document
+
+The Content Value Document provides all of the content for the Element. This is the content that needs to be translated for each of the provided entries. To add new translations, you must first add a new Content Value Culture to your Tenant. Once added, you can then provided content translations for that Culture.
+
+Key | Description
+--- | -----------
+**translations**<br/>object | Contains the translations for each Content Value Culture supported by the Tenant. Each key in the object relates to the Content Value Culture identifier. For each of the Content Value Culture identifier keys is then a property for contentValues. The structure of this is as follows:<br/><br/>**{id}** (string):<br/>The unique identifier within the Element to be translated. This is associated with a label or piece of content in the structure of the Element. Looking within the Translation object, this will be paired with a property in the structure of the Element.<br/><br/>**{content}** (string):<br/>The content that will be shown to the user for the property and Content Value Culture. This is the content that should be translated.
 
 ### Query Flows for Translation
 
@@ -675,6 +676,8 @@ The filter can take the following formats:
 }
 ```
 
+Used to get an existing Flow Translation. The Flow Translation object provides all of the content Elements and properties in a Flow that can be translated.
+
 #### HTTP Request
 
 `GET /api/translate/1/flow/{id}`
@@ -685,6 +688,69 @@ Key | Description
 
 
 ## Page Element Translation
+
+> Example Response:
+
+```json
+{
+    "labelContentValueId": "{idA}",
+    "pageContainers": [
+        {
+            "containerType": "VERTICAL_FLOW",
+            "developerName": "Root",
+            "labelContentValueId": "{idB}",
+            "pageContainers": null
+        }
+    ],
+    "pageComponents": [
+        {
+            "pageContainerDeveloperName": "Root",
+            "developerName": "Account Name",
+            "componentType": "INPUT",
+            "contentContentValueId": "{idC}",
+            "labelContentValueId": "{idD}",
+            "hintValueContentValueId": "{idE}",
+            "helpInfoContentValueId": "{idF}",
+            "columns": null
+        }
+    ],
+    "id": "{id}",
+    "elementType": "PAGE_LAYOUT",
+    "developerName": "Account Detail",
+    "developerSummary": "",
+    "contentValueDocument": {
+        "translations": {
+            "<!-- Culture: United States of America -->": {
+                "contentValues": {
+                    "{idA}": "Account Detail",
+                    "{idB}": "Details of Account",
+                    "{idC}": null,
+                    "{idD}": "Account Name",
+                    "{idE}": "Enter account name",
+                    "{idF}": "Some helpful info"
+                }
+            }
+        }
+    }
+}
+```
+
+*The Page Element Translation object provides all of the content properties in a Page Element that can be translated.*
+
+The Flow Translation object provides every property in the Page Element that can be translated. The Page Element Translation object also includes additional properties to help translators identify the purpose/location of the content being translated.
+
+#### Page Element Translation
+
+Key | Description
+--- | -----------
+**labelContentValueId**<br/>string | A unique identifier for the Page Element label. This identifier matches with an identifier in the translations section.
+**pageContainers**<br/>array | The array of Page Containers in the page. Each Page Container entry has the following keys:<br/><br/>**containerType** (string):<br/>The type of Page Container (see Page Element in the Draw API).<br/><br/>**developerName** (string):<br/>The developer name for the Page Container (see Page Element in the Draw API).<br/><br/>**labelContentValueId** (string):<br/>A unique identifier for the Page Container label property. This identifier matches with an identifier in the translations section.<br/><br/>**pageContainers** (string):<br/>The array of child Page Containers for this Page Container.
+**pageComponents**<br/>array | The array of Page Components in the page. Each Page Component entry has the following keys:<br/><br/>**pageContainerDeveloperName** (string):<br/>The developer name for the Page Container in which the Page Component is placed (see Page Element in the Draw API).<br/><br/>**developerName** (string):<br/>The developer name for the Page Component (see Page Element in the Draw API).<br/><br/>**componentType** (string):<br/>The type of Page Component (see Page Element in the Draw API).<br/><br/>**contentContentValueId** (string):<br/>A unique identifier for the Page Component content property. This identifier matches with an identifier in the translations section.<br/><br/>**labelContentValueId** (string):<br/>A unique identifier for the Page Component label property. This identifier matches with an identifier in the translations section.<br/><br/>**hintValueContentValueId** (string):<br/>A unique identifier for the Page Component hint property. This identifier matches with an identifier in the translations section.<br/><br/>**helpInfoContentValueId** (string):<br/>A unique identifier for the Page Component helpInfo property. This identifier matches with an identifier in the translations section.
+**id**<br/>string | The unique identifier for the Page Element associated with this Page Element Translation.
+**elementType**<br/>string | The Element type for the Page Element associated with this Page Element Translation.
+**developerName**<br/>string | The name for the Page Element associated with this Page Element Translation. This is typically a helpful name to remind builders of the purpose of the Flow.
+**developerSummary**<br/>string | The summary for the Page Element associated with this Page Element Translation. This is typically additional information that will help explain the purpose of the Flow.
+**contentValueDocument**<br/>object | See the Flow Translation Document section for details on this object.
 
 ### Get Page Element Translation
 
@@ -714,6 +780,22 @@ Key | Description
 #### HTTP Request
 
 `POST /api/translate/1/element/value`
+
+
+## Type Element Translation
+
+### Get Type Element Translation
+
+#### HTTP Request
+
+`GET /api/translate/1/element/type/{id}`
+
+
+### Update Type Element Translation
+
+#### HTTP Request
+
+`POST /api/translate/1/element/type`
 
 
 ## Map Element Translation

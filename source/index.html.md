@@ -12,6 +12,15 @@ includes:
   - conceptual/sharedelements
   - conceptual/mapelements
   - conceptual/states
+  - uiframework/_intro.md
+  - uiframework/_components.md
+  - uiframework/_customcomponents.md
+  - uiframework/_componentstate.md
+  - uiframework/_debugging.md
+  - connect
+  - salesforce
+  - box
+  - reporting
   - adminapi
   - adminapi/provisioning
   - adminapi/tenants
@@ -38,12 +47,6 @@ includes:
   - serviceapi
   - logapi
   - reportapi
-  - uiframework/_intro.md
-  - uiframework/_components.md
-  - uiframework/_customcomponents.md
-  - uiframework/_componentstate.md
-  - uiframework/_debugging.md
-  - reporting
 
 
 search: true
