@@ -540,7 +540,9 @@ A Flow won&rsquo;t be valid and will fail to run until you connect the Start ele
 
 <p>When creating a new flow or editing an existing one, you can set the <strong>Expire After</strong> field to the number of seconds that the state should last for.</p>
 
-          <h1 id="ui-framework">UI Framework</h1>
+          <h1 id="embed">Embed</h1>
+
+<h2 id="ui-framework">UI Framework</h2>
 
 <p>The ManyWho HTML5 UI framework will handle all the user interaction and rendering of Flows in a browser. The framework
 is built upon some standard front end technologies including:</p>
@@ -579,7 +581,7 @@ is built upon some standard front end technologies including:</p>
 
 <p>The HTML5 Player code is licensed as shared source, you can find the source code for the player here: <a href="https://github.com/manywho/ManyWho_HTML5_Players2">https://github.com/manywho/ManyWho_HTML5_Players2</a></p>
 
-          <h2 id="available-components">Available components</h2>
+          <h3 id="available-components">Available components</h3>
 
 <table><thead>
 <tr>
@@ -711,7 +713,7 @@ is built upon some standard front end technologies including:</p>
 </tr>
 </tbody></table>
 
-          <h2 id="creating-a-custom-component">Creating a Custom Component</h2>
+          <h3 id="creating-a-custom-component">Creating a Custom Component</h3>
 
 <p>A UI component consists of at least one React component and potentially some optional CSS.</p>
 <pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">myComponent</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span>
@@ -763,25 +765,25 @@ is built upon some standard front end technologies including:</p>
 <strong>item</strong> will be the model of the child being rendered and <strong>container</strong> will be the model of the container that contains <strong>item</strong>. An example of this being used can be found
 here: https://github.com/manywho/ManyWho_HTML5_Players2/blob/master/runtime/js/components/horizontal.js#L54</p>
 
-          <h2 id="component-state-local-state-and-remote-state">Component State, Local State and Remote State</h2>
+          <h3 id="component-state-local-state-and-remote-state">Component State, Local State and Remote State</h3>
 
 <p>When working with custom components there are 3 types of state that you should be aware of:</p>
 
-<h3 id="component-state">Component State</h3>
+<h4 id="component-state">Component State</h4>
 
 <p>This is the regular React component state which can be accessed by this.state. Documentation about React component state can be found here: https://facebook.github.io/react/docs/getting-started.html</p>
 
-<h3 id="local-state">Local State</h3>
+<h4 id="local-state">Local State</h4>
 
 <p>This is the ManyWho flow state that currently exists in your browser session. The flow state contains a snapshot of the current state (values, selections, etc) of the flow.</p>
 <pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">state</span> <span class="o">=</span> <span class="nx">manywho</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">getComponent</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">flowKey</span><span class="p">);</span>
 </code></pre>
 
-<h3 id="remote-state">Remote State</h3>
+<h4 id="remote-state">Remote State</h4>
 
 <p>This is the same as the local state however it exists in the ManyWho cloud. The only important distinction is that the local state may be &ldquo;out of sync&rdquo; with the remote state periodically i.e. a user running a flow enters some values into some inputs on a page, these values only exist in the local state until the UI informs ManyWho to sync (usually via an outcome on the page).</p>
 
-<h3 id="which-state-should-i-use-in-my-components">Which state should I use in my components?</h3>
+<h4 id="which-state-should-i-use-in-my-components">Which state should I use in my components?</h4>
 
 <p>Component state should be used when you need to track changes that only affect the UI and don&rsquo;t need to be synced to the flow e.g. dropdown toggling, switching between tabs.</p>
 
@@ -789,7 +791,7 @@ here: https://github.com/manywho/ManyWho_HTML5_Players2/blob/master/runtime/js/c
 
 <p>Remote state is taken care of for you, if you want your component to trigger events in the flow e.g. this combobox should sync with the remote state when the value changes as other components will update based on the selected value in the combobox, then you should call manywho.component.handleEvent in your components change handler(s).</p>
 
-          <h2 id="debugging-the-html5-player-locally">Debugging the HTML5 Player Locally</h2>
+          <h3 id="debugging-the-html5-player-locally">Debugging the HTML5 Player Locally</h3>
 
 <p>When creating custom components you may need to debug the existing HTML5 player code in its un-compiled format:</p>
 <pre class="highlight javascript"><code><span class="nx">manywho</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">initialize</span><span class="p">({</span>
@@ -2174,7 +2176,7 @@ POST https://&lt;your subdomain&gt;-developer-edition.&lt;your pod&gt;.force.com
 <li>Click <strong>Next</strong> to enter in additional configuration settings and finish as usual.</li>
 </ol>
 
-          <h2 id="box-service">Box Service</h2>
+          <h2 id="box">Box</h2>
 
 <p>Box is a content management platform. Our box service integrates with their platform and allows access files in your box account as well as other more advanced features.</p>
 
