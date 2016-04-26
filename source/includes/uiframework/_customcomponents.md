@@ -1,4 +1,4 @@
-## Creating a Custom Component
+### Creating a Custom Component
 A UI component consists of at least one React component and potentially some optional CSS.
 
 ```javascript

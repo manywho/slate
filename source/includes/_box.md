@@ -1,4 +1,4 @@
-## Box Service
+## Box
 
 Box is a content management platform. Our box service integrates with their platform and allows access files in your box account as well as other more advanced features.
 

@@ -1,4 +1,4 @@
-## Debugging the HTML5 Player Locally
+### Debugging the HTML5 Player Locally
 
 When creating custom components you may need to debug the existing HTML5 player code in its un-compiled format:
 

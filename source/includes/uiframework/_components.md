@@ -1,4 +1,4 @@
-## Available components
+### Available components
 
 | Name | Description | Available In Page Layout Editor | Notes | Supported Attributes |
 | --- | --- | --- | --- | --- |
