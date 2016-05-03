@@ -2507,6 +2507,386 @@ Name | String | No | The new Filename</p>
 </tr>
 </tbody></table>
 
+          <h2 id="twilio">Twilio</h2>
+
+<p>You can use the Twilio Service to build Flows that do interesting things with text messaging, text-to-speech, and speech-to-text. For more information on Twilio, you can visit their site here: <a href="https://twilio.com">https://twilio.com</a>. It can also be helpful to reference the Twilio developer documentation (<a href="https://docs.twilio.com">https://docs.twilio.com</a>) if you need additional information on how things work.</p>
+
+<h3 id="installing-the-twilio-service">Installing the Twilio Service</h3>
+
+<h4 id="intro">Intro</h4>
+
+<p>In order to install the Twilio Service, you first need an active Twilio Account. To sign up for an account, please go here: <a href="https://www.twilio.com/try-twilio">https://www.twilio.com/try-twilio</a>.</p>
+
+<p>Once you have an account, you can complete the Twilio Service installation below. All of the information you need is available in the <strong>Account</strong> area under the <strong>API Credentials</strong>.</p>
+
+<p><strong>Text Messaging</strong></p>
+
+<p>If you are going to use the Service to send/receive text messages, you should do the following:</p>
+
+<ol>
+<li>Purchase a number that supports text messaging.</li>
+<li>Under the <strong>PROGRAMMABLE SMS</strong> section, click on <strong>PHONE NUMBERS</strong>.</li>
+<li>Click on the purchased phone number and view the <strong>Messaging</strong> tab. Provide the following:
+
+<ul>
+<li><strong>Configure with</strong>: select <em>URL</em></li>
+<li><strong>Request URL</strong>: <code class="prettyprint">https://services.manywho.com/api/twilio/2/callback/status/message</code></li>
+<li><strong>Fallback URL</strong>: <code class="prettyprint">https://services.manywho.com/api/twilio/2/callback/status/message</code></li>
+</ul></li>
+<li>Click on <strong>Save</strong></li>
+</ol>
+
+<p>This will configure the number for asynchronous text messaging. Allowing your Flows to not only send texts, but also receive and process responses.</p>
+
+<p><strong>Text-to-Speech</strong></p>
+
+<p>If you are going to use the Service to build IVRs using text-to-speech, you should do the following:</p>
+
+<ol>
+<li>Purchase a number that supports voice. You can re-use the number above.</li>
+<li>Build a Flow that will be used to handle in-coming calls from your Twilio number.</li>
+<li>Under the <strong>PROGRAMMABLE VOICE</strong> section, click on <strong>PHONE NUMBERS</strong>.</li>
+<li>Click on the purchased phone number and view the <strong>Voice</strong> tab. Provide the following:
+
+<ul>
+<li><strong>Configure with</strong>: select <em>URL</em></li>
+<li><strong>Request URL</strong>: <code class="prettyprint">https://services.manywho.com/api/twilio/2/callback/twiml/voice/flow/{tenantId}/{flowId}</code></li>
+<li><strong>Fallback URL</strong>: <code class="prettyprint">https://services.manywho.com/api/twilio/2/callback/twiml/voice/flow/{tenantId}/{flowId}</code></li>
+</ul></li>
+<li>Click on <strong>Save</strong></li>
+</ol>
+
+<p>The <strong>{tenantId}</strong> and <strong>{flowId}</strong> parameters can be retrieved from the URL for your Flow:</p>
+
+<p><code class="prettyprint">https://flow.manywho.com/{tenantId}/play/default?flow-id={flowId}</code></p>
+
+<h5 id="features">Features</h5>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>Logic</strong></td>
+<td>Twilio Service supports a number of logic features from starting an outbound call to sending and receiving text messages.</td>
+</tr>
+</tbody></table>
+
+<h4 id="configuration">Configuration</h4>
+
+<p>When installing the Service, you should use the following settings:</p>
+
+<p><strong>Connection Uri</strong></p>
+
+<p><code class="prettyprint">https://services.manywho.com/api/twilio/2</code></p>
+
+<p><strong>Configuration Values</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th style="text-align: center">Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Account SID</td>
+<td>String</td>
+<td style="text-align: center">✔</td>
+<td>The AccountSID for your Twilio account. You can access this information from the Account area under the API Credentials.</td>
+</tr>
+<tr>
+<td>Auth Token</td>
+<td>Password</td>
+<td style="text-align: center">✔</td>
+<td>The AuthToken for your Twilio account.</td>
+</tr>
+</tbody></table>
+
+<h4 id="types">Types</h4>
+
+<p>The following Types are available for this Service. The Database column indicates if the Type can be Saved, Loaded, or Deleted using the Service. The Listening column indicates if Objects of this Type can be listened to.</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th style="text-align: center">Database</th>
+<th style="text-align: center">Listening</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>Call</strong></td>
+<td>Used to make a Call</td>
+<td style="text-align: center">✘</td>
+<td style="text-align: center">✘</td>
+</tr>
+<tr>
+<td><strong>SMS</strong></td>
+<td>Used to send text messages</td>
+<td style="text-align: center">✘</td>
+<td style="text-align: center">✘</td>
+</tr>
+<tr>
+<td><strong>MMS</strong></td>
+<td>Used to send multi-media messages</td>
+<td style="text-align: center">✘</td>
+<td style="text-align: center">✘</td>
+</tr>
+<tr>
+<td><strong>Media</strong></td>
+<td>The media associated with a MMS</td>
+<td style="text-align: center">✘</td>
+<td style="text-align: center">✘</td>
+</tr>
+<tr>
+<td><strong>Recording</strong></td>
+<td>Contains the result of a call recording</td>
+<td style="text-align: center">✘</td>
+<td style="text-align: center">✘</td>
+</tr>
+</tbody></table>
+
+<h4 id="actions">Actions</h4>
+
+<p>Some helpful summary information about the various Actions that can be performed.</p>
+
+<h5 id="send-sms">Send SMS</h5>
+
+<p>Use this action to send/receive SMS messages.</p>
+
+<aside class="notice">
+<b>Message Apps</b><br/>
+If you create a Outcome Conditions for the SMS reply, this Action will act acynchronously. This means that when you execute this Action, the Flow will wait for the reply until the Outcome Condition is &lsquo;true&rsquo;.
+</aside>
+
+<p><strong>Inputs</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th style="text-align: center">Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>Message</strong></td>
+<td>SMS</td>
+<td style="text-align: center">✘</td>
+<td>The SMS message to send.</td>
+</tr>
+</tbody></table>
+
+<p><strong>Outputs</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>Reply</strong></td>
+<td>SMS</td>
+<td>The SMS message the user replied back with.</td>
+</tr>
+</tbody></table>
+
+<h5 id="send-sms-simple">Send SMS (Simple)</h5>
+
+<p>Use this action to send/receive SMS messages without using the SMS object. Otherwise, this Action is identical to Send SMS.</p>
+
+<aside class="notice">
+<b>Message Apps</b><br/>
+If you create a Outcome Conditions for the Reply, this Action will act acynchronously. This means that when you execute this Action, the Flow will wait for the reply until the Outcome Condition is 'true&rsquo;.
+</aside>
+
+<p><strong>Inputs</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th style="text-align: center">Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>To</strong></td>
+<td>String</td>
+<td style="text-align: center">✘</td>
+<td>The phone number to send the text.</td>
+</tr>
+<tr>
+<td><strong>From</strong></td>
+<td>String</td>
+<td style="text-align: center">✘</td>
+<td>The phone number associated with your Twilio Account. This is the number that supports text messaging.</td>
+</tr>
+<tr>
+<td><strong>Body</strong></td>
+<td>String</td>
+<td style="text-align: center">✘</td>
+<td>The body of the text that will be sent to the <strong>To</strong> phone number.</td>
+</tr>
+</tbody></table>
+
+<p><strong>Outputs</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>Reply</strong></td>
+<td>String</td>
+<td>The body of the text received from the end user.</td>
+</tr>
+</tbody></table>
+
+<h5 id="send-mms">Send MMS</h5>
+
+<p>Use this action to send/receive MMS messages.</p>
+
+<aside class="notice">
+<b>Message Apps</b><br/>
+If you create a Outcome Conditions for the MMS reply, this Action will act acynchronously. This means that when you execute this Action, the Flow will wait for the reply until the Outcome Condition is 'true&rsquo;.
+</aside>
+
+<p><strong>Inputs</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th style="text-align: center">Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>Message</strong></td>
+<td>MMS</td>
+<td style="text-align: center">✘</td>
+<td>The MMS message to send. To send media with the MMS you can populate the List of Media objects accordingly.</td>
+</tr>
+</tbody></table>
+
+<p><strong>Outputs</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>Reply</strong></td>
+<td>MMS</td>
+<td>The MMS message the user replied back with.</td>
+</tr>
+</tbody></table>
+
+<h5 id="start-outbound-call">Start Outbound Call</h5>
+
+<p>Use this action to start a call with the end user.</p>
+
+<aside class="notice">
+<b>Text-to-Speech</b><br/>
+Once the call has been started, Twilio will &ldquo;join&rdquo; the follow and begin rendering the Steps/Pages as TwiML (text-to-speech). Make sure you check out the documentation on creating a basic Twilio IVR to get details on this.
+</aside>
+
+<p><strong>Inputs</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th style="text-align: center">Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>Call</strong></td>
+<td>Call</td>
+<td style="text-align: center">✘</td>
+<td>The call to start with the end user.</td>
+</tr>
+</tbody></table>
+
+<h5 id="start-outbound-call-simple">Start Outbound Call (Simple)</h5>
+
+<p>Use this action to start a call with the end user without using the Call object. Otherwise, this Action is identical to Send SMS.</p>
+
+<aside class="notice">
+<b>Text-to-Speech</b><br/>
+Once the call has been started, Twilio will &ldquo;join&rdquo; the follow and begin rendering the Steps/Pages as TwiML (text-to-speech). Make sure you check out the documentation on creating a basic Twilio IVR to get details on this.
+</aside>
+
+<p><strong>Inputs</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th style="text-align: center">Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>To</strong></td>
+<td>String</td>
+<td style="text-align: center">✘</td>
+<td>The phone number to send the text.</td>
+</tr>
+<tr>
+<td><strong>From</strong></td>
+<td>String</td>
+<td style="text-align: center">✘</td>
+<td>The phone number associated with your Twilio Account. This is the number that supports text messaging.</td>
+</tr>
+<tr>
+<td><strong>Timeout</strong></td>
+<td>Number</td>
+<td style="text-align: center">✘</td>
+<td>The number of seconds to wait until the outbound call should timeout. The usual value is <code class="prettyprint">60</code>.</td>
+</tr>
+<tr>
+<td><strong>Record</strong></td>
+<td>Boolean</td>
+<td style="text-align: center">✘</td>
+<td>Indicates if the call should be recorded.</td>
+</tr>
+</tbody></table>
+
+<h3 id="code">Code</h3>
+
+<p>You can access the source code and developer details about implementation on GitHub.</p>
+
+<p><strong>GitHub</strong></p>
+
+<p><code class="prettyprint">https://github.com/manywho</code></p>
+
+<h3 id="building-an-ivr">Building an IVR</h3>
+
+<p>You can use the Twilio Service to create Flows that work exactly like an IVR. A few considerations:</p>
+
+<ol>
+<li>You should use Steps for the content of each step in the IVR. Do not use any formatting as this can confuse the text-to-speech converter.</li>
+<li>Any outcomes coming from the Step should have a Name that&rsquo;s a digit. If the user enters the digit into their phone, this is equivalent to a user clicking on the Outcome in the browser.</li>
+<li>The Flow should be &ldquo;public&rdquo; as Twilio does not support any form of authentication.</li>
+</ol>
+
+<p>You can always test your Flow in the browser before accessing it via Twilio.</p>
+
           <h1 id="reporting">Reporting</h1>
 
 <p>States can be set to send reporting data to an external endpoint that adheres to our Reporting API interface (a supported implementation is available <a href="https://github.com/manywho/reporting">on GitHub</a>). This allows you to gain a greater insight into how and when flows are being uses, as well as the values being used inside a state.</p>
