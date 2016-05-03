@@ -20,6 +20,7 @@ includes:
   - connect
   - salesforce
   - box
+  - twilio
   - reporting
   - adminapi
   - adminapi/provisioning
