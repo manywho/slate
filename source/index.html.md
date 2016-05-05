@@ -21,6 +21,7 @@ includes:
   - salesforce
   - box
   - twilio
+  - email
   - reporting
   - adminapi
   - adminapi/provisioning
