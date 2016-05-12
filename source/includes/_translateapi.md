@@ -737,7 +737,7 @@ Key | Description
 
 *The Page Element Translation object provides all of the content properties in a Page Element that can be translated.*
 
-The Flow Translation object provides every property in the Page Element that can be translated. The Page Element Translation object also includes additional properties to help translators identify the purpose/location of the content being translated.
+The Page Element Translation object also includes additional properties to help translators identify the purpose/location of the content being translated.
 
 #### Page Element Translation
 
@@ -849,18 +849,116 @@ The raw JSON for the Page Element Translation.
 
 ## Value Element Translation
 
+> Example Response:
+
+```json
+{
+    "contentType": "ContentString",
+    "contentFormatContentValueId": "{idA}",
+    "defaultContentValueContentValueId": "{idB}",
+    "id": "{id}",
+    "elementType": "VARIABLE",
+    "developerName": "Value",
+    "developerSummary": "",
+    "contentValueDocument": {
+        "translations": {
+            "<!-- Culture: United States of America -->": {
+                "contentValues": {
+                    "{idA}": null,
+                    "{idB}": null
+                }
+            }
+        }
+    }
+}
+```
+
+*The Value Element Translation object provides all of the content properties in a Value Element that can be translated.*
+
+The Value Element Translation object also includes additional properties to help translators identify the purpose/location of the content being translated.
+
+Key | Description
+--- | -----------
+**contentType**<br/>string | The content type represented by the Tag Element. Valid values are:<ul><li>**ContentString**: A string value</li><li>**ContentNumber**: A numeric value</li><li>**ContentPassword**: A hidden value</li><li>**ContentDateTime**: A date and time value</li><li>**ContentContent**: A rich content value</li><li>**ContentObject**: An object value</li><li>**ContentList**: A list value</li></ul>
+**contentFormatContentValueId**<br/>string | The unique identitifer of the Content Value Document that contains the value of the Value element's content format
+**defaultContentValueContentValueId**<br/>string | The unique identitifer of the Content Value Document that contains the value of the Value element's default value
+**id**<br/>string | The unique identifier for the Value Element associated with this Value Element Translation.
+**elementType**<br/>string | The Element type for the Value Element associated with this Value Element Translation.
+**developerName**<br/>string | The name for the Value Element associated with this Value Element Translation. This is typically a helpful name to remind builders of the purpose of the Flow.
+**developerSummary**<br/>string | The summary for the Value Element associated with this Value Element Translation. This is typically additional information that will help explain the purpose of the Flow.
+**contentValueDocument**<br/>object | See the Flow Translation Document section for details on this object.
+
 ### Get Value Element Translation
+
+Used to filter existing Value objects that are available for translation. The Value Translation object provides all of the properties in a Value that can be translated.
 
 #### HTTP Request
 
+> Example Response:
+
+```json
+{
+    "contentType": "ContentString",
+    "contentFormatContentValueId": "161f5ee2-4b91-43ad-a91e-d38c823f5fbd",
+    "defaultContentValueContentValueId": "56e8259a-e723-48c3-bdb5-d8c1bc4a56cd",
+    "id": "884f170a-f033-4c69-9c48-9ecf663a29d9",
+    "elementType": "VARIABLE",
+    "developerName": "Value Name",
+    "developerSummary": "",
+    "contentValueDocument": {
+        "translations": {
+            "ef6dc583-26b0-46ea-9623-1756695503a7": {
+                "contentValues": {
+                    "161f5ee2-4b91-43ad-a91e-d38c823f5fbd": "Content Format",
+                    "56e8259a-e723-48c3-bdb5-d8c1bc4a56cd": "Default Value"
+                }
+            }
+        }
+    }
+}
+```
+
 `GET /api/translate/1/element/value/{id}`
 
+Key | Description
+--- | -----------
+**id**<br/>string | The unique identifier for the Value associated with this Value Translation.
 
 ### Update Value Element Translation
 
 #### HTTP Request
 
+> Example 200 OK Response
+
+```json
+{
+    "contentType": "ContentString",
+    "contentFormatContentValueId": "161f5ee2-4b91-43ad-a91e-d38c823f5fbd",
+    "defaultContentValueContentValueId": "56e8259a-e723-48c3-bdb5-d8c1bc4a56cd",
+    "id": "884f170a-f033-4c69-9c48-9ecf663a29d9",
+    "elementType": "VARIABLE",
+    "developerName": "Value Name",
+    "developerSummary": "",
+    "contentValueDocument": {
+        "translations": {
+            "ef6dc583-26b0-46ea-9623-1756695503a7": {
+                "contentValues": {
+                    "161f5ee2-4b91-43ad-a91e-d38c823f5fbd": "Content Format",
+                    "56e8259a-e723-48c3-bdb5-d8c1bc4a56cd": "Default Value"
+                }
+            }
+        }
+    }
+}
+```
+
+Used to update an existing Value Element translation.
+
 `POST /api/translate/1/element/value`
+
+#### Body
+
+The raw JSON for the Value Element translation.
 
 
 ## Type Element Translation
