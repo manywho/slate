@@ -754,17 +754,98 @@ Key | Description
 
 ### Get Page Element Translation
 
+Used to get an existing Page Element Translation. The Page Element Translation object provides all of the content properties in a Page Element that can be translated.
+
 #### HTTP Request
 
 `GET /api/translate/1/element/page/{id}`
 
+Key | Description
+--- | -----------
+**id**<br/>string | The unique identifier for the Page Element associated with this Page Element Translation.
 
 ### Update Page Element Translation
+
+> Example 200 OK Response
+
+```json
+{
+    "labelContentValueId": "e867f7b3-d4fb-44d1-a0d5-dee6b32b2e72",
+    "pageContainers": [
+        {
+            "containerType": "VERTICAL_FLOW",
+            "developerName": "Root",
+            "labelContentValueId": "629746a7-6a80-4e8b-beda-86d5efd5449c",
+            "pageContainers": null
+        }
+    ],
+    "pageComponents": [
+        {
+            "pageContainerDeveloperName": "Root",
+            "developerName": "Intro",
+            "componentType": "PRESENTATION",
+            "contentContentValueId": "7ee2e85a-782d-4239-8832-73f0b3a2b097",
+            "labelContentValueId": "35b20e81-aec2-4579-963c-67ed2177fa71",
+            "hintValueContentValueId": "e44fbccf-7dd1-4087-937b-7b2e03fc95e4",
+            "helpInfoContentValueId": "44e4f2a3-ea7c-42c6-af81-10f393ed9b08",
+            "columns": null
+        },
+        {
+            "pageContainerDeveloperName": "Root",
+            "developerName": "Tasks",
+            "componentType": "TABLE",
+            "contentContentValueId": "00d44f1f-5554-4199-b998-e7c3eedc1d91",
+            "labelContentValueId": "ae648655-41ff-4cd5-b9c3-859b852c9807",
+            "hintValueContentValueId": "53dfb219-92ad-4b49-8421-10557b518295",
+            "helpInfoContentValueId": "cc56a4d5-469c-4a6f-ae55-edb3ac416ab6",
+            "columns": [
+                {
+                    "labelContentValueId": "97e4d512-301a-41d4-a42e-2885b4108e3f"
+                },
+                {
+                    "labelContentValueId": "0c40ca0d-9312-4d86-8bab-3489e0b5bd94"
+                }
+            ]
+        }
+    ],
+    "id": "84a4a6d3-89a3-4a14-931b-b448d4a3c98a",
+    "elementType": "PAGE_LAYOUT",
+    "developerName": "Tasks",
+    "developerSummary": "",
+    "contentValueDocument": {
+        "translations": {
+            "8c7c8402-7dd3-44ef-8199-72d57e5a395b": {
+                "contentValues": {
+                    "e867f7b3-d4fb-44d1-a0d5-dee6b32b2e72": "Tasks",
+                    "629746a7-6a80-4e8b-beda-86d5efd5449c": "",
+                    "44e4f2a3-ea7c-42c6-af81-10f393ed9b08": "",
+                    "e44fbccf-7dd1-4087-937b-7b2e03fc95e4": "",
+                    "35b20e81-aec2-4579-963c-67ed2177fa71": "",
+                    "7ee2e85a-782d-4239-8832-73f0b3a2b097": "<h1>My Tasks</h1>",
+                    "ee7c1deb-41fd-4210-8986-a34f7fbcda8b": null,
+                    "cc56a4d5-469c-4a6f-ae55-edb3ac416ab6": "",
+                    "53dfb219-92ad-4b49-8421-10557b518295": "",
+                    "ae648655-41ff-4cd5-b9c3-859b852c9807": "",
+                    "97e4d512-301a-41d4-a42e-2885b4108e3f": "Subject",
+                    "0c40ca0d-9312-4d86-8bab-3489e0b5bd94": "Due Date",
+                    "00d44f1f-5554-4199-b998-e7c3eedc1d91": null,
+                    "1f983609-3e67-49b1-83eb-728eb90b1252": null
+                }
+            }
+        }
+    }
+}
+```
+
+Used to update a Page Element Translation. The Page Element Translation object provides all of the content properties in a Page Element that can be translated.
 
 #### HTTP Request
 
 `POST /api/translate/1/element/page`
 
+#### Body
+
+The raw JSON for the Page Element Translation.
 
 ## Value Element Translation
 
