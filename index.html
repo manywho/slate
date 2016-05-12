@@ -10516,7 +10516,7 @@ The filter can take the following formats:
 
 <p><em>The Page Element Translation object provides all of the content properties in a Page Element that can be translated.</em></p>
 
-<p>The Flow Translation object provides every property in the Page Element that can be translated. The Page Element Translation object also includes additional properties to help translators identify the purpose/location of the content being translated.</p>
+<p>The Page Element Translation object also includes additional properties to help translators identify the purpose/location of the content being translated.</p>
 
 <h4 id="page-element-translation">Page Element Translation</h4>
 
@@ -10562,29 +10562,256 @@ The filter can take the following formats:
 
 <h3 id="get-page-element-translation">Get Page Element Translation</h3>
 
+<p>Used to get an existing Page Element Translation. The Page Element Translation object provides all of the content properties in a Page Element that can be translated.</p>
+
 <h4 id="http-request">HTTP Request</h4>
 
 <p><code class="prettyprint">GET /api/translate/1/element/page/{id}</code></p>
 
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>id</strong><br/>string</td>
+<td>The unique identifier for the Page Element associated with this Page Element Translation.</td>
+</tr>
+</tbody></table>
+
 <h3 id="update-page-element-translation">Update Page Element Translation</h3>
+
+<blockquote>
+<p>Example 200 OK Response</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"labelContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"e867f7b3-d4fb-44d1-a0d5-dee6b32b2e72"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"pageContainers"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"containerType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"VERTICAL_FLOW"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Root"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"labelContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"629746a7-6a80-4e8b-beda-86d5efd5449c"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"pageContainers"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"pageComponents"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"pageContainerDeveloperName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Root"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Intro"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"componentType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PRESENTATION"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"contentContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7ee2e85a-782d-4239-8832-73f0b3a2b097"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"labelContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"35b20e81-aec2-4579-963c-67ed2177fa71"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"hintValueContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"e44fbccf-7dd1-4087-937b-7b2e03fc95e4"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"helpInfoContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"44e4f2a3-ea7c-42c6-af81-10f393ed9b08"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"columns"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"pageContainerDeveloperName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Root"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tasks"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"componentType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TABLE"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"contentContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"00d44f1f-5554-4199-b998-e7c3eedc1d91"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"labelContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ae648655-41ff-4cd5-b9c3-859b852c9807"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"hintValueContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"53dfb219-92ad-4b49-8421-10557b518295"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"helpInfoContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cc56a4d5-469c-4a6f-ae55-edb3ac416ab6"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"columns"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"labelContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"97e4d512-301a-41d4-a42e-2885b4108e3f"</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"labelContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0c40ca0d-9312-4d86-8bab-3489e0b5bd94"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">]</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"84a4a6d3-89a3-4a14-931b-b448d4a3c98a"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"elementType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PAGE_LAYOUT"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tasks"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"contentValueDocument"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"translations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"8c7c8402-7dd3-44ef-8199-72d57e5a395b"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"contentValues"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"e867f7b3-d4fb-44d1-a0d5-dee6b32b2e72"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tasks"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"629746a7-6a80-4e8b-beda-86d5efd5449c"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"44e4f2a3-ea7c-42c6-af81-10f393ed9b08"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"e44fbccf-7dd1-4087-937b-7b2e03fc95e4"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"35b20e81-aec2-4579-963c-67ed2177fa71"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"7ee2e85a-782d-4239-8832-73f0b3a2b097"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;h1&gt;My Tasks&lt;/h1&gt;"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"ee7c1deb-41fd-4210-8986-a34f7fbcda8b"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"cc56a4d5-469c-4a6f-ae55-edb3ac416ab6"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"53dfb219-92ad-4b49-8421-10557b518295"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"ae648655-41ff-4cd5-b9c3-859b852c9807"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"97e4d512-301a-41d4-a42e-2885b4108e3f"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Subject"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"0c40ca0d-9312-4d86-8bab-3489e0b5bd94"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Due Date"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"00d44f1f-5554-4199-b998-e7c3eedc1d91"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"1f983609-3e67-49b1-83eb-728eb90b1252"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>Used to update a Page Element Translation. The Page Element Translation object provides all of the content properties in a Page Element that can be translated.</p>
 
 <h4 id="http-request">HTTP Request</h4>
 
 <p><code class="prettyprint">POST /api/translate/1/element/page</code></p>
 
+<h4 id="body">Body</h4>
+
+<p>The raw JSON for the Page Element Translation.</p>
+
 <h2 id="value-element-translation">Value Element Translation</h2>
+
+<blockquote>
+<p>Example Response:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"contentType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ContentString"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"contentFormatContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{idA}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"defaultContentValueContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{idB}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"elementType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"VARIABLE"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Value"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"contentValueDocument"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"translations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"&lt;!-- Culture: United States of America --&gt;"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"contentValues"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"{idA}"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"{idB}"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><em>The Value Element Translation object provides all of the content properties in a Value Element that can be translated.</em></p>
+
+<p>The Value Element Translation object also includes additional properties to help translators identify the purpose/location of the content being translated.</p>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>contentType</strong><br/>string</td>
+<td>The content type represented by the Tag Element. Valid values are:<ul><li><strong>ContentString</strong>: A string value</li><li><strong>ContentNumber</strong>: A numeric value</li><li><strong>ContentPassword</strong>: A hidden value</li><li><strong>ContentDateTime</strong>: A date and time value</li><li><strong>ContentContent</strong>: A rich content value</li><li><strong>ContentObject</strong>: An object value</li><li><strong>ContentList</strong>: A list value</li></ul></td>
+</tr>
+<tr>
+<td><strong>contentFormatContentValueId</strong><br/>string</td>
+<td>The unique identitifer of the Content Value Document that contains the value of the Value element&rsquo;s content format</td>
+</tr>
+<tr>
+<td><strong>defaultContentValueContentValueId</strong><br/>string</td>
+<td>The unique identitifer of the Content Value Document that contains the value of the Value element&rsquo;s default value</td>
+</tr>
+<tr>
+<td><strong>id</strong><br/>string</td>
+<td>The unique identifier for the Value Element associated with this Value Element Translation.</td>
+</tr>
+<tr>
+<td><strong>elementType</strong><br/>string</td>
+<td>The Element type for the Value Element associated with this Value Element Translation.</td>
+</tr>
+<tr>
+<td><strong>developerName</strong><br/>string</td>
+<td>The name for the Value Element associated with this Value Element Translation. This is typically a helpful name to remind builders of the purpose of the Flow.</td>
+</tr>
+<tr>
+<td><strong>developerSummary</strong><br/>string</td>
+<td>The summary for the Value Element associated with this Value Element Translation. This is typically additional information that will help explain the purpose of the Flow.</td>
+</tr>
+<tr>
+<td><strong>contentValueDocument</strong><br/>object</td>
+<td>See the Flow Translation Document section for details on this object.</td>
+</tr>
+</tbody></table>
 
 <h3 id="get-value-element-translation">Get Value Element Translation</h3>
 
+<p>Used to filter existing Value objects that are available for translation. The Value Translation object provides all of the properties in a Value that can be translated.</p>
+
 <h4 id="http-request">HTTP Request</h4>
 
+<blockquote>
+<p>Example Response:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"contentType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ContentString"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"contentFormatContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"161f5ee2-4b91-43ad-a91e-d38c823f5fbd"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"defaultContentValueContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"56e8259a-e723-48c3-bdb5-d8c1bc4a56cd"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"884f170a-f033-4c69-9c48-9ecf663a29d9"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"elementType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"VARIABLE"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Value Name"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"contentValueDocument"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"translations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"ef6dc583-26b0-46ea-9623-1756695503a7"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"contentValues"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"161f5ee2-4b91-43ad-a91e-d38c823f5fbd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Content Format"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"56e8259a-e723-48c3-bdb5-d8c1bc4a56cd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Default Value"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
 <p><code class="prettyprint">GET /api/translate/1/element/value/{id}</code></p>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>id</strong><br/>string</td>
+<td>The unique identifier for the Value associated with this Value Translation.</td>
+</tr>
+</tbody></table>
 
 <h3 id="update-value-element-translation">Update Value Element Translation</h3>
 
 <h4 id="http-request">HTTP Request</h4>
 
+<blockquote>
+<p>Example 200 OK Response</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"contentType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ContentString"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"contentFormatContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"161f5ee2-4b91-43ad-a91e-d38c823f5fbd"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"defaultContentValueContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"56e8259a-e723-48c3-bdb5-d8c1bc4a56cd"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"884f170a-f033-4c69-9c48-9ecf663a29d9"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"elementType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"VARIABLE"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Value Name"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"contentValueDocument"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"translations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"ef6dc583-26b0-46ea-9623-1756695503a7"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"contentValues"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"161f5ee2-4b91-43ad-a91e-d38c823f5fbd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Content Format"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"56e8259a-e723-48c3-bdb5-d8c1bc4a56cd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Default Value"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>Used to update an existing Value Element translation.</p>
+
 <p><code class="prettyprint">POST /api/translate/1/element/value</code></p>
+
+<h4 id="body">Body</h4>
+
+<p>The raw JSON for the Value Element translation.</p>
 
 <h2 id="type-element-translation">Type Element Translation</h2>
 
