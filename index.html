@@ -10815,31 +10815,370 @@ The filter can take the following formats:
 
 <h2 id="type-element-translation">Type Element Translation</h2>
 
+<blockquote>
+<p>Example response:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{idA}"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Property One"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"contentFormatContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{idB}"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{idC}"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Property Two"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"contentFormatContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{idD}"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{idE}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"elementType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TYPE"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Type Name"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"contentValueDocument"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"translations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"{idF}"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"contentValues"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"{idB}"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Translation for Property One"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"{idD}"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Translation for Property Two"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><em>The Type Element Translation object provides all of the content properties in a Type Element that can be translated.</em></p>
+
+<p>The Type Element Translation object also includes additional properties to help translators identity the purpose/location of the content being translated.</p>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>id</strong><br/>string</td>
+<td>A unique identifier for the Type Element (see Type Element in the Draw API).</td>
+</tr>
+<tr>
+<td><strong>elementType</strong><br/>string</td>
+<td>The type of Type Element. Valid values are:<br/><ul><li>TYPE</li></ul></td>
+</tr>
+<tr>
+<td><strong>developerName</strong><br/>string</td>
+<td>The developer name of the Type Element (see Type Element in the Draw API).</td>
+</tr>
+<tr>
+<td><strong>developerSummary</strong><br/>string</td>
+<td>The developer summary of the Type Element (see Type Element in the Draw API).</td>
+</tr>
+<tr>
+<td><strong>contentValueDocument</strong><br/>object</td>
+<td>See the Flow Translation Document section for details on this object.</td>
+</tr>
+</tbody></table>
+
 <h3 id="get-type-element-translation">Get Type Element Translation</h3>
+
+<p>Used to get an existing Type Element Translation. The Type Element Translation object provides all of the content properties in a Type Element that can be translated.</p>
 
 <h4 id="http-request">HTTP Request</h4>
 
+<blockquote>
+<p>Example Response:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5af55b98-d697-4cd3-a450-be77b4982872"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Name"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"contentFormatContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"079359a8-cc9b-4747-95f5-d1cb46fb0bc4"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"60001a40-5ad5-4faf-aa46-89443aca0607"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Age"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"contentFormatContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"978258dd-8e7d-4a4c-bbe6-1b02c5d75e3d"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cd594a53-0f32-4b21-bd82-21f35b00e5cf"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"elementType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TYPE"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Person"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"contentValueDocument"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"translations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"88b9010a-4a01-40e5-a18e-742d95de6273"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"contentValues"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"079359a8-cc9b-4747-95f5-d1cb46fb0bc4"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"978258dd-8e7d-4a4c-bbe6-1b02c5d75e3d"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
 <p><code class="prettyprint">GET /api/translate/1/element/type/{id}</code></p>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>id</strong><br/>string</td>
+<td>The unique identifier for the Type associated with this Type Translation.</td>
+</tr>
+</tbody></table>
 
 <h3 id="update-type-element-translation">Update Type Element Translation</h3>
 
 <h4 id="http-request">HTTP Request</h4>
 
 <p><code class="prettyprint">POST /api/translate/1/element/type</code></p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5af55b98-d697-4cd3-a450-be77b4982872"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Name"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"contentFormatContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"079359a8-cc9b-4747-95f5-d1cb46fb0bc4"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"60001a40-5ad5-4faf-aa46-89443aca0607"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Age"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"contentFormatContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"978258dd-8e7d-4a4c-bbe6-1b02c5d75e3d"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cd594a53-0f32-4b21-bd82-21f35b00e5cf"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"elementType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TYPE"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Person"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"contentValueDocument"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"translations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"88b9010a-4a01-40e5-a18e-742d95de6273"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"contentValues"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"079359a8-cc9b-4747-95f5-d1cb46fb0bc4"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"978258dd-8e7d-4a4c-bbe6-1b02c5d75e3d"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h4 id="body">Body</h4>
+
+<p>The raw JSON for the Type Element translation.</p>
 
 <h2 id="map-element-translation">Map Element Translation</h2>
 
+<blockquote>
+<p>Example response:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"userContentContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{idA}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"statusMessageContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{idB}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"postUpdateMessageContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{idC}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"notAuthorizedMessageContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{idD}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"outcomes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Outcome Name"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Outcome Summary"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"labelContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{idE}"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"nextMapElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Id of the next Map Element"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Id of the Map Element"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"elementType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Map Element Type"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Map Element Name"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Map Element Summary"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"contentValueDocument"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"translations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"&lt;!-- Culture: United States of America --&gt;"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"contentValues"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"{idE}"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Outcome Label"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"{idB}"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"{idC}"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"{idD}"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"{idA}"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;p&gt;Content&lt;/p&gt;"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><em>The Map Element Translation object provides all of the content properties in a Map Element that can be translated.</em></p>
+
+<p>The Map Element Translation object also includes additional properties to help translators identity the purpose/location of the content being translated.</p>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>userContentContentValueId</strong><br/>string</td>
+<td>A unique identifier for the content inside Map Elements of type <strong>Step</strong>. This identifier matches with an identifier in the translations section.</td>
+</tr>
+<tr>
+<td><strong>statusMessageContentValueId</strong><br/>string</td>
+<td>A unique identifier for the content that should be shown to the user while waiting for a system step to complete. This identifier matches with an identifier in the translations section.</td>
+</tr>
+<tr>
+<td><strong>postUpdateMessageContentValueId</strong><br/>string</td>
+<td>A unique identifier for the content of the message that should be posted to the collaboration stream. This identifier matches with an identifier in the translations section.</td>
+</tr>
+<tr>
+<td><strong>notAuthorizedMessageContentValueId</strong><br/>string</td>
+<td>A unique identifier for the content that should be shown to the user if they are not authorized to take action on this Map Element. This identifier matches with an identifier in the translations section.</td>
+</tr>
+<tr>
+<td><strong>outcomes</strong><br/>array</td>
+<td>The array of Outcomes coming from the Map Element. Each Outcome entry has the following keys:<br/><br/><strong>developerName</strong>(string):<br/>The developer name for the outcome object(see Outcome in the Draw API).<br/></br><strong>developerSummary</strong>(string):<br/>The developerSummary of the outcome object(see Outcome in the Draw API).<br/><br/><strong>labelContentValueId</strong>(string):<br/>A unique identifier for the Outcome label property. This identifier matches with an identifier in the translations section.<br/><br/><strong>nextMapElementId</strong>(string):<br/>A unique identifier for the target Map Element of the Outcome(see Outcome in the Draw API).</td>
+</tr>
+<tr>
+<td><strong>id</strong><br/>string</td>
+<td>A unique identifier for the Map Element(see Map Element in the Draw API).</td>
+</tr>
+<tr>
+<td><strong>elementType</strong><br/>string</td>
+<td>The type of Map Element. Valid values are:<br/><br/><ul><li>step</li><li>input</li><li>decision</li><li>operator</li><li>message</li><li>database_delete</li><li>database_load</li><li>database_save</li></td>
+</tr>
+<tr>
+<td><strong>developerName</strong><br/>string</td>
+<td>The developer name of the Map Element(see Map Element in the Draw API).</td>
+</tr>
+<tr>
+<td><strong>developerSummary</strong><br/>string</td>
+<td>The developer summary of the Map Element(see Map Element in the Draw API).</td>
+</tr>
+<tr>
+<td><strong>contentValueDocument</strong><br/>object</td>
+<td>See the Flow Translation Document section for details on this object.</td>
+</tr>
+</tbody></table>
+
 <h3 id="get-map-element-translation">Get Map Element Translation</h3>
 
+<p>Used to filter existing Map Element objects that are available for translation. The Map Element Translation object provides all of the properties in a Map Element that can be translated.</p>
+
 <h4 id="http-request">HTTP Request</h4>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"userContentContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fe6fceca-6498-46a2-8cf1-91a0792a9b8c"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"statusMessageContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"e069447f-2244-4769-b0ba-4b94b75058f2"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"postUpdateMessageContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1ded70cc-7e00-4de4-b778-f0752ec22862"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"notAuthorizedMessageContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ed714ae2-79ad-4846-9e80-f44ea980f0a7"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"outcomes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Outcome Name"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Outcome Summary"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"labelContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"34d6a14d-e578-400d-958a-94b2863596fe"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"nextMapElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9c07363f-51ee-48ba-a70e-1d7cc16625db"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5067025f-8ab8-43de-8293-875faf12f4c8"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"elementType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"step"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Map Element Name"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Map Element Summary"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"contentValueDocument"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"translations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"e9f71cf1-b8d4-4acd-a16c-e51a8c328b60"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"contentValues"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"34d6a14d-e578-400d-958a-94b2863596fe"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Outcome Label"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"e069447f-2244-4769-b0ba-4b94b75058f2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Status message presented while waiting"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"ed714ae2-79ad-4846-9e80-f44ea980f0a7"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Message presented when not authorized"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"1ded70cc-7e00-4de4-b778-f0752ec22862"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Content added to the collaboration stream"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"fe6fceca-6498-46a2-8cf1-91a0792a9b8c"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;p&gt;Content inside the step Map Element&lt;/p&gt;"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 
 <p><code class="prettyprint">GET /api/translate/1/flow/{flow_id}/{editing_token}/element/map/{id}</code></p>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>flow_id</strong><br/>string</td>
+<td>The unique identifier of the Flow where the Map Element is present.</td>
+</tr>
+<tr>
+<td><strong>editing_token</strong><br/>string</td>
+<td>The unique identifier of the token used to validate changes to the Flow&rsquo;s Map Elements.</td>
+</tr>
+<tr>
+<td><strong>id</strong><br/>string</td>
+<td>The unique identifier of the Map Element associated with this Map Element Translation.</td>
+</tr>
+</tbody></table>
 
 <h3 id="update-map-element-translation">Update Map Element Translation</h3>
 
 <h4 id="http-request">HTTP Request</h4>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"userContentContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fe6fceca-6498-46a2-8cf1-91a0792a9b8c"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"statusMessageContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"e069447f-2244-4769-b0ba-4b94b75058f2"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"postUpdateMessageContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1ded70cc-7e00-4de4-b778-f0752ec22862"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"notAuthorizedMessageContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ed714ae2-79ad-4846-9e80-f44ea980f0a7"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"outcomes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Outcome Name"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Outcome Summary"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"labelContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"34d6a14d-e578-400d-958a-94b2863596fe"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"nextMapElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9c07363f-51ee-48ba-a70e-1d7cc16625db"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5067025f-8ab8-43de-8293-875faf12f4c8"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"elementType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"step"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Map Element Name"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Map Element Summary"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"contentValueDocument"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"translations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"e9f71cf1-b8d4-4acd-a16c-e51a8c328b60"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"contentValues"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"34d6a14d-e578-400d-958a-94b2863596fe"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Outcome Label"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"e069447f-2244-4769-b0ba-4b94b75058f2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Status message presented while waiting"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"ed714ae2-79ad-4846-9e80-f44ea980f0a7"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Message presented when not authorized"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"1ded70cc-7e00-4de4-b778-f0752ec22862"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Content added to the collaboration stream"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"fe6fceca-6498-46a2-8cf1-91a0792a9b8c"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;p&gt;Content inside the step Map Element&lt;/p&gt;"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 
 <p><code class="prettyprint">POST /api/translate/1/flow/{flow_id}/{editing_token}/element/map</code></p>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>flow_id</strong><br/>string</td>
+<td>The unique identifier of the Flow where the Map Element is present.</td>
+</tr>
+<tr>
+<td><strong>editing_token</strong><br/>string</td>
+<td>The unique identifier of the token used to validate changes to the Flow&rsquo;s Map Elements.</td>
+</tr>
+</tbody></table>
+
+<h4 id="body">Body</h4>
+
+<p>The raw JSON for the Map Element translation.</p>
 
 <h2 id="navigation-element-translation">Navigation Element Translation</h2>
 
@@ -10857,23 +11196,117 @@ The filter can take the following formats:
 
           <h1 id="package-api">Package API</h1>
 
-<h2 id="export-latest-version">Export Latest Version</h2>
+<p>The packaging API allows you to move a Flow from one tenant to another. This can be handy for a few example reasons:</p>
+
+<ul>
+<li>You have Sub-Tenants that you use for testing or team based development of Flows. You then have a master tenant for all &ldquo;production&rdquo; Flows.</li>
+<li>You have a library of useful Flows that you want to distribute as templates.</li>
+<li>You want to create a &ldquo;store&rdquo; of Flows that can be used by your customers to help them leverage and adapt your existing intellectual property.</li>
+</ul>
+
+<p>A few things to consider with packaging:</p>
+
+<ol>
+<li>The source Tenant should be used for editing. If you make changes in the target Tenant and attempt to apply those back to the source, you can accidentially overwrite changes in the source, not applied in the target.</li>
+<li>Packaging overwrites the existing Flow with the same Flow identifier. As a result, you can apply upgrades to a target Tenant.</li>
+<li>If you plan to use a Service in multiple Tenants, make sure you create the Service in the source Tenant and distribute a Flow package for all target Tenants. If a Service is installed in each Target Tenant, it will be duplicated as we do not &ldquo;merge&rdquo; Services even if they point to the same Service end-point.</li>
+<li>Do not refresh the Service in the Target Tenant if you are simply changing the endpoint URL. Packaging only pulls in the Types that are used by the Flow. If you refresh the whole Service in the Target Tenant, you can end up with duplicate Types.</li>
+<li>When you export a Flow Package, you will receive a String that contains all the information needed to execute your Flow.</li>
+<li>We do not automatically Package sub-Flows.</li>
+<li>You can only export a package of the Flow if that Flow has a SnapShot (generated by either Running or Publishing the Flow).</li>
+</ol>
+
+<p>The package file should never be altered. Please refer to the SnapShot APIs if you need to get information about your Flows.</p>
+
+<h2 id="export-latest-package-version">Export Latest Package Version</h2>
+
+<p>This API will package the latest version of a Flow SnapShot.</p>
 
 <h4 id="http-request">HTTP Request</h4>
 
-<p><code class="prettyprint">GET /api/package/1/flow/{id}?nullPasswords={nullPasswords}</code></p>
+<p><code class="prettyprint">GET /api/package/1/flow/{id}?nullPasswords={null_passwords}</code></p>
 
-<h2 id="export-specific-version">Export Specific Version</h2>
+<h4 id="parameters">Parameters</h4>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>id</strong><br/>string</td>
+<td>Unique identifier for the Flow you wish to Package.</td>
+</tr>
+<tr>
+<td><strong>null_passwords</strong><br/>boolean</td>
+<td>Indicates if the Package should inlude any Configuration Values that contain Password content typed values.</td>
+</tr>
+</tbody></table>
+
+<h2 id="export-specific-package-version">Export Specific Package Version</h2>
+
+<p>This API will Package a specific version of a Flow SnapShot.</p>
 
 <h4 id="http-request">HTTP Request</h4>
 
-<p><code class="prettyprint">GET /api/package/1/flow/{id}/{version_id}?nullPasswords={nullPasswords}</code></p>
+<p><code class="prettyprint">GET /api/package/1/flow/{id}/{version_id}?nullPasswords={null_passwords}</code></p>
 
-<h2 id="import">Import</h2>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>id</strong><br/>string</td>
+<td>Unique identifier for the Flow you wish to Package.</td>
+</tr>
+<tr>
+<td><strong>version_id</strong><br/>string</td>
+<td>Unique identifier for the Flow Version you wish to Package.</td>
+</tr>
+<tr>
+<td><strong>null_passwords</strong><br/>boolean</td>
+<td>Indicates if the Package should inlude any Configuration Values that contain Password content typed values.</td>
+</tr>
+</tbody></table>
+
+<h2 id="import-package">Import Package</h2>
+
+<blockquote>
+<p>Success 204 No Content Response</p>
+</blockquote>
+
+<p>This allows you to import a Flow Package back into a Tenant. It&rsquo;s important to note that this is not the same as cloning a Flow. If you import a Flow Package into a Tenant that contains a Flow with the same Flow identifier, the Flow in the Target Tenant will be overwritten with the Flow Package being imported.</p>
 
 <h4 id="http-request">HTTP Request</h4>
 
 <p><code class="prettyprint">POST /api/package/1/flow/{id}/{version_id}?isActive={isActive}&amp;isDefault={isDefault}&amp;uriMapping[n][from]={from}&amp;uriMapping[n][to]={to}</code></p>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>isActive</strong><br/>boolean</td>
+<td>Optional. A boolean value indicating if the Package should be imported as an active SnapShot.</td>
+</tr>
+<tr>
+<td><strong>isDefault</strong><br/>boolean</td>
+<td>Optional. A boolean value indicating if the Package should be imported as an active SnapShot that should be immediately made the default version.</td>
+</tr>
+<tr>
+<td><strong>uriMapping[n][from]</strong><br/>string</td>
+<td>Optional. At position n in an array of uriMapping values, this is the Uri that any Services in the Package currently point to.</td>
+</tr>
+<tr>
+<td><strong>uriMapping[n][to]</strong><br/>string</td>
+<td>Optional. At position n in an array of uriMapping values, this is the Uri that the matching Service (as per the from) should point to once the Package has been imported. This allows you to map Services to a different Uri as part of the packaging process.</td>
+</tr>
+</tbody></table>
 
           <h1 id="play-api">Play API</h1>
 
