@@ -963,18 +963,136 @@ The raw JSON for the Value Element translation.
 
 ## Type Element Translation
 
+> Example response:
+
+```json
+{
+    "properties": [
+        {
+            "id": "{idA}",
+            "developerName": "Property One",
+            "contentFormatContentValueId": "{idB}"
+        },
+        {
+            "id": "{idC}",
+            "developerName": "Property Two",
+            "contentFormatContentValueId": "{idD}"
+        }
+    ],
+    "id": "{idE}",
+    "elementType": "TYPE",
+    "developerName": "Type Name",
+    "developerSummary": "",
+    "contentValueDocument": {
+        "translations": {
+            "{idF}": {
+                "contentValues": {
+                    "{idB}": "Translation for Property One",
+                    "{idD}": "Translation for Property Two"
+                }
+            }
+        }
+    }
+}
+```
+
+*The Type Element Translation object provides all of the content properties in a Type Element that can be translated.*
+
+The Type Element Translation object also includes additional properties to help translators identity the purpose/location of the content being translated.
+
+Key | Description
+--- | -----------
+**id**<br/>string | A unique identifier for the Type Element (see Type Element in the Draw API).
+**elementType**<br/>string | The type of Type Element. Valid values are:<br/><ul><li>TYPE</li></ul>
+**developerName**<br/>string | The developer name of the Type Element (see Type Element in the Draw API).
+**developerSummary**<br/>string | The developer summary of the Type Element (see Type Element in the Draw API).
+**contentValueDocument**<br/>object | See the Flow Translation Document section for details on this object.
+
 ### Get Type Element Translation
+
+Used to get an existing Type Element Translation. The Type Element Translation object provides all of the content properties in a Type Element that can be translated.
 
 #### HTTP Request
 
+> Example Response:
+
+```json
+{
+    "properties": [
+        {
+            "id": "5af55b98-d697-4cd3-a450-be77b4982872",
+            "developerName": "Name",
+            "contentFormatContentValueId": "079359a8-cc9b-4747-95f5-d1cb46fb0bc4"
+        },
+        {
+            "id": "60001a40-5ad5-4faf-aa46-89443aca0607",
+            "developerName": "Age",
+            "contentFormatContentValueId": "978258dd-8e7d-4a4c-bbe6-1b02c5d75e3d"
+        }
+    ],
+    "id": "cd594a53-0f32-4b21-bd82-21f35b00e5cf",
+    "elementType": "TYPE",
+    "developerName": "Person",
+    "developerSummary": "",
+    "contentValueDocument": {
+        "translations": {
+            "88b9010a-4a01-40e5-a18e-742d95de6273": {
+                "contentValues": {
+                    "079359a8-cc9b-4747-95f5-d1cb46fb0bc4": "",
+                    "978258dd-8e7d-4a4c-bbe6-1b02c5d75e3d": ""
+                }
+            }
+        }
+    }
+}
+```
+
 `GET /api/translate/1/element/type/{id}`
 
+Key | Description
+--- | -----------
+**id**<br/>string | The unique identifier for the Type associated with this Type Translation.
 
 ### Update Type Element Translation
 
 #### HTTP Request
 
 `POST /api/translate/1/element/type`
+
+```json
+{
+    "properties": [
+        {
+            "id": "5af55b98-d697-4cd3-a450-be77b4982872",
+            "developerName": "Name",
+            "contentFormatContentValueId": "079359a8-cc9b-4747-95f5-d1cb46fb0bc4"
+        },
+        {
+            "id": "60001a40-5ad5-4faf-aa46-89443aca0607",
+            "developerName": "Age",
+            "contentFormatContentValueId": "978258dd-8e7d-4a4c-bbe6-1b02c5d75e3d"
+        }
+    ],
+    "id": "cd594a53-0f32-4b21-bd82-21f35b00e5cf",
+    "elementType": "TYPE",
+    "developerName": "Person",
+    "developerSummary": "",
+    "contentValueDocument": {
+        "translations": {
+            "88b9010a-4a01-40e5-a18e-742d95de6273": {
+                "contentValues": {
+                    "079359a8-cc9b-4747-95f5-d1cb46fb0bc4": "",
+                    "978258dd-8e7d-4a4c-bbe6-1b02c5d75e3d": ""
+                }
+            }
+        }
+    }
+}
+```
+
+#### Body
+
+The raw JSON for the Type Element translation.
 
 
 ## Map Element Translation
