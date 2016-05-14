@@ -49,7 +49,11 @@ Key | Description
 
 ## Import Package
 
-> Success 204 No Content Response
+> Example Request
+
+```http
+POST https://flow.manywho.com/api/package/1/flow?uriMapping[0][from]=https://flow.manywho.com/plugins/manywho/api/identity/1/authentication&uriMapping[0][to]=https://myservice.mycompany.com/plugins/api/identity/1/authentication
+```
 
 This allows you to import a Flow Package back into a Tenant. It's important to note that this is not the same as cloning a Flow. If you import a Flow Package into a Tenant that contains a Flow with the same Flow identifier, the Flow in the Target Tenant will be overwritten with the Flow Package being imported.
 
