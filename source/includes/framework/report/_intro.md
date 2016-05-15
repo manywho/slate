@@ -1,4 +1,4 @@
-# Reporting
+# Report Framework
 
 States can be set to send reporting data to an external endpoint that adheres to our Reporting API interface (a supported implementation is available [on GitHub](https://github.com/manywho/reporting)). This allows you to gain a greater insight into how and when flows are being uses, as well as the values being used inside a state.
 

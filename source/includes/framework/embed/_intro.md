@@ -1,4 +1,4 @@
-# Embed
+# Embed Framework
 
 ## UI Framework
 The ManyWho HTML5 UI framework will handle all the user interaction and rendering of Flows in a browser. The framework
