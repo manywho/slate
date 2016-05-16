@@ -540,7 +540,154 @@ A Flow won&rsquo;t be valid and will fail to run until you connect the Start ele
 
 <p>When creating a new flow or editing an existing one, you can set the <strong>Expire After</strong> field to the number of seconds that the state should last for.</p>
 
-          <h1 id="embed">Embed</h1>
+          <h1 id="how-to">How To</h1>
+
+<p>We&rsquo;ve created this section to include answers to common questions. Please refer to the core API documentation for more in-depth information about various features, as this section does not give a complete picture of all the things you can do with the Platform.</p>
+
+<h2 id="general">General</h2>
+
+<h3 id="debugging-a-flow">Debugging a Flow</h3>
+
+<p>As with all things in technology, it often doesn&rsquo;t work the first time. When things don&rsquo;t work, there&rsquo;s nothing more frustrating than not know what&rsquo;s gone wrong. As a result, ManyWho has built-in debugging capabilities to help Flow Builders get detailed knowledge of what&rsquo;s happening on the service.
+When running a Flow from the tooling, you will have noticed that we three buttons for running a Flow. If running in Debug or Debug Step-through, the platform will do the following:</p>
+
+<ul>
+<li>Populate the preCommitStateValues so you can see exactly what values are waiting in the engine to be committed. These are the changes that will be applied to the Values in your Flow State once the Map Element and Map Element Outcome have successfully completed and navigated the user to the next Element in the Flow.</li>
+<li>Populate the stateValues so you can see exactly what Values are currently being stored in the engine State.</li>
+</ul>
+
+<p>However, in addition to the features of the debug options, the engine will also perform substantially more validation on the incoming requests to make sure the request is valid. Therefore, if you&rsquo;re building a new HTML5 Player or simply debugging your Flows, make sure you flip the mode to one of the &lsquo;debug&rsquo; modes - it will save you a lot of time!</p>
+
+<h2 id="pages">Pages</h2>
+
+<h3 id="creating-picklists">Creating Picklists</h3>
+
+<p>It&rsquo;s very easy to create re-usable PickList or ComboBox Page Components using the Platform. However, there are a few steps to do this to ensure your Flow applications are consistent:</p>
+
+<ol>
+<li>You need to create a Type for the structure of your entries in the ComboBox. If you&rsquo;re used to HTML, this might contain a Label and a Value. But in reality, the Type can be as complicated as you like and hold as much data as you need to drive the rules and logic of your Flow.</li>
+<li>You need to create a List Value to hold the data in your ComboBox.</li>
+<li>You can optionally create an Object Value to hold the user selection.</li>
+<li>You need to create the ComboBox Page Component that brings it all together.</li>
+</ol>
+
+<aside class="notice">
+<b>Hint</b><br/>
+Try creating a Type with two string properties: Label and Name. From there you can always add more properties. You can then also re-use this Type for all ComboBoxes you use for all Flows. You can also re-use your List for all Flows ensuring keep central lists of all picklists in one place.
+</aside>
+
+<h3 id="creating-dynamic-pages">Creating Dynamic Pages</h3>
+
+<p>To create Dynamic Pages, you should use what we call &ldquo;Page Conditions&rdquo;. Have a look in the PageElement documentation under the Draw API for details on how PageConditions are configured. In our tooling, you can also use our point-and-click Page Conditions editor to easily configure new and existing logic in your Pages.</p>
+
+<h3 id="hiding-buttons">Hiding Buttons</h3>
+
+<p>Referencing Creating Dynamic Pages, you cannot currently create Page Conditions for Outcomes. However, it is still possible to apply dynamic logic to Outcomes. The way you do this is to &ldquo;place the outcome with&rdquo; a Page Component and then apply the Page Conditions for hide/display to the Page Component. When the Page Component is hidden, the Outcome (button) will be hidden also.</p>
+
+<h3 id="creating-editable-quot-spreadsheets-quot">Creating Editable &ldquo;Spreadsheets&rdquo;</h3>
+
+<p>It can be helpful to allow users to &ldquo;inline&rdquo; edit data contained in a Table component. The following assumes you have a working knowledge of Flow building.</p>
+
+<ol>
+<li>Create a new Type or use an existing Type, this will represent the columns of your Table.</li>
+<li>Create a new List Value of the above Type.</li>
+<li>Add some data to the List via the List editor. These entries will represent the rows in your Table.</li>
+<li>Create a new Page and new Page Layout in your Flow.</li>
+<li>Create a new Table Page Component referencing your List as the data source, and also the place to save the data.</li>
+<li>Add the relevant columns you want to display to the running user(s). Tick the &ldquo;Editable&rdquo; box for all columns you want the user to be able to edit inline.</li>
+<li>Save the Page Layout and Page.</li>
+</ol>
+
+<p>That&rsquo;s it. You&rsquo;ve now created an editable Table.</p>
+
+<aside class="notice">
+<b>Data</b><br/>
+It&rsquo;s important to note that you can make any Table editable - even if the data is sourced from a Service.
+</aside>
+
+<h3 id="adding-custom-components-to-your-pages">Adding Custom Components to your Pages</h3>
+
+<p>Currently some Page Components aren&rsquo;t available in the drag &amp; drop Page Editor, however they are available in the UI framework. For example, have a look at our GitHub repository:</p>
+
+<p><strong>Digital Signature Pad</strong>: Allows you to draw your signature directly on the Page.</p>
+
+<p>http://github.com/manywho/ui-signature-pad</p>
+
+<p><strong>Box</strong>: Includes the various UI components available from Box.com, such as the document Viewer.</p>
+
+<p>http://github.com/manywho/ui-box</p>
+
+<p><strong>QR Code Reader</strong>: Add a QR Code scanner/reader to your Flow applications.</p>
+
+<p>http://github.com/manywho/ui-qr-code</p>
+
+<p>However, our UI framework also includes additional UI components are standard. Check out the Embed section and our UI Framework for details.</p>
+
+<p>The simplest way to add a custom component is to do the following:</p>
+
+<ol>
+<li>Find a component that&rsquo;s similar to the custom component in terms of features.</li>
+<li>Drag that component into your Page Layout, providing as many of the configuration options as possible.</li>
+<li>Click on the Edit Page Metadata button.</li>
+<li>Find the component you just added in the JSON.</li>
+<li>Change the &ldquo;componentType&rdquo; to the component type value provided in the documentation for the custom component.</li>
+<li>Click to Edit the component again, and note that all settings are now available to change.</li>
+</ol>
+
+<aside class="notice">
+<b>Note</b><br/>
+You should reference the settings for the custom component on which settings can be used and are supported.
+</aside>
+
+<h3 id="searching-specific-database-columns">Searching Specific Database Columns</h3>
+
+<p>You can add column specific search capabilities by configuring your Page metadata as shown in the example JSON.</p>
+<pre class="highlight json"><code><span class="s2">"objectDataRequest"</span><span class="err">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"typeElementBindingId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"typeElementId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"listFilter"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"search"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Search For"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"searchCriteria"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"columnTypeElementEntryId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id of the property}"</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"typeElementDeveloperName"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<aside class="notice">
+<b>Service</b><br/>
+It&rsquo;s important to note that searching by specific database columns is based on the Service. Not all Services support this feature so you should make sure you check out any Service documentation if you&rsquo;re not getting the expected results. In addition, the search by column is not available for data that is bound to a List Value.
+</aside>
+
+<h2 id="navigation">Navigation</h2>
+
+<h3 id="changing-the-navigation-menu-dynamically">Changing the Navigation Menu Dynamically</h3>
+
+<p>Each Map Element in the Flow has the ability to override the standard Navigation menu. Have a look in the MapElement documentation under the Draw API for details on how NavigationOverrides are configured. You can disable or hide individual parts or the whole Navigation menu by adding an override to a specific map element. For example if you have a Step / Page in your Flow that you don&rsquo;t want to display the navigation on you would add an override like the following to the Map Element&rsquo;s metadata:</p>
+<pre class="highlight json"><code><span class="s2">"navigationOverrides"</span><span class="err">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"isEnabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"isVisible"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"navigationElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id of the navigation to hide}"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"navigationItemId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id of the navigation item to hide}"</span><span class="w"> </span><span class="err">//</span><span class="w">  </span><span class="err">e.g.</span><span class="w"> </span><span class="mi">00000000-0000-0000-0000-000000000000</span><span class="w">
+        </span><span class="s2">"locationMapElementId"</span><span class="w"> </span><span class="s2">"{id of the map element the navigation item points to}"</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Omit</span><span class="w"> </span><span class="err">if</span><span class="w"> </span><span class="err">you</span><span class="w"> </span><span class="err">are</span><span class="w"> </span><span class="err">hiding</span><span class="w"> </span><span class="err">/</span><span class="w"> </span><span class="err">disabling</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">entire</span><span class="w"> </span><span class="err">nav</span><span class="w"> </span><span class="err">bar</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<p>A couple of interesting features to mention:</p>
+
+<ol>
+<li>Set the <code class="prettyprint">navigationItemId</code> to an empty Guid (I.e. &ldquo;00000000-0000-0000-0000-000000000000&rdquo;) to hide the entire Navigation menu from the running user(s). This is in addition to setting &ldquo;isVisible&rdquo; to <code class="prettyprint">false</code>;</li>
+<li>You can edit the Navigation Element metadata by using the Draw API with the API tool. Make sure you check out the NavigationElement documentation for details on this.</li>
+<li>The NavigationOverride will continue to take affect for every subsequent Map Element that is navigated to until it has been cleared. You can clear navigation overrides by setting &ldquo;clearNavigationOverrides&rdquo; to true on a Map Element.</li>
+</ol>
+
+          <h1 id="embed-framework">Embed Framework</h1>
 
 <h2 id="ui-framework">UI Framework</h2>
 
@@ -713,6 +860,395 @@ is built upon some standard front end technologies including:</p>
 </tr>
 </tbody></table>
 
+          <h4 id="input-component">Input Component</h4>
+
+<h5 id="attributes">Attributes</h5>
+
+<blockquote>
+<p>Example JSON</p>
+</blockquote>
+<pre class="highlight json"><code><span class="s2">"attributes"</span><span class="err">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="err">  </span><span class="nt">"dateTimeLocale"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en-us"</span><span class="p">,</span><span class="w">
+</span><span class="err">  </span><span class="nt">"dateTimeFormat"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MM/DD/YYYY hh:mm:ss"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>The following attributes can be added to the Input Component to further customize the user experience:</p>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>dateTimeLocale</td>
+<td>{the local}</td>
+<td>By default, the input field for DateTime Content Types, displayes using &ldquo;en-us&rdquo;. Other locales are supported. For more information, please refer to the documentation here: <a href="https://github.com/moment/moment/tree/develop/locale">https://github.com/moment/moment/tree/develop/locale</a></td>
+</tr>
+<tr>
+<td>dateTimeFormat</td>
+<td>{the format}</td>
+<td>By default the date picker (only enabled with DateTime Content Types) does not display the time or allow users to specify a time, when selecting a date the time component will default to &ldquo;now&rdquo;. More information on accepted dateTimeFormat strings can be found here: <a href="http://momentjs.com/docs/#/displaying/format">http://momentjs.com/docs/#/displaying/format</a></td>
+</tr>
+</tbody></table>
+
+          <h4 id="rich-text-content-component">Rich Text / Content Component</h4>
+
+<h5 id="attributes">Attributes</h5>
+
+<p>None</p>
+
+<h5 id="feature-add-image-upload-support">Feature: Add Image Upload Support</h5>
+
+<p>You can add image upload support to your Flow applications using the Rich Text editor. This is done by editing the meta-data for your component:</p>
+
+<p>Open the Page Layout with your Rich Text / Content Component.
+Click on Edit Page Metadata.
+Copy the &ldquo;id&rdquo; property for the Page Layout.
+Using the API tool (Admin), use the <code class="prettyprint">.../page/{id}</code> endpoint (pasting your id into the appropriate place) to GET the full Page Element.
+Copy the contents of the right pane into the left pane.
+Use the <code class="prettyprint">.../service?filter=</code> endpoint to get the list of available Service Elements.
+Find the Service Element that will be used to store the uploaded file. Grab the &ldquo;id&rdquo; property for that Service Element.</p>
+
+<p>Now that you have the necessary information for the base configuration, change the &ldquo;fileDataRequest&rdquo; property for your component to:</p>
+<pre class="highlight json"><code><span class="s2">"fileDataRequest"</span><span class="err">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"serviceElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id of the service holding the files}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"resourcePath"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"resourceFile"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>To provide image upload support for your running user(s), the file will be uploaded to the underlying Service. As a result, the Service must support file uploads. Use the <code class="prettyprint">.../page</code> endpoint to POST your amended JSON back to the Draw API.</p>
+
+<aside class="notice">
+<b>Salesforce Service</b><br/>
+In case you are using the Salesforce Service to host the files, the resourcePath property must contain the following string: &ldquo;ParentRecordId:{id of the record the file will be attached to}&rdquo; E.g.: &ldquo;ParentRecordId:{![Case].[Case Id]}&rdquo;
+</aside>
+
+          <h4 id="files-and-file-component">Files and File Component</h4>
+
+<h5 id="attributes">Attributes</h5>
+
+<blockquote>
+<p>Example JSON</p>
+</blockquote>
+<pre class="highlight json"><code><span class="s2">"attributes"</span><span class="err">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="nt">"isAutoUpload"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>The following attributes can be added to the Files and File Component to further customize the user experience:</p>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>isAutoUpload</td>
+<td>true or false</td>
+<td>Indicates if the component should auto-upload files when dropped onto the component but the running user(s).</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">
+<b>Files</b><br/>
+For the Files Component, you should also check out the Table Component attributes as the Files component supports the same features.
+</aside>
+
+          <h4 id="table-component">Table Component</h4>
+
+<h5 id="attributes">Attributes</h5>
+
+<blockquote>
+<p>Example JSON</p>
+</blockquote>
+<pre class="highlight json"><code><span class="s2">"attributes"</span><span class="err">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="nt">"borderless"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"striped"</span><span class="p">:</span><span class="w"> </span><span class="s2">"false"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"radio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"outcomes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"icons"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>The following attributes can be added to the Table Component to further customize the user experience:</p>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>borderless</td>
+<td>true or false</td>
+<td>Removes all vertical borders.</td>
+</tr>
+<tr>
+<td>striped</td>
+<td>true or false</td>
+<td>Adds a stripe effect to the table.</td>
+</tr>
+<tr>
+<td>radio</td>
+<td>true or false</td>
+<td>Adds an extra column at the beginning of the table with a radio button input for each row. Multi-select tables will display checkboxes.</td>
+</tr>
+<tr>
+<td>outcomes</td>
+<td>icons</td>
+<td>Changes all non-bulk action outcomes to icons.</td>
+</tr>
+</tbody></table>
+
+          <h4 id="navigation-component">Navigation Component</h4>
+
+<h5 id="attributes">Attributes</h5>
+
+<p>None</p>
+
+<h5 id="feature-adding-additional-menus-buttons-and-components">Feature: Adding Additional Menus, Buttons, and Components</h5>
+
+<p>Additional React components can be added to the navigation bar adding the components property to the navigation setting in a custom player. This property takes an array of React components that will be rendered after any other items that are configured to be displayed in the navigation bar by your Flow.</p>
+<pre class="highlight json"><code><span class="err">navigation:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="err">isFixed:</span><span class="w"> </span><span class="err">true;</span><span class="w">
+    </span><span class="err">components:</span><span class="w"> </span><span class="err">[</span><span class="w">
+        </span><span class="err">React.DOM.li(null,</span><span class="w"> </span><span class="err">React.DOM.a({</span><span class="w"> </span><span class="err">href:</span><span class="w"> </span><span class="err">'#'</span><span class="w"> </span><span class="p">}</span><span class="err">,</span><span class="w"> </span><span class="err">'My</span><span class="w"> </span><span class="err">Custom</span><span class="w"> </span><span class="err">Nav</span><span class="w"> </span><span class="err">Item'))</span><span class="w">
+    </span><span class="err">]</span><span class="w">
+</span><span class="err">}</span><span class="w">
+</span></code></pre>
+
+<aside class="notice">
+<b>Salesforce Service</b><br/>
+The navigation bar is based on the Bootstrap 3 elements & styling. You can find more information on what elements the navigation bar supports and examples of using them here: [http://getbootstrap.com/components/#navbar](http://getbootstrap.com/components/#navbar)
+</aside>
+
+          <h3 id="custom-themes">Custom Themes</h3>
+
+<p>The HTML5 player includes support for the various Bootswatch themes (available here: <a href="http://bootswatch.com">http://bootswatch.com</a>), where the Paper theme is the default. You can change the theme at any time by running the following in the javascript console (&lsquo;yeti&rsquo; can be replaced with any Bootswatch theme name). Or you can add this line of JavaScript to your Player code within the initialization block.</p>
+<pre class="highlight javascript"><code><span class="nx">manywho</span><span class="p">.</span><span class="nx">theming</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="s1">'yeti'</span><span class="p">);</span>
+</code></pre>
+
+<h4 id="creating-a-new-theme">Creating A New Theme</h4>
+
+<p>You can also use a custom theme that you have created instead of the included Bootswatch themes. Below are some steps outlining this process:</p>
+
+<ol>
+<li>Namespace your theme&rsquo;s css to .mw-bs, the easiest way to do this is to wrap it in a LESS file e.g. <code class="prettyprint">.mw-bs { @import (less) &quot;mytheme.css&quot;; }</code></li>
+<li>Upload your namespaced css to a publicly available url</li>
+<li>Create a custom player in your tenant that is a copy of the default player</li>
+<li>Add the following snippet of javascript to the top of the initialize function in your custom player (just before manywho.settings.initialize): <code class="prettyprint">manywho.theming.custom(&#39;theme css url goes here&#39;);</code></li>
+</ol>
+
+<aside class="notice">
+<b>Bootstrap 3</b><br/>
+Custom themes need to be Bootstrap 3 compatible.
+</aside>
+
+          <h4 id="loading-custom-components-and-css">Loading Custom Components and CSS</h4>
+
+<p>Below are some steps outlining the process for loading custom resources (CSS and JavaScript files) into the HTML5 Player, this is useful if you have created custom components:</p>
+
+<ol>
+<li>Upload your resources to a publicly available url (this url will need to support CORS).</li>
+<li>Create a custom player using the Player tool in the Admin area.</li>
+<li>Alter the <code class="prettyprint">manywho</code> object by adding a &ldquo;customResources&rdquo; property as shown below.</li>
+</ol>
+<pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">manywho</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">cdnUrl</span><span class="p">:</span> <span class="s1">'https://assets.manywho.com'</span><span class="p">,</span>
+    <span class="na">customResources</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">"https://mydomain.com/js/test.js"</span>
+    <span class="p">],</span>
+    <span class="na">initialize</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// Your usual initialize code here...</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>Any custom resource file loaded using the customResources property will be included into the player after the manywho resources have finished loading, this is desired when adding custom components for example. If you need your resources to load first then add them as script or link tags to the player directly.</p>
+
+<aside class="notice">
+<b>Assets</b><br/>
+You can use the Assets area to upload your files. Please note that files uploaded to your Assets repository are publicly accessible.
+</aside>
+
+          <h3 id="localization">Localization</h3>
+
+<p>You can change the default text used throughout the player by configuring the localization object:</p>
+<pre class="highlight javascript"><code><span class="nx">manywho</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">initialize</span><span class="p">({</span>
+    <span class="na">adminTenantId</span><span class="p">:</span> <span class="nx">ManyWhoConstants</span><span class="p">.</span><span class="nx">MANYWHO_ADMIN_TENANT_ID</span><span class="p">,</span>
+    <span class="na">playerUrl</span><span class="p">:</span> <span class="p">[</span> <span class="nx">location</span><span class="p">.</span><span class="nx">protocol</span><span class="p">,</span> <span class="s1">'//'</span><span class="p">,</span> <span class="nx">location</span><span class="p">.</span><span class="nx">host</span><span class="p">,</span> <span class="nx">location</span><span class="p">.</span><span class="nx">pathname</span> <span class="p">].</span><span class="nx">join</span><span class="p">(</span><span class="s1">''</span><span class="p">),</span>
+    <span class="na">joinUrl</span><span class="p">:</span> <span class="p">[</span> <span class="nx">location</span><span class="p">.</span><span class="nx">protocol</span><span class="p">,</span> <span class="s1">'//'</span><span class="p">,</span> <span class="nx">location</span><span class="p">.</span><span class="nx">host</span><span class="p">,</span> <span class="nx">location</span><span class="p">.</span><span class="nx">pathname</span> <span class="p">].</span><span class="nx">join</span><span class="p">(</span><span class="s1">''</span><span class="p">),</span>
+    <span class="na">localization</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">initializing</span><span class="p">:</span> <span class="s1">'Init'</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</code></pre>
+
+<aside class="notice">
+<b>Available Options</b><br/>
+The localization object currently supports the following properties: initializing, executing, loading, navigating, syncing, joining, sending, returnToParent
+</aside>
+
+          <h3 id="locking-the-ui-assets">Locking the UI Assets</h3>
+
+<p>In some cases you may want to &ldquo;freeze&rdquo; the version of ManyWho CSS and JavaScript for the HTML5 player, which normally, is updated regularly for you.</p>
+
+<aside class="notice">
+<b>To Lock Or Not To Lock</b><br/>
+We recommend if you do any customization of the UI framework that you lock the assets and manage version / updates manually. This gives you the option to do additional testing based on your customizations. If you are only changing the initialization options, it can be easier to allow ManyWho to push regular updates to you.
+</aside>
+
+<p>You can do this by creating a custom player and pasting in the following HTML:</p>
+<pre class="highlight html"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span> <span class="na">xmlns=</span><span class="s">"http://www.w3.org/1999/xhtml"</span> <span class="na">class=</span><span class="s">"manywho"</span> <span class="na">style=</span><span class="s">"height: 100%;"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"viewport"</span> <span class="na">content=</span><span class="s">"width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;title&gt;</span>ManyWho<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body</span> <span class="na">style=</span><span class="s">"height: 100%;"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"manywho"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"loader"</span> <span class="na">style=</span><span class="s">"width: 100%; height: 100%; background: black; opacity: 0.3;"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"position: absolute; width: 100%; top: 50%; left: 0; margin-top: -4em; text-align: center; color: white;"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;p</span> <span class="na">style=</span><span class="s">"font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 2em"</span><span class="nt">&gt;</span>Initializing<span class="nt">&lt;/p&gt;</span>
+            <span class="nt">&lt;/div&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+    <span class="c">&lt;!-- Paste vendor assets here--&gt;</span>
+    <span class="nt">&lt;script&gt;</span>
+        <span class="kd">var</span> <span class="nx">manywho</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="na">cdnUrl</span><span class="p">:</span> <span class="s1">'https://assets.manywho.com'</span><span class="p">,</span>
+            <span class="na">initialize</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+                <span class="kd">var</span> <span class="nx">queryParameters</span> <span class="o">=</span> <span class="nx">manywho</span><span class="p">.</span><span class="nx">utils</span><span class="p">.</span><span class="nx">parseQueryString</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">search</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>
+                <span class="nx">manywho</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">initialize</span><span class="p">({</span>
+                    <span class="na">adminTenantId</span><span class="p">:</span> <span class="nx">ManyWhoConstants</span><span class="p">.</span><span class="nx">MANYWHO_ADMIN_TENANT_ID</span><span class="p">,</span>
+                    <span class="na">playerUrl</span><span class="p">:</span> <span class="p">[</span> <span class="nx">location</span><span class="p">.</span><span class="nx">protocol</span><span class="p">,</span> <span class="s1">'//'</span><span class="p">,</span> <span class="nx">location</span><span class="p">.</span><span class="nx">host</span><span class="p">,</span> <span class="nx">location</span><span class="p">.</span><span class="nx">pathname</span> <span class="p">].</span><span class="nx">join</span><span class="p">(</span><span class="s1">''</span><span class="p">),</span>
+                    <span class="na">joinUrl</span><span class="p">:</span> <span class="p">[</span> <span class="nx">location</span><span class="p">.</span><span class="nx">protocol</span><span class="p">,</span> <span class="s1">'//'</span><span class="p">,</span> <span class="nx">location</span><span class="p">.</span><span class="nx">host</span><span class="p">,</span> <span class="nx">location</span><span class="p">.</span><span class="nx">pathname</span> <span class="p">].</span><span class="nx">join</span><span class="p">(</span><span class="s1">''</span><span class="p">)</span>
+                <span class="p">});</span>
+                <span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="na">authentication</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="na">sessionId</span><span class="p">:</span> <span class="nx">queryParameters</span><span class="p">[</span><span class="s1">'session-token'</span><span class="p">],</span>
+                        <span class="na">sessionUrl</span><span class="p">:</span> <span class="nx">queryParameters</span><span class="p">[</span><span class="s1">'session-url'</span><span class="p">]</span>
+                    <span class="p">},</span>
+                    <span class="na">navigationElementId</span><span class="p">:</span> <span class="nx">queryParameters</span><span class="p">[</span><span class="s1">'navigation-element-id'</span><span class="p">],</span>
+                    <span class="na">mode</span><span class="p">:</span> <span class="nx">queryParameters</span><span class="p">[</span><span class="s1">'mode'</span><span class="p">],</span>
+                    <span class="na">reportingMode</span><span class="p">:</span> <span class="nx">queryParameters</span><span class="p">[</span><span class="s1">'reporting-mode'</span><span class="p">],</span>
+                    <span class="na">trackLocation</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+                    <span class="na">replaceUrl</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+                    <span class="na">collaboration</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="na">isEnabled</span><span class="p">:</span> <span class="kc">false</span>
+                    <span class="p">},</span>
+                    <span class="na">autoFocusInput</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+                    <span class="na">inputs</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+                    <span class="na">annotations</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+                    <span class="na">collapsible</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+                    <span class="na">navigation</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="na">isFixed</span><span class="p">:</span> <span class="kc">true</span>
+                    <span class="p">},</span>
+                    <span class="na">callbacks</span><span class="p">:</span> <span class="p">[]</span>
+                <span class="p">};</span>
+                <span class="kd">var</span> <span class="nx">tenantId</span> <span class="o">=</span> <span class="nx">queryParameters</span><span class="p">[</span><span class="s1">'tenant-id'</span><span class="p">];</span>
+                <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">tenantId</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="nx">tenantId</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">pathname</span>
+                                <span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">'/'</span><span class="p">)</span>
+                                <span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">path</span><span class="p">)</span> <span class="p">{</span>
+                                    <span class="k">return</span> <span class="nx">path</span> <span class="o">&amp;&amp;</span> <span class="nx">path</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">;</span>
+                                <span class="p">})[</span><span class="mi">0</span><span class="p">];</span>
+                <span class="p">}</span>
+                <span class="nx">manywho</span><span class="p">.</span><span class="nx">engine</span><span class="p">.</span><span class="nx">initialize</span><span class="p">(</span>
+                    <span class="nx">tenantId</span><span class="p">,</span>
+                    <span class="nx">queryParameters</span><span class="p">[</span><span class="s1">'flow-id'</span><span class="p">],</span>
+                    <span class="nx">queryParameters</span><span class="p">[</span><span class="s1">'flow-version-id'</span><span class="p">],</span>
+                    <span class="s1">'main'</span><span class="p">,</span>
+                    <span class="nx">queryParameters</span><span class="p">[</span><span class="s1">'join'</span><span class="p">],</span>
+                    <span class="nx">queryParameters</span><span class="p">[</span><span class="s1">'authorization'</span><span class="p">],</span>
+                    <span class="nx">options</span><span class="p">,</span>
+                    <span class="nx">queryParameters</span><span class="p">[</span><span class="s1">'initialization'</span><span class="p">]</span>
+                <span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">};</span>
+    <span class="nt">&lt;/script&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://flow.manywho.com/js/constants"</span><span class="nt">&gt;&lt;/script&gt;</span>
+
+    <span class="c">&lt;!-- Paste versioned assets here --&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">href=</span><span class="s">"https://assets.manywho.com/css/themes/mw-paper.css"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;script&gt;</span>
+        <span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">manywho</span><span class="p">,</span> <span class="nb">window</span><span class="p">,</span> <span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">function</span> <span class="nx">appendScript</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">onLoad</span><span class="p">)</span> <span class="p">{</span>
+                <span class="kd">var</span> <span class="nx">script</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">"script"</span><span class="p">);</span>
+                <span class="nx">script</span><span class="p">.</span><span class="nx">type</span> <span class="o">=</span> <span class="s2">"text/javascript"</span><span class="p">;</span>
+                <span class="nx">script</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="nx">onLoad</span><span class="p">;</span>
+                <span class="nx">script</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="nx">url</span><span class="p">;</span>
+                <span class="nb">document</span><span class="p">.</span><span class="nx">head</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">script</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="kd">function</span> <span class="nx">appendStylesheet</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">id</span><span class="p">)</span> <span class="p">{</span>
+                <span class="kd">var</span> <span class="nx">compiledStyles</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">"link"</span><span class="p">);</span>
+                <span class="nx">compiledStyles</span><span class="p">.</span><span class="nx">rel</span> <span class="o">=</span> <span class="s2">"stylesheet"</span><span class="p">;</span>
+                <span class="nx">compiledStyles</span><span class="p">.</span><span class="nx">href</span> <span class="o">=</span> <span class="nx">url</span><span class="p">;</span>
+                <span class="nx">compiledStyles</span><span class="p">.</span><span class="nx">id</span> <span class="o">=</span> <span class="nx">id</span><span class="p">;</span>
+                <span class="nb">document</span><span class="p">.</span><span class="nx">head</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">compiledStyles</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="nx">manywho</span><span class="p">.</span><span class="nx">loader</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="na">initialize</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">callback</span><span class="p">,</span> <span class="nx">cdnUrl</span><span class="p">,</span> <span class="nx">customResources</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="kd">var</span> <span class="nx">scripts</span> <span class="o">=</span> <span class="p">[];</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="nx">customResources</span><span class="p">)</span>
+                    <span class="p">{</span>
+                        <span class="nx">customResources</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">url</span><span class="p">)</span> <span class="p">{</span>
+                            <span class="k">if</span> <span class="p">(</span><span class="nx">url</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="s1">'\.css$'</span><span class="p">))</span> <span class="p">{</span>
+                                <span class="nx">appendStylesheet</span><span class="p">(</span><span class="nx">url</span><span class="p">);</span>
+                            <span class="p">}</span>
+                            <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">url</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="s1">'\.js$'</span><span class="p">))</span> <span class="p">{</span>
+                                <span class="nx">scripts</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">url</span><span class="p">);</span>
+                            <span class="p">}</span>
+                        <span class="p">});</span>
+                    <span class="p">}</span>
+                    <span class="kd">var</span> <span class="nx">loadedScriptCount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="nx">scripts</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="nx">scripts</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">index</span><span class="p">,</span> <span class="nx">scripts</span><span class="p">)</span> <span class="p">{</span>
+
+                            <span class="nx">appendScript</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+
+                                <span class="nx">loadedScriptCount</span><span class="o">++</span><span class="p">;</span>
+                               <span class="k">if</span> <span class="p">(</span><span class="nx">loadedScriptCount</span> <span class="o">==</span> <span class="nx">scripts</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="p">{</span>
+
+                                    <span class="nx">callback</span><span class="p">();</span>
+
+                                <span class="p">}</span>
+
+                            <span class="p">});</span>
+
+                        <span class="p">});</span>
+
+                    <span class="p">}</span>
+                    <span class="k">else</span> <span class="p">{</span>
+
+                        <span class="nx">callback</span><span class="p">();</span>
+
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="nx">manywho</span><span class="p">.</span><span class="nx">loader</span><span class="p">.</span><span class="nx">initialize</span><span class="p">(</span><span class="nx">manywho</span><span class="p">.</span><span class="nx">initialize</span><span class="p">,</span> <span class="nx">manywho</span><span class="p">.</span><span class="nx">cdnUrl</span><span class="p">,</span> <span class="nx">manywho</span><span class="p">.</span><span class="nx">customResources</span><span class="p">);</span>
+        <span class="p">}(</span><span class="nx">manywho</span><span class="p">,</span> <span class="nb">window</span><span class="p">,</span> <span class="nx">jQuery</span><span class="p">));</span>
+    <span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre>
+
+<p>In addition to the above HTML, you need to do the following:</p>
+
+<ul>
+<li>Replace &lt;!&ndash; Paste vendor assets here &ndash;&gt; with the script tags from Vendor Assets.</li>
+<li>Replace &lt;!&ndash; Paste versioned assets here&ndash;&gt; with the script &amp; link tags from Versioned Assets.</li>
+</ul>
+
+<p>The assets references can be found here: <a href="https://developers.manywho.com/display/MA/UI+-+Change+Log">UI - Change Log</a></p>
+
           <h3 id="creating-a-custom-component">Creating a Custom Component</h3>
 
 <p>A UI component consists of at least one React component and potentially some optional CSS.</p>
@@ -811,7 +1347,105 @@ here: https://github.com/manywho/ManyWho_HTML5_Players2/blob/master/runtime/js/c
 <li>You can debug a production flow by adding the tenant-id, flow-id &amp; flow-version-id query parameters in the browser (join query parameter is also supported) e.g. <code class="prettyprint">http://localhost:3000?tenant-id=mytenantid&amp;flow-id=myflowid&amp;flow-version-id=myflowversionid</code></li>
 </ol>
 
-          <h1 id="connect">Connect</h1>
+          <h3 id="adding-custom-css-classes-to-components-amp-containers">Adding Custom CSS Classes to Components &amp; Containers</h3>
+
+<p>Page Components &amp; Containers rendered using the HTML5 player uses standard CSS for their styling. You can customize the look &amp; feel of Page Components &amp; Containers by overriding their default styling using custom styles (either inline in a custom player or in a separate stylesheet).</p>
+
+<p>Occasionally it may be required to add custom classes to a Page Component or Container, for example, if you have existing styles that you want to implement. You can do this by adding the following piece of javascript to your HTML5 player:</p>
+<pre class="highlight javascript"><code><span class="c1">// Add 'my-class' to presentation components</span>
+<span class="nx">manywho</span><span class="p">.</span><span class="nx">styling</span><span class="p">.</span><span class="nx">registerComponent</span><span class="p">(</span><span class="s1">'presentation'</span><span class="p">,</span> <span class="s1">'my-class'</span><span class="p">);</span>
+
+<span class="c1">// Adds 'my-class-1' &amp; 'my-class-2' to the vertical container</span>
+<span class="nx">manywho</span><span class="p">.</span><span class="nx">styling</span><span class="p">.</span><span class="nx">registerComponent</span><span class="p">(</span><span class="s1">'vertical_flow'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'my-class-1'</span><span class="p">,</span> <span class="s1">'my-class-2'</span><span class="p">]);</span>
+
+<span class="c1">// Adds 'my-class' to input components</span>
+<span class="nx">manywho</span><span class="p">.</span><span class="nx">styling</span><span class="p">.</span><span class="nx">registerComponent</span><span class="p">(</span><span class="s1">'input'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">item</span><span class="p">,</span> <span class="nx">container</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="s1">'my-class'</span><span class="p">;</span>
+<span class="p">});</span>
+</code></pre>
+
+          <h3 id="embedding-the-html5-player">Embedding the HTML5 Player</h3>
+
+<p>The HTML5 player supports being embedded into existing pages without requiring the use of an IFrame (embedding using an IFrame is supported also). The HTML5 player&rsquo;s CSS is namespaced to the .mw-bs class so it will won&rsquo;t clash with any existing styles on your page. You can embed the player onto your page by copying and pasting the following:</p>
+<pre class="highlight html"><code><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"manywho"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"loader"</span> <span class="na">style=</span><span class="s">"width: 100%; height: 100%; background: black; opacity: 0.3;"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"position: absolute; width: 100%; top: 50%; left: 0; margin-top: -4em; text-align: center; color: white;"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;p</span> <span class="na">style=</span><span class="s">"font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 2em"</span><span class="nt">&gt;</span>Initializing<span class="nt">&lt;/p&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://assets.manywho.com/js/vendor/jquery.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://assets.manywho.com/js/vendor/bootstrap.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://assets.manywho.com/js/vendor/react.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://assets.manywho.com/js/vendor/socket.io-1.3.2.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://assets.manywho.com/js/vendor/chosen.jquery.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://assets.manywho.com/js/vendor/loglevel.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://assets.manywho.com/js/vendor/moment-with-locales.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+    <span class="kd">var</span> <span class="nx">manywho</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="na">cdnUrl</span><span class="p">:</span> <span class="s1">'https://assets.manywho.com'</span><span class="p">,</span>
+        <span class="na">initialize</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">queryParameters</span> <span class="o">=</span> <span class="nx">manywho</span><span class="p">.</span><span class="nx">utils</span><span class="p">.</span><span class="nx">parseQueryString</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">search</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>
+            <span class="nx">manywho</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">initialize</span><span class="p">({</span>
+                <span class="na">adminTenantId</span><span class="p">:</span> <span class="nx">ManyWhoConstants</span><span class="p">.</span><span class="nx">MANYWHO_ADMIN_TENANT_ID</span><span class="p">,</span>
+                <span class="na">playerUrl</span><span class="p">:</span> <span class="p">[</span> <span class="nx">location</span><span class="p">.</span><span class="nx">protocol</span><span class="p">,</span> <span class="s1">'//'</span><span class="p">,</span> <span class="nx">location</span><span class="p">.</span><span class="nx">host</span><span class="p">,</span> <span class="nx">location</span><span class="p">.</span><span class="nx">pathname</span> <span class="p">].</span><span class="nx">join</span><span class="p">(</span><span class="s1">''</span><span class="p">),</span>
+                <span class="na">joinUrl</span><span class="p">:</span> <span class="p">[</span> <span class="nx">location</span><span class="p">.</span><span class="nx">protocol</span><span class="p">,</span> <span class="s1">'//'</span><span class="p">,</span> <span class="nx">location</span><span class="p">.</span><span class="nx">host</span><span class="p">,</span> <span class="nx">location</span><span class="p">.</span><span class="nx">pathname</span> <span class="p">].</span><span class="nx">join</span><span class="p">(</span><span class="s1">''</span><span class="p">),</span>
+                <span class="na">platform</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="na">uri</span><span class="p">:</span> <span class="s1">'https://flow.manywho.com'</span>
+                <span class="p">}</span>
+            <span class="p">});</span>
+            <span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="na">authentication</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="na">sessionId</span><span class="p">:</span> <span class="nx">queryParameters</span><span class="p">[</span><span class="s1">'session-token'</span><span class="p">],</span>
+                    <span class="na">sessionUrl</span><span class="p">:</span> <span class="nx">queryParameters</span><span class="p">[</span><span class="s1">'session-url'</span><span class="p">]</span>
+                <span class="p">},</span>
+                <span class="na">navigationElementId</span><span class="p">:</span> <span class="nx">queryParameters</span><span class="p">[</span><span class="s1">'navigation-element-id'</span><span class="p">],</span>
+                <span class="na">mode</span><span class="p">:</span> <span class="nx">queryParameters</span><span class="p">[</span><span class="s1">'mode'</span><span class="p">],</span>
+                <span class="na">reportingMode</span><span class="p">:</span> <span class="nx">queryParameters</span><span class="p">[</span><span class="s1">'reporting-mode'</span><span class="p">],</span>
+                <span class="na">trackLocation</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+                <span class="na">replaceUrl</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+                <span class="na">collaboration</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="na">isEnabled</span><span class="p">:</span> <span class="kc">false</span>
+                <span class="p">},</span>
+                <span class="na">autoFocusInput</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+                <span class="na">inputs</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+                <span class="na">annotations</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+                <span class="na">collapsible</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+                <span class="na">navigation</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="na">isFixed</span><span class="p">:</span> <span class="kc">true</span>
+                <span class="p">}</span>
+            <span class="p">};</span>
+            <span class="kd">var</span> <span class="nx">tenantId</span> <span class="o">=</span> <span class="nx">queryParameters</span><span class="p">[</span><span class="s1">'tenant-id'</span><span class="p">];</span>
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">tenantId</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">tenantId</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">pathname</span>
+                            <span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">'/'</span><span class="p">)</span>
+                            <span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">path</span><span class="p">)</span> <span class="p">{</span>
+                                <span class="k">return</span> <span class="nx">path</span> <span class="o">&amp;&amp;</span> <span class="nx">path</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">;</span>
+                            <span class="p">})[</span><span class="mi">0</span><span class="p">];</span>
+            <span class="p">}</span>
+            <span class="nx">manywho</span><span class="p">.</span><span class="nx">engine</span><span class="p">.</span><span class="nx">initialize</span><span class="p">(</span>
+                <span class="nx">tenantId</span><span class="p">,</span>
+                <span class="nx">queryParameters</span><span class="p">[</span><span class="s1">'flow-id'</span><span class="p">],</span>
+                <span class="nx">queryParameters</span><span class="p">[</span><span class="s1">'flow-version-id'</span><span class="p">],</span>
+                <span class="s1">'main'</span><span class="p">,</span>
+                <span class="nx">queryParameters</span><span class="p">[</span><span class="s1">'join'</span><span class="p">],</span>
+                <span class="nx">queryParameters</span><span class="p">[</span><span class="s1">'authorization'</span><span class="p">],</span>
+                <span class="nx">options</span><span class="p">,</span>
+                <span class="nx">queryParameters</span><span class="p">[</span><span class="s1">'initialization'</span><span class="p">]</span>
+            <span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">};</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://flow.manywho.com/js/constants"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://assets.manywho.com/js/loader.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+</code></pre>
+
+<aside class="notice">
+<b>Lock Assets</b><br/>
+If you are embedding the HTML5 Player into another page (e.g. a Visualforce Page), we highly recommend that you lock your assets to a specific version.
+</aside>
+
+          <h1 id="connect-framework">Connect Framework</h1>
 
 <p>This section contains information on how you can connect/integrate ManyWho to various other applications and platforms. Typically there are two parts to any integration:</p>
 
@@ -859,7 +1493,7 @@ here: https://github.com/manywho/ManyWho_HTML5_Players2/blob/master/runtime/js/c
 <li>Click <strong>OK</strong>, and your service should now run under Grizzly when you launch it by clicking the <strong>Debug</strong> button</li>
 </ol>
 
-<h3 id="how-to-build-a-service">How to: Build a Service</h3>
+<h3 id="build-a-service">Build a Service</h3>
 
 <p>In this tutorial, we will be building a service that integrates with GitHub. We&rsquo;ll start right from generating the basic project template, and finish off with a service that loads, saves, and hits actions on the GitHub API.</p>
 
@@ -1297,6 +1931,266 @@ The **message** value of the exception is what will be seen by users running the
 web: java -Dserver.port=${PORT:-8080} ${JAVA_OPTS} -jar target/artifact-1.0-SNAPSHOT.jar
 </code></p>
 
+          <h2 id="manywho-run">ManyWho Run</h2>
+
+<p>ManyWho also provides a number of features that you can access through the Run Service. These are features that help Flow Builders create more robust Flow applications:</p>
+
+<ol>
+<li><strong>Execute Sub-Flows</strong>: The ability to initialize, invoke and listen to changes in another Flow. This allows you to handle parallel Flow execution and create Flow &ldquo;inboxes&rdquo;.</li>
+<li><strong>Available Flows</strong>: Exposes the list of Flows that are available to run.</li>
+<li><strong>Sharing</strong>: Exposes the sharing functionality to allow Flow Builders to configure how and when users can provide escalated access to Swimlanes.</li>
+</ol>
+
+<p>For more information on Run functions, you can also reference the Run API documentation.</p>
+
+<h3 id="installing-the-manywho-run-service">Installing the ManyWho Run Service</h3>
+
+<h4 id="intro">Intro</h4>
+
+<p>To set up the ManyWho Run Service, please complete the following instructions. The ManyWho Run Service is part of the core platform.</p>
+
+<h5 id="features">Features</h5>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>Logic</strong></td>
+<td>You can execute Sub-Flows in your ManyWho Tenant.</td>
+</tr>
+<tr>
+<td><strong>Listening</strong></td>
+<td>Listen to Flow States in your ManyWho Tenant.</td>
+</tr>
+<tr>
+<td><strong>Database</strong></td>
+<td>Query Flows and Flow States in your ManyWho Tenant.</td>
+</tr>
+</tbody></table>
+
+<h4 id="configuration">Configuration</h4>
+
+<p>When installing the Service, you should use the following settings:</p>
+
+<p><strong>Connection Uri</strong></p>
+
+<p><code class="prettyprint">https://flow.manywho.com/plugins/manywho/api/run/1</code></p>
+
+<p><strong>Configuration Values</strong></p>
+
+<p>None</p>
+
+<h3 id="creating-a-flow-listing">Creating a Flow Listing</h3>
+
+<p>A Flow Listing allows running user(s) to view and run the Flows available in your ManyWho Tenant. This can be used in conjunction with the &ldquo;Inbox&rdquo; to allow your running user(s) to see a list of Flows available and also see a list of Flow States that may require action from them. In this example, we&rsquo;ll use the FlowOut feature to create an Inbox.</p>
+
+<p>In order to complete the steps in this example, you will need to have a reasonable understanding of how to build Flows already. We&rsquo;ll assume you have some Flows already in your Tenant and you now wish to build an Inbox for managing them.</p>
+
+<ol>
+<li>Create a new Object Value of Type Flow. Call it &ldquo;State&rdquo;.</li>
+<li>Create a new Flow for your Flow Listing (or re-use an existing one). This must be in the same Tenant.</li>
+<li>In the Shared Elements tool, import the Flow Value you just created. Make sure the Flow Type and ManyWho Run Service are also imported.</li>
+</ol>
+
+<p>Now that we have the basics needed for our Flow listing, we can create our Page for the listing:</p>
+
+<ol>
+<li>Drag a Page onto your Flow.</li>
+<li>Create a new Page Layout for this Page.</li>
+<li>Drag a new Table component onto your Page Layout.</li>
+<li>Bind that Table to the ManyWho Run Service and select the Flow Type and Binding to list your Flows in the Tenant.</li>
+<li>Create a number of columns for your Table, you&rsquo;ll see we expose various pieces of information about the Flow.</li>
+<li>Put the selected value into the Flow Value you created.</li>
+<li>Save your Page Layout and Page.</li>
+</ol>
+
+<p>As you can see the Flow listing is basically just like any other table of data in ManyWho. However, rather than querying data from, for example, Salesforce, you&rsquo;re querying the ManyWho database for Flows. As a result, you can create a filter on Developer Name to reduce the list just as you filter any other data from a Service.</p>
+
+<p>At this stage, you will need to open the API tooling as we do not yet have point-and-click tooling for the FlowOut functionality:</p>
+
+<ol>
+<li>Click on API in the Admin area of the tooling.</li>
+<li>Use the <code class="prettyprint">...map?filter=</code> endpoint to GET the list of Map Elements.</li>
+<li>In the provided list, find your Inbox Map Element (the Page in your Flow). Grab the &ldquo;id&rdquo; property value.</li>
+<li>Use the <code class="prettyprint">...map/{id}</code> endpoint (pasting your id into the appropriate place) to GET the full Inbox Map Element.</li>
+<li>Copy everything in the right pane into the left pane so we can make edits.</li>
+</ol>
+
+<p>In order to allow the running user(s) to &ldquo;join&rdquo; a running Flow State (i.e. They click on a button to open a Flow that&rsquo;s running), we need to add the Outcome and configure the FlowOut. For more information on Outcomes, have a look at the MapElement in the Draw API documentation. Add the following JSON for your &ldquo;outcomes&rdquo; property:</p>
+<pre class="highlight json"><code><span class="s2">"outcomes"</span><span class="err">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Run"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Run"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"pageActionType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SAVE"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"isBulkAction"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"pageActionBindingType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EDIT"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"pageObjectBindingId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"order"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"flowOut"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"valueElementFlowId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"typeElementPropertyId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<p>Looking at the above metadata, you need to make some amendments to make this work. In order to allow running user(s) to Run a Flow, we need to tell the &ldquo;Run&rdquo; outcome where it&rsquo;s getting the Flow identifier from (so we know which Flow we&rsquo;re actually running). This will be the Flow the user selects in the Table. If you remember, we bound the Flows table to our Flow Value. That Flow Value will contain the selected Flow - which holds the unique identifier for the Flow in it&rsquo;s ID property. Here&rsquo;s how you get that information:</p>
+
+<ol>
+<li>Use the <code class="prettyprint">.../value?filter=</code> endpoint to get the list of values. Have a look at the ValueElement documentation in the Draw API for more details on this.</li>
+<li>Find the Value with a &ldquo;developerName&rdquo; value of &ldquo;Flow&rdquo;. Grab the &ldquo;id&rdquo; property value.</li>
+<li>Use the <code class="prettyprint">...value/{id}</code> endpoint (pasting your id into the appropriate place) to GET the full Value Element.</li>
+<li>In the left pane, also paste the &ldquo;id&rdquo; property value into the &ldquo;id&rdquo; property in the &ldquo;valueElementFlowId&rdquo;. I.e. here: <code class="prettyprint">&quot;valueElementFlowId&quot;</code> -&gt; <code class="prettyprint">&quot;id&quot;</code>. This tells the FlowOut we&rsquo;re referencing your Flow Value for the information.</li>
+<li>In the right pane again, find the &ldquo;typeElementId&rdquo; property for the &ldquo;Flow&rdquo; Value. We need to load the Type Element for Flow.</li>
+<li>Use the<code class="prettyprint">.../type/{id}</code> endpoint (pasting your typeElementId into the id placeholder) to GET the full Type Element.</li>
+<li>In the Type definition, find the property with the &ldquo;developerName&rdquo; property called &ldquo;ID&rdquo;. Grab the &ldquo;id&rdquo; property value for that property.</li>
+<li>In the left pane, paste this property id into the &ldquo;typeElementPropertyId&rdquo; property in the &ldquo;valueElementFlowId&rdquo;. I.e. here: <code class="prettyprint">&quot;valueElementFlowId&quot;</code> -&gt; <code class="prettyprint">&quot;typeElementPropertyId&quot;</code>. This tells the FlowOut we&rsquo;re referencing the ID of the Flow Value, not the whole Flow Value.</li>
+</ol>
+
+<p>That&rsquo;s it. The above instructions will ensure that this Outcome will pass the Flow identifier into the ManyWho platform so it knows which Flow to run. At this stage, we can simply save our MapElement by doing the following:</p>
+
+<ul>
+<li>Use the <code class="prettyprint">.../map</code> endpoint to POST your amended JSON back to the Draw API. Have a look at the MapElement documentation in the Draw API for more information on this. Also, you might check out the <em>Creating an Inbox</em> documentation above as this would allow you to dynamically join running Flow States.</li>
+</ul>
+
+<p>All of these changes will have been applied to your open Flow in the tooling, so you can simply Run/Publish the Flow to see the changes.</p>
+
+<p>If you would like to &ldquo;Place the Outcome with&rdquo; the States table in your Page Layout, you can do these additional steps:</p>
+
+<ol>
+<li>In the MapElement definition in the left pane, copy the value for the &ldquo;pageElementId&rdquo; property.</li>
+<li>Use the <code class="prettyprint">.../page/{id}</code> endpoint to load the PageElement associated with this MapElement.</li>
+<li>In the right pane, find the &ldquo;TABLE&rdquo; component for the Flows. Grab the &ldquo;id&rdquo; property value.</li>
+<li>In the left pane, paste the &ldquo;id&rdquo; property value into the &ldquo;pageObjectBindingId&rdquo; value. This tells the UI that the Outcome should be placed with the Flows Table.</li>
+</ol>
+
+<p>Once you&rsquo;ve completed these steps, save your MapElement changes as you did above using the <code class="prettyprint">.../map</code> endpoint.</p>
+
+<h3 id="creating-an-quot-inbox-quot">Creating an &ldquo;Inbox&rdquo;</h3>
+
+<p>An Inbox allows running user(s) to access the list of Flow States (or Tasks) that they need to complete. It can also be used to simply show the status of various running Flow States in your Tenant. In this example, we&rsquo;ll use the FlowOut feature to create an Inbox.</p>
+
+<p>In order to complete the steps in this example, you will need to have a reasonable understanding of how to build Flows already. We&rsquo;ll assume you have some Flows already in your Tenant and you now wish to build an Inbox for managing them.</p>
+
+<ol>
+<li>Open the Flow you want to monitor from your Inbox.</li>
+<li>Click on Publish.</li>
+<li>Copy the Link to your Flow and paste it into NotePad.</li>
+<li>In the Url, is the unique identifier for this flow. E.g.: https://flow.manywho.com/72dd7009-a144-46b4-b602-5fb5f03dc00a/play/default?flow-id=<strong>68ac3ace-ae71-480c-a839-5d52782f0dfa</strong></li>
+<li>Create a new String Value and paste in your Flow Id as the default value. Call it &ldquo;FlowId: {name of your Flow}&rdquo;.</li>
+<li>Create a new Object Value of Type State. Make sure you select &ldquo;State&rdquo; and not &ldquo;$State&rdquo; as the latter is the system Value. Call it &ldquo;State&rdquo;.</li>
+<li>Create a new Flow for your Inbox (or re-use and existing one). This must be in the same Tenant. Make sure you use the same Service as you did for the Sub-Flow for managing identity. If the Sub-Flow uses a different identity provider, this can cause issues.</li>
+<li>In the Shared Elements tool, import the State Value you just created. Make sure the State Type and ManyWho Run Service are also imported.</li>
+</ol>
+
+<p>Now that we have the basics needed for our inbox, we can create our Page for the inbox:</p>
+
+<ol>
+<li>Drag a Page onto your Flow.</li>
+<li>Create a new Page Layout for this Page.</li>
+<li>Drag a new Table component onto your Page Layout.</li>
+<li>Bind that Table to the ManyWho Run Service and select the State Type and Binding to list your States in the Tenant.</li>
+<li>Create a number of columns for your Table, you&rsquo;ll see we expose various pieces of information about the Flow State.</li>
+<li>Put the selected value into the State Value you created.</li>
+<li>Save your Page Layout and Page.</li>
+</ol>
+
+<p>As you can see the Inbox is basically just like any other table of data in ManyWho. However, rather than querying data from, for example, Salesforce, you&rsquo;re querying the ManyWho database for Flow States. As a result, you can create a filter on External Id to reduce the list just as you filter any other data from a Service.</p>
+
+<p>At this stage, you will need to open the API tooling as we do not yet have point-and-click tooling for the FlowOut functionality:</p>
+
+<ol>
+<li>Click on API in the Admin area of the tooling.</li>
+<li>Use the <code class="prettyprint">...map?filter=</code> endpoint to GET the list of Map Elements.</li>
+<li>In the provided list, find your Inbox Map Element (the Page in your Flow). Grab the &ldquo;id&rdquo; property value.</li>
+<li>Use the <code class="prettyprint">...map/{id}</code> endpoint (pasting your id into the appropriate place) to GET the full Inbox Map Element.</li>
+<li>Copy everything in the right pane into the left pane so we can make edits.</li>
+</ol>
+
+<p>In order to allow the running user(s) to &ldquo;join&rdquo; a running Flow State (i.e. They click on a button to open a Flow that&rsquo;s running), we need to add the Outcome and configure the FlowOut. For more information on Outcomes, have a look at the MapElement in the Draw API documentation. Add the following JSON for your &ldquo;outcomes&rdquo; property:</p>
+<pre class="highlight json"><code><span class="s2">"outcomes"</span><span class="err">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Join"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Join"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"pageActionType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SAVE"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"isBulkAction"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"pageActionBindingType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EDIT"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"pageObjectBindingId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"order"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"flowOut"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"valueElementStateId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"typeElementPropertyId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Start"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Start"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"pageActionType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SAVE"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"isBulkAction"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"pageActionBindingType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NEW"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"pageObjectBindingId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"order"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"flowOut"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"valueElementFlowId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"typeElementPropertyId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{id}"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<p>Looking at the above metadata, you need to make some amendments to make this work. In order to allow running user(s) to join a running Flow State, we need to tell the &ldquo;Join&rdquo; outcome where it&rsquo;s getting the Flow State identifier from (so we know which Flow State we&rsquo;re actually joining). This will be the State the user selects in the Table. If you remember, we bound the States table to our State Value. That State Value will contain the selected State - which holds the unique identifier for the State in it&rsquo;s ID property. Here&rsquo;s how you get that information:</p>
+
+<ol>
+<li>Use the <code class="prettyprint">.../value?filter=</code> endpoint to get the list of values. Have a look at the ValueElement documentation in the Draw API for more details on this.</li>
+<li>Find the Value with a &ldquo;developerName&rdquo; value of &ldquo;State&rdquo;. Grab the &ldquo;id&rdquo; property value.</li>
+<li>Use the <code class="prettyprint">...value/{id}</code> endpoint (pasting your id into the appropriate place) to GET the full Value Element.</li>
+<li>In the left pane, also paste the &ldquo;id&rdquo; property value into the &ldquo;id&rdquo; property in the &ldquo;valueElementStateId&rdquo;. I.e. here: <code class="prettyprint">&quot;valueElementStateId&quot;</code> -&gt; <code class="prettyprint">&quot;id&quot;</code>. This tells the FlowOut we&rsquo;re referencing your State Value for the information.</li>
+<li>In the right pane again, find the &ldquo;typeElementId&rdquo; property for the &ldquo;State&rdquo; Value. We need to load the Type Element for State.</li>
+<li>Use the<code class="prettyprint">.../type/{id}</code> endpoint (pasting your typeElementId into the id placeholder) to GET the full Type Element.</li>
+<li>In the Type definition, find the property with the &ldquo;developerName&rdquo; property called &ldquo;ID&rdquo;. Grab the &ldquo;id&rdquo; property value for that property.</li>
+<li>In the left pane, paste this property id into the &ldquo;typeElementPropertyId&rdquo; property in the &ldquo;valueElementStateId&rdquo;. I.e. here: <code class="prettyprint">&quot;valueElementStateId&quot;</code> -&gt; <code class="prettyprint">&quot;typeElementPropertyId&quot;</code>. This tells the FlowOut we&rsquo;re referencing the ID of the State Value, not the whole State Value.</li>
+</ol>
+
+<p>The above instructions will ensure that this Outcome will pass the Flow State identifier into the ManyWho platform so it knows which Flow State to join. Now we should configure the &ldquo;Start&rdquo; Outcome to start a new Flow so the running user(s) can kick off new Flows from our Inbox:</p>
+
+<ol>
+<li>Use the <code class="prettyprint">.../value?filter=</code> endpoint to get the list of values. Have a look at the ValueElement documentation in the Draw API for more details on this.</li>
+<li>Find the Value with a &ldquo;developerName&rdquo; value of &ldquo;FlowId: {name of your Flow}&rdquo;. Grab the &ldquo;id&rdquo; property value.</li>
+<li>In the left pane, paste the &ldquo;id&rdquo; property value into the &ldquo;id&rdquo; property in the &ldquo;valueElementFlowId&rdquo;. I.e. here: <code class="prettyprint">&quot;valueElementFlowId&quot;</code> -&gt; <code class="prettyprint">&quot;id&quot;</code>. This tells the FlowOut we&rsquo;re referencing your specific Flow.</li>
+</ol>
+
+<p>That&rsquo;s it. At this stage, we can simply save our MapElement by doing the following:</p>
+
+<ul>
+<li>Use the <code class="prettyprint">.../map</code> endpoint to POST your amended JSON back to the Draw API. Have a look at the MapElement documentation in the Draw API for more information on this. Also, you might check out the <em>Creating a Flow Listing</em> documentation above as this would allow you to dynamically assign the Flow to Start rather than &ldquo;hard-coding&rdquo; the FlowId.</li>
+</ul>
+
+<p>All of these changes will have been applied to your open Flow in the tooling, so you can simply Run/Publish the Flow to see the changes.</p>
+
+<p>If you would like to &ldquo;Place the Outcome with&rdquo; the States table in your Page Layout, you can do these additional steps:</p>
+
+<ol>
+<li>In the MapElement definition in the left pane, copy the value for the &ldquo;pageElementId&rdquo; property.</li>
+<li>Use the <code class="prettyprint">.../page/{id}</code> endpoint to load the PageElement associated with this MapElement.</li>
+<li>In the right pane, find the &ldquo;TABLE&rdquo; component for the States. Grab the &ldquo;id&rdquo; property value.</li>
+<li>In the left pane, for each of the Outcomes, paste the &ldquo;id&rdquo; property value into the &ldquo;pageObjectBindingId&rdquo; value. This tells the UI that the Outcome should be placed with the States Table.</li>
+<li>For the &ldquo;Start&rdquo; Outcome, change the &ldquo;isBulkAction&rdquo; from <code class="prettyprint">false</code> to <code class="prettyprint">true</code>. This will ensure the Outcome appears at the top of the Table.</li>
+</ol>
+
+<p>Once you&rsquo;ve completed these steps, save your MapElement changes as you did above using the <code class="prettyprint">.../map</code> endpoint.</p>
+
           <h2 id="salesforce">Salesforce</h2>
 
 <p>If you are an existing Salesforce customer, you may want to create a Developer Edition org to try out our platform. If you are not an existing Salesforce customer, you can get a free Developer Edition account to make the most of the ManyWho platform.</p>
@@ -1314,45 +2208,24 @@ web: java -Dserver.port=${PORT:-8080} ${JAVA_OPTS} -jar target/artifact-1.0-SNAP
 Take a note of the website address being used by your account in salesforce. You should see something like &lsquo;https://na15.salesforce.com/&rsquo;. Make a note of the first part that starts with 'na&rsquo; or 'eu&rsquo;, etc. In this example, it&rsquo;s 'na15&rsquo;. We&rsquo;ll need this information when setting up the Salesforce Service.
 </aside>
 
-<h4 id="enable-social-features">Enable Social Features</h4>
+<h4 id="salesforce-sdk">Salesforce SDK</h4>
 
-<h5 id="create-a-custom-object-for-manywho">Create a Custom Object for ManyWho</h5>
+<p>Install the Salesforce SDK available here:</p>
 
-<p>In order for ManyWho to leverage the social/feed capabilities of Salesforce (i.e. Chatter), you need to create a custom object. We use this to store the feed comments:</p>
+<p>https://github.com/manywho/sdk-salesforce</p>
 
-<ol>
-<li>In the top right menu of your salesforce.com account, click on <strong>Setup</strong></li>
-<li>In the navigation bar on the left side, under the <em>Build</em> section, click on <strong>Create</strong></li>
-<li>In the sub-menu you have to go into <em>Objects</em> and then click <strong>New</strong></li>
-<li>On the screen for <em>New Custom Object</em>, complete the following (make sure this information is entered exactly as shown):
-
-<ul>
-<li>Label: ManyWhoFlow</li>
-<li>Plural Label: ManyWhoFlows</li>
-</ul></li>
-<li>Leave all of the other settings alone and click on the <strong>Save</strong> button.</li>
-<li>In the <em>Custom Fields &amp; Relationships</em> section, click on <strong>New</strong> to create a new field.</li>
-<li>Select <strong>URL</strong> for the field type and click on <strong>Next</strong></li>
-<li>Provide the following for the field:
-
-<ul>
-<li>Field Label: JoinUri</li>
-<li>Field Name: JoinUri</li>
-</ul></li>
-<li>Click on Next.</li>
-<li>Tick the box at the top of the <strong>Visible</strong> column to ensure this field is visible to all profiles.</li>
-<li>Click on Next. Click on Save.</li>
-</ol>
-
-<h5 id="add-feed-tracking-to-the-manywhoflow-custom-object">Add feed tracking to the ManyWhoFlow Custom Object</h5>
+<p>Simply do the following:</p>
 
 <ol>
-<li>Under the <em>Build</em> section, click on <strong>Customize</strong></li>
-<li>In the displayed sub menu, scroll down and click on <strong>Chatter</strong></li>
-<li>In the displayed sub menu, click on <strong>Feed Tracking</strong></li>
-<li>On the <em>Feed Tracking</em> screen, select <strong>ManyWhoFlow</strong> in this list of objects (on the left beside the main setup menu)</li>
-<li>Tick the box for <strong>Enable Feed Tracking</strong> at the top of the page area and click on the <strong>Save</strong> button</li>
+<li>Click on Deploy to Salesforce (blue button).</li>
+<li>Click on the Login to Salesforce button (top right).</li>
+<li>Login into your Salesforce org.</li>
+<li>Click on the Deploy button.</li>
 </ol>
+
+<p>Once this process is completed, you will have a number of ManyWho features added to your Salesforce org. Check out the README documentation for information on what&rsquo;s in the Salesforce SDK:</p>
+
+<p>https://github.com/manywho/sdk-salesforce/blob/master/README.md</p>
 
 <h4 id="enable-identity-features">Enable Identity Features</h4>
 
@@ -1998,22 +2871,11 @@ POST https://salesforce.manywho.com/plugins/api/salesforce/1/workflowrules/liste
 
 <h4 id="create-the-common-manywho-api-objects">Create the Common ManyWho API objects</h4>
 
-<p>We do not yet have a fully comprehensive set of our API objects in Salesforce Apex, however, we have many of the main ones. In order to make these objects available to you in your Salesforce org, download the SDK file here:</p>
+<p>Make sure you have the Salesforce SDK deployed into your Salesforce org. The SDK is available here:</p>
 
-<p><a href="https://drive.google.com/file/d/0BxOahH5Z4tUTX2NBcjY3aGlFLTg/view?usp=sharing">ManyWho Apex API</a></p>
+<p>https://github.com/manywho/sdk-salesforce</p>
 
-<p>To add this to your org, simply do the following:</p>
-
-<ol>
-<li>Login to Salesforce (https://login.salesforce.com).</li>
-<li>Click on <strong>Setup</strong> and find the <em>Build</em> section in the setup tree.</li>
-<li>Click on <strong>Develop -&gt; Apex Classes</strong>.</li>
-<li>Click on the <strong>New</strong> button.</li>
-<li>Copy the contents of the above file into the <strong>Apex Class</strong> tab.</li>
-<li>Click on the <strong>Save</strong> button.</li>
-</ol>
-
-<p>And that&rsquo;s it. You can now code up a Service directly in Apex. Let&rsquo;s do that now.</p>
+<p>For instructions on installing this, please see the Salesforce SDK section above.</p>
 
 <h4 id="tell-manywho-what-the-service-does">Tell ManyWho what the Service does</h4>
 
@@ -2887,7 +3749,7 @@ Once the call has been started, Twilio will &ldquo;join&rdquo; the follow and be
 
 <p>You can always test your Flow in the browser before accessing it via Twilio.</p>
 
-          <h1 id="reporting">Reporting</h1>
+          <h1 id="report-framework">Report Framework</h1>
 
 <p>States can be set to send reporting data to an external endpoint that adheres to our Reporting API interface (a supported implementation is available <a href="https://github.com/manywho/reporting">on GitHub</a>). This allows you to gain a greater insight into how and when flows are being uses, as well as the values being used inside a state.</p>
 
@@ -11275,8 +12137,10 @@ The filter can take the following formats:
 <h2 id="import-package">Import Package</h2>
 
 <blockquote>
-<p>Success 204 No Content Response</p>
+<p>Example Request</p>
 </blockquote>
+<pre class="highlight http"><code><span class="err">POST https://flow.manywho.com/api/package/1/flow?uriMapping[0][from]=https://flow.manywho.com/plugins/manywho/api/identity/1/authentication&amp;uriMapping[0][to]=https://myservice.mycompany.com/plugins/api/identity/1/authentication
+</span></code></pre>
 
 <p>This allows you to import a Flow Package back into a Tenant. It&rsquo;s important to note that this is not the same as cloning a Flow. If you import a Flow Package into a Tenant that contains a Flow with the same Flow identifier, the Flow in the Target Tenant will be overwritten with the Flow Package being imported.</p>
 
@@ -11308,67 +12172,187 @@ The filter can take the following formats:
 </tr>
 </tbody></table>
 
-          <h1 id="play-api">Play API</h1>
-
-<h2 id="create-update-player">Create/Update Player</h2>
-
-<h4 id="http-request">HTTP Request</h4>
-
-<p><code class="prettyprint">POST /{tenant_id}/play/{name}</code></p>
-
-<h2 id="create-update-player">Create/Update Player</h2>
-
-<h4 id="http-request">HTTP Request</h4>
-
-<p><code class="prettyprint">POST /{tenant_id}/play/{name}</code></p>
-
-<h2 id="get-players">Get Players</h2>
-
-<h4 id="http-request">HTTP Request</h4>
-
-<p><code class="prettyprint">GET /{tenant_id}/player</code></p>
-
-<h2 id="get-player-sub-domain">Get Player (Sub-Domain)</h2>
-
-<h4 id="http-request">HTTP Request</h4>
-
-<p><code class="prettyprint">GET /play/{name}</code></p>
-
-<h2 id="get-player-no-sub-domain">Get Player (No Sub-Domain)</h2>
-
-<h4 id="http-request">HTTP Request</h4>
-
-<p><code class="prettyprint">GET /{tenant_id}/play/{name}</code></p>
-
-<h2 id="get-custom-styles">Get Custom Styles</h2>
-
-<h4 id="http-request">HTTP Request</h4>
-
-<p><code class="prettyprint">GET /css/tenant/{tenant_id}/customstyles</code></p>
-
-<h2 id="delete-player">Delete Player</h2>
-
-<h4 id="http-request">HTTP Request</h4>
-
-<p><code class="prettyprint">DELETE /{tenant_id}/play/{name}</code></p>
-
           <h1 id="run-api">Run API</h1>
+
+<p>The Run API provides all of the features of your executing Flow applications. When you build a Flow on the ManyWho Platform, it is exposed through this API:</p>
+
+<ol>
+<li>The Player UI code works with this API to generate the Pages, Navigation, Outcomes, etc.</li>
+<li>A number of Services, such as the Twilio Service, use this API to generate text-to-speech versions of the UI.</li>
+<li>Asynchronous messages and Listeners use this API to notify the Flow State of events.</li>
+<li>Applications can use this API to query Flows available to Run.</li>
+<li>3rd party applications can use this API to authenticate Users and we can also provide SSO solutions information about the various authenticating end-points.</li>
+</ol>
+
+<p>The Run API is perhaps the most important part of the Platform as it represents everything that is needed to run your Flow applications.</p>
 
 <h2 id="authenticating-running-users">Authenticating Running Users</h2>
 
+<p>Authentication as an end user has a couple of layers. This is because Flows can be constructed to leverage multiple identity Services - but also because we don&rsquo;t always deny the user complete access if they are not authorized. It works like this:</p>
+
+<ul>
+<li><strong>Flow authentication</strong>: When a Flow is created, the Flow Builder must define the overall authentication for the Flow and the directory the user must authenticate against to gain access. The authentication process can rely on specific user access, group access or location requirements. If the user cannot authenticated at the Flow level, they are denied all access to the running of the Flow.</li>
+<li><strong>Swimlane authentication</strong>: During the execution of the Flow, the user may enter into a Swimlane element (which is a group of elements that have a particular authentication configuration that differs from the Flow. In this situation, the default behavior of our runtimes is that the user will not be excluded from the Flow and can continue to get status updates and collaborate. However, the user cannot view any pages or take any actions.</li>
+</ul>
+
+<p>The engine will provide you with the authorization context as part of the response. The authorization context can then be used against our authentication API to log the user in to the correct directory to get the required authentication token. The authorization context object will be returned for initialization, execution and join requests on the engine. We do not return the authorization context for &ldquo;response&rdquo; requests as part of an asynchronous execution.</p>
+
+<h4 id="authentication-context">Authentication Context</h4>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>directoryName</strong><br/>string</td>
+<td>The name of the directory the running user needs to login to.</td>
+</tr>
+<tr>
+<td><strong>directoryId</strong><br/>string</td>
+<td>The unique identifier for the directory the running user needs to login to.</td>
+</tr>
+<tr>
+<td><strong>loginUrl</strong><br/>string</td>
+<td>The Url that should be used for authentication. For basic authentication, this Url should be provided in the authentication object. For OAuth2 authentication, the user should be re-directed to this Url to initiate the OAuth2 sequence.</td>
+</tr>
+<tr>
+<td><strong>authenticationType</strong><br/>string</td>
+<td>The type of authentication that should be performed. Valid values are:<ul><li><strong>USERNAME_PASSWORD</strong>: The user should login using our authentication API using their username/password to authenticate.</li><li><strong>OAUTH2</strong>: The user should login using OAuth2. If the user is redirected to to the loginUrl address, ManyWho already provides support for the OAuth2 sequence.</ul></td>
+</tr>
+</tbody></table>
+
+<h4 id="authentication-request">Authentication Request</h4>
+
+<p>{
+  &ldquo;loginUrl&rdquo;:&ldquo;https://salesforce.manywho.com/plugins/api/salesforce/1/authentication&rdquo;,
+  &ldquo;username&rdquo;:&ldquo;steve.wood@manywho.com&rdquo;,
+  &ldquo;password&rdquo;:&ldquo;not tellin&rdquo;,
+  &ldquo;token&rdquo;:&ldquo;ThAnK5Chuc4M0rt1m0r3&rdquo;,
+  &ldquo;sessionToken&rdquo;:null,
+  &ldquo;sessionUrl&rdquo;:null,
+  &ldquo;instanceUrl&rdquo;:null
+}</p>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>loginUrl</strong><br/>string</td>
+<td>The loginUrl provided in the Authentication Context.</td>
+</tr>
+<tr>
+<td><strong>username</strong><br/>string</td>
+<td>The username for the running user for the particular underlying Service/Directory.</td>
+</tr>
+<tr>
+<td><strong>password</strong><br/>string</td>
+<td>The password for the running user for the particular underlying Service/Directory.</td>
+</tr>
+<tr>
+<td><strong>token</strong><br/>string</td>
+<td>An optional token to augment the username/password that may be required by the underlying Service/Directory.</td>
+</tr>
+<tr>
+<td><strong>sessionToken</strong><br/>string</td>
+<td>An existing session token for the underlying Service/Directory.</td>
+</tr>
+<tr>
+<td><strong>sessionUrl</strong><br/>string</td>
+<td>An existing session url for the underlying Service/Directory.</td>
+</tr>
+<tr>
+<td><strong>instanceUrl</strong><br/>string</td>
+<td>An existing instance for which the session information is associated.</td>
+</tr>
+</tbody></table>
+
 <h3 id="get-authentication-context">Get Authentication Context</h3>
+
+<blockquote>
+<p>Example 200 OK Response</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"directoryName"</span><span class="p">:</span><span class="s2">"ManyWho"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"directoryId"</span><span class="p">:</span><span class="s2">"00DE0000000XtGrPLC"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"loginUrl"</span><span class="p">:</span><span class="s2">"https://salesforce.manywho.com/plugins/api/salesforce/1/authentication"</span><span class="w">
+  </span><span class="s2">"authenticationType"</span><span class="err">:</span><span class="w"> </span><span class="s2">"USERNAME_PASSWORD"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>When you initialize a Flow, you are provided with the authentication context in the response. However, you can also retrieve and login to Services individually. It&rsquo;s important to note that despite authentication being done against a Flow state, the returned Runtime Authentication Token is valid across all Flow States. </p>
+
+<aside class="notice">
+<b>Re-using Authentication Tokens</b><br/>
+There&rsquo;s no need to login each time the user starts a Flow once you have a valid Runtime Authentication Token. However, if you are not logged into all Services that require login, you will be prompted accordingly or those API calls will fail.
+</aside>
 
 <h4 id="http-request">HTTP Request</h4>
 
-<p><code class="prettyprint">GET /api/run/1/authentication/{state_id}</code></p>
+<p><code class="prettyprint">GET /api/run/1/authentication/{state_id}?serviceElementId={service_element_id}</code></p>
+
+<h4 id="parameters">Parameters</h4>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>state_id</strong><br/>string</td>
+<td>The unique identifier for an active Flow State that is associated with the Service the runtime user wants to authenticate against.</td>
+</tr>
+<tr>
+<td><strong>service_element_id</strong><br/>string</td>
+<td>The unique identifier for the Service Element providing the authentication.</td>
+</tr>
+</tbody></table>
 
 <h3 id="basic-authentication">Basic Authentication</h3>
 
+<blockquote>
+<p>Example 200 OK Response</p>
+</blockquote>
+<pre class="highlight json"><code><span class="err">majqgTJf%</span><span class="mi">2</span><span class="err">fffzUTTQZ</span><span class="mi">2</span><span class="err">EhyikQanT%</span><span class="mi">2</span><span class="err">b</span><span class="mi">8</span><span class="err">j</span><span class="mi">8</span><span class="err">SgBz%</span><span class="mi">2</span><span class="err">furxCPJDYzUiYPdrYXBW</span><span class="mi">3</span><span class="err">LB</span><span class="mi">0</span><span class="err">AhdFd</span><span class="mi">5</span><span class="err">%</span><span class="mi">2</span><span class="err">b</span><span class="mi">3</span><span class="err">c</span><span class="mi">8</span><span class="err">AIcNG</span><span class="mi">6</span><span class="err">L</span><span class="mi">6</span><span class="err">AuI</span><span class="mi">6</span><span class="err">nE</span><span class="mi">4</span><span class="err">Lk</span><span class="mi">48</span><span class="err">jwF</span><span class="mi">35</span><span class="err">sX</span><span class="mi">9</span><span class="err">DpuMBLRIzUM%</span><span class="mi">3</span><span class="err">d</span><span class="w">
+</span></code></pre>
+
+<p>This API is typically used if the underlying Service/Directory does not currently support OAuth2 for authentication. However, it can also be used for session based authentication where the user already has an active authenticated session token and simply wants to re-use it to speed authentication - but also allow SSO.</p>
+
+<aside class="notice">
+<b>Services</b><br/>
+It&rsquo;s important to reference the documentation for the Service being used. The options available very much depend on the implementation of the Service.
+</aside>
+
 <h4 id="http-request">HTTP Request</h4>
 
-<p><code class="prettyprint">GET /api/run/1/authentication/{state_id}</code></p>
+<p><code class="prettyprint">POST /api/run/1/authentication/{state_id}</code></p>
+
+<h4 id="parameters">Parameters</h4>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>state_id</strong><br/>string</td>
+<td>The unique identifier for an active Flow State that is associated with the Service the runtime user wants to authenticate against.</td>
+</tr>
+</tbody></table>
+
+<h4 id="body">Body</h4>
+
+<p>The raw JSON for the Map Element.</p>
 
 <h3 id="oauth2-authentication">OAuth2 Authentication</h3>
+
+<p>The OAuth2 API is not typically used directly. This API is the Callback URL that should be configured in the identity providing Service that will be performing the OAuth2 login. This API supports the standard OAuth2 parameters as part of the callback sequence.</p>
 
 <h4 id="http-request">HTTP Request</h4>
 
@@ -11376,27 +12360,385 @@ The filter can take the following formats:
 
 <h2 id="flow">Flow</h2>
 
+<p>As part of the Run API, integrated applications can query for the list of available Flow applications and can get basic details about how to access them.</p>
+
 <h3 id="query-flows">Query Flows</h3>
+
+<blockquote>
+<p>Example 200 OK Response</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"dateCreated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-03-10T22:35:42Z"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"dateModified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-03-26T06:14:01Z"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"whoCreated"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"914e2919-4c72-4b75-853e-85e060d49380"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Paul"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"paul.smith@manywho.com"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"username"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"verified"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"whoModified"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"914e2919-4c72-4b75-853e-85e060d49380"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Paul"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"paul.smith@manywho.com"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"username"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"verified"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"whoOwner"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"914e2919-4c72-4b75-853e-85e060d49380"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Paul"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"paul.smith@manywho.com"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"username"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"verified"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"alertEmail"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"isActive"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"isDefault"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"comment"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"editingToken"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9a563d47-fa58-4a27-b633-f1fd6898ed07"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"versionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"85c93559-352d-4dfe-8c62-252e52003355"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Account Manager"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"startMapElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4cfebe7e-f3a6-4379-94b0-a5a7285bd529"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"allowJumping"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"stateExpirationLength"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"authorization"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"dateCreated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-30T04:44:34Z"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"dateModified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-03-26T07:05:22Z"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"whoCreated"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"914e2919-4c72-4b75-853e-85e060d49380"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Paul"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"paul.smith@manywho.com"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"username"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"verified"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"whoModified"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"914e2919-4c72-4b75-853e-85e060d49380"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Paul"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"paul.smith@manywho.com"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"username"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"verified"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"whoOwner"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"914e2919-4c72-4b75-853e-85e060d49380"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Paul"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"paul.smith@manywho.com"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"username"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"verified"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"alertEmail"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"isActive"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"isDefault"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"comment"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"editingToken"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3ca32f1c-0278-477b-9ce1-ff88210be747"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"versionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"175cf7fe-e1ff-4b83-89bb-9f3e21c4e634"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Task Manager"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A demo app showing task management."</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"startMapElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9467970b-6f7e-48e3-9f8b-ced3a24c93c5"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"allowJumping"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"stateExpirationLength"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"authorization"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<p>Used to filter existing Flow applications that are active/default (e.g. &ldquo;Published&rdquo;).</p>
+
+<aside class="notice">
+<b>Flow Response</b><br/>
+You can reference the Draw API documentation for information on the structure of the Flow Response objects returned by this API
+</aside>
 
 <h4 id="http-request">HTTP Request</h4>
 
 <p><code class="prettyprint">GET /api/run/1/flow?filter={filter}</code></p>
 
+<h4 id="parameters">Parameters</h4>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>filter</strong><br/>string</td>
+<td>The filter for querying Flows.</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">
+<b>Filter</b><br/>
+The filter can take the following formats:
+<ul><li><b>developerName eq &rsquo;{developer_name}&rsquo;</b>: Filter the list of Elements where the &ldquo;developerName&rdquo; property exactly matches the provided developer name (case insensitive)</li><li><b>substringof(developerName, &rsquo;{developer_name}&rsquo;)</b>: Filter the list of Elements where the &ldquo;developerName&rdquo; property partially matches the provided developer name (case insensitive)</li></ul>
+</aside>
+
 <h3 id="get-flow">Get Flow</h3>
+
+<blockquote>
+<p>Example 200 OK Response</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"dateCreated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-30T04:44:34Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"dateModified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-03-26T07:05:22Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"whoCreated"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"914e2919-4c72-4b75-853e-85e060d49380"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Paul"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"paul.smith@manywho.com"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"username"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"verified"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"whoModified"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"914e2919-4c72-4b75-853e-85e060d49380"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Paul"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"paul.smith@manywho.com"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"username"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"verified"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"whoOwner"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"914e2919-4c72-4b75-853e-85e060d49380"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Paul"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"paul.smith@manywho.com"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"username"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"verified"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"alertEmail"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"isActive"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"isDefault"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"comment"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"editingToken"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3ca32f1c-0278-477b-9ce1-ff88210be747"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"versionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"175cf7fe-e1ff-4b83-89bb-9f3e21c4e634"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Task Manager"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A demo app showing task management."</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"startMapElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9467970b-6f7e-48e3-9f8b-ced3a24c93c5"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"allowJumping"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"stateExpirationLength"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"authorization"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>Used to get an existing Flow application that is active/default (e.g. &ldquo;Published&rdquo;) by using the identifier.</p>
 
 <h4 id="http-request">HTTP Request</h4>
 
 <p><code class="prettyprint">GET /api/run/1/flow/{id}</code></p>
 
+<h4 id="parameters">Parameters</h4>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>id</strong><br/>string</td>
+<td>The unique identifier for the Flow.</td>
+</tr>
+</tbody></table>
+
 <h3 id="get-flow-by-name">Get Flow by Name</h3>
+
+<blockquote>
+<p>Example 200 OK Response</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"dateCreated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-30T04:44:34Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"dateModified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-03-26T07:05:22Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"whoCreated"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"914e2919-4c72-4b75-853e-85e060d49380"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Paul"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"paul.smith@manywho.com"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"username"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"verified"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"whoModified"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"914e2919-4c72-4b75-853e-85e060d49380"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Paul"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"paul.smith@manywho.com"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"username"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"verified"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"whoOwner"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"914e2919-4c72-4b75-853e-85e060d49380"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Paul"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"paul.smith@manywho.com"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"username"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"verified"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"alertEmail"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"isActive"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"isDefault"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"comment"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"editingToken"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3ca32f1c-0278-477b-9ce1-ff88210be747"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"versionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"175cf7fe-e1ff-4b83-89bb-9f3e21c4e634"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Task Manager"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A demo app showing task management."</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"startMapElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9467970b-6f7e-48e3-9f8b-ced3a24c93c5"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"allowJumping"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"stateExpirationLength"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"authorization"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>Used to get an existing Flow application that is active/default (e.g. &ldquo;Published&rdquo;) by using the developerName as the identifier.</p>
 
 <h4 id="http-request">HTTP Request</h4>
 
 <p><code class="prettyprint">GET /api/run/1/flow/name/{name}</code></p>
 
+<h4 id="parameters">Parameters</h4>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>name</strong><br/>string</td>
+<td>The exact developerName property of the Flow.</td>
+</tr>
+</tbody></table>
+
 <h2 id="flow-state">Flow State</h2>
 
+<p>A Flow State represents an &ldquo;instance&rdquo; of your Flow Application. The Flow State contains the information that&rsquo;s collected from the running user(s), which step they&rsquo;re on, etc. If a Flow State is &ldquo;shared&rdquo; with another running user, it is automatically collaborative - allowing multiple running users to work on the same Flow State at the same time.</p>
+
+<p>In most situations, a new Flow State is created each time the running user(s) start running a Flow. This Flow State usually only exists for the time that particular instance is used and then the Flow State is discarded.</p>
+
 <h3 id="initialize-flow-state">Initialize Flow State</h3>
+
+<p>Once you have the full Flow Identifier object, you can initialize your flow, ready to start executing. Initialization allows you to do a few things:</p>
+
+<ul>
+<li><strong>Pass Input Values into the Flow</strong>: Inputs are related to Values in a Flow. If the Flow Builder has created Values that have an access setting of &ldquo;Input&rdquo; or &ldquo;Input/Output&rdquo;, you can pass information into those Values at initialization. These might be things like the Id of an Account record in salesforce.com that the Flow relates to, or the phone number of the current caller.</li>
+<li><strong>Create annotations</strong>: An annotation is a piece of data you want to attach to your flow, but is not actually passed in as an input. Often developers want to store additional information in the Flow State that helps with integration or more complex configuration. Think of annotations as session state that is read/write for the entire duration of the Flow execution.</li>
+<li><strong>Set the execution mode</strong>: The &ldquo;mode&rdquo; allows you to run the flow in a couple of different debug configurations. This allows you to step through the Flow as a user would see it, but also step through the Flow Element by Element (even logical Elements). It&rsquo;s very powerful for debugging, particularly when Flows get more complex.</li>
+</ul>
+
+<h4 id="initialization-request">Initialization Request</h4>
+
+<p>The Initialization Request object is used to initialize the Flow.</p>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>id</strong><br/>object</td>
+<td>This is a composite identifier that has the following properties:<ul><li><strong>id</strong> (string): The unique identifier for the Flow.</li><li><strong>versionId</strong> (string): The unique version identifier for the Flow. This is optional and should only be used if you wish to initialize a very specific version of a Flow.</li></ul></td>
+</tr>
+<tr>
+<td><strong>stateId</strong><br/>string</td>
+<td>This is the identifier for an existing Flow State. This property should only be provided in the case where the Initialization Response required you to authenticate the running user before proceeding. This allows you to re-initialize the Flow State after authentication has been successful.</td>
+</tr>
+<tr>
+<td><strong>parentStateId</strong><br/>string</td>
+<td>The parent Flow State identifier for this Flow State. This property is populated by the platform when executing Sub-Flows or using the Flow Out feature. However, it can be manually assigned.</td>
+</tr>
+<tr>
+<td><strong>externalIdentifier</strong><br/>string</td>
+<td>An external identifier for this Flow State. This is an arbitrary string value that allows you to retrieve a Flow State based on a particular identifier.</td>
+</tr>
+<tr>
+<td><strong>annotations</strong><br/>object</td>
+<td>Key/value pairs that provide additional information that should be annotated on the Flow State.</td>
+</tr>
+<tr>
+<td><strong>inputs</strong><br/>array</td>
+<td>The array of inputs associated with the Flow. Each Input entry maps a Value in the Flow. Each Input entry has the following keys:<br/><br/><strong>developerName</strong> or <strong>valueElementId</strong> (string):<br/>The developerName or unique identifier of the Value being assigned.<br/><br/><strong>contentType</strong> (string):<br/>The content type of the data being provided (this allows the Platform to determine how the input data should be parsed if the input ContentType does not match the ContentType of the Value). Valid values are:<ul><li><strong>ContentString</strong>: A string value</li><li><strong>ContentNumber</strong>: A numeric value</li><li><strong>ContentPassword</strong>: A hidden value</li><li><strong>ContentDateTime</strong>: A date and time value</li><li><strong>ContentContent</strong>: A rich content value</li><li><strong>ContentObject</strong>: An object value</li><li><strong>ContentList</strong>: A list value</li></ul><br/><strong>typeElementId</strong> or <strong>typeElementDeveloperName</strong> (string):<br/>The unique identifier or developerName of the Type of the Object or List value being provided. This is only applicable for ContentObject and ContentList inputs.<br/><br/><strong>typeElementPropertyId</strong> or <strong>typeElementPropertyDeveloperName</strong> (string):<br/>The unique identifier or developerName of the property of a Value in the Flow that is an Object. This allows you to assign a property in an Object Value.<br/><br/><strong>contentValue</strong> (string): The value being provided for the input. This is only used if the Value being assigned is not ContentObject or ContentList.<br/><br/><strong>objectData</strong> (array):<br/>The ObjectData that should be assigned into the Value in the Flow. This is only used if the Value being assigned is ContentObject or ContentList. See ObjectData for details.</td>
+</tr>
+<tr>
+<td><strong>playerUrl</strong><br/>string</td>
+<td>The URL for the Player that should be referenced for all running users wishing to initiate a Flow State for this Flow.</td>
+</tr>
+<tr>
+<td><strong>joinPlayerUrl</strong><br/>string</td>
+<td>The URL for the Player that should be referenced for all running users wishing to join this Flow State.</td>
+</tr>
+<tr>
+<td><strong>mode</strong><br/>string</td>
+<td>The mode in which the engine should run. Valid values are:<ul><li><em>null</em>: Execute the Flow State as normal.</li><li><strong>DEBUG</strong>: Execute the Flow State, exposing debug information about the Flow State.</li><li><strong>DEBUG_STEPTHROUGH</strong>: Execute the Flow State, exposing debug information about the Flow State, and also stop the execution at each and every Map Element.</li><li><strong>LOG</strong>: Produce logging information about the Flow State. See the Log API for details.</li></ul></td>
+</tr>
+<tr>
+<td><strong>reportingMode</strong><br/>string</td>
+<td>The reporting mode that should be used for capturing and producing reports from this Flow State. Valid values are:<ul><li><em>null</em>: Do not produce any reporting data.</li><li><strong>VALUES</strong>: Report on Values in the Flow State.</li><li><strong>PATH</strong>: Report on the path of execution in the FLow State. These are all of the Map Elements that have been executed, time stamps of execution, user access, etc. See the Reporting API for details.</li><li><strong>PATH_AND_VALUES</strong>: Capture reporting on both of the above.</li></ul></td>
+</tr>
+</tbody></table>
+
+<h4 id="initialization-response">Initialization Response</h4>
+
+<p>Once a Flow State has been initialized, the Response object is returned.</p>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>culture</strong><br/>object</td>
+<td>The internationalization Culture the Flow is running in. See the Translate API for details.</td>
+</tr>
+<tr>
+<td><strong>stateId</strong><br/>string</td>
+<td>This is the identifier for an existing Flow State. The state identifier is constant for the entire lifetime of the Flow State.</td>
+</tr>
+<tr>
+<td><strong>stateToken</strong><br/>string</td>
+<td>The unique identifier for this initialization response. The state token changes for each and every request made to the Flow State where that request can alter the Flow State.</td>
+</tr>
+<tr>
+<td><strong>currentMapElementId</strong><br/>string</td>
+<td>The unique identifier for the current Map Element. When a Flow State is initialized, this is the &ldquo;Start&rdquo; Map Element typically.</td>
+</tr>
+<tr>
+<td><strong>currentStreamId</strong><br/>string</td>
+<td>The unique identifier for the collaboration stream associated with this Flow State. This is provided if the Flow is configured to support collaboration.</td>
+</tr>
+<tr>
+<td><strong>statusCode</strong><br/>string</td>
+<td>The status code of the initialization based on HTTP authentication/status codes. Valid values are:<ul><li><strong>200</strong>: The user is authenticated and can successfully execute the Flow State.</li><li><strong>401</strong>: The use is not authenticated to execute the Flow State. As a result, the user should use the authenticationContext information to authenticate the user and then re-try the initialization of the Flow State. See Authenticating Running Users for details.</li></ul></td>
+</tr>
+<tr>
+<td><strong>authorizationContext</strong><br/>object</td>
+<td>The authentication context required to access the Flow State. See Authenticating Running Users for details.</td>
+</tr>
+<tr>
+<td><strong>navigationElementReferences</strong><br/>array</td>
+<td>The array of Navigation Elements associated with this Flow State. Each Navigation Element Reference entry has the following keys:<br/><br/><strong>id</strong> (string)<br/>The unique identifier for the Navigation Element that can be loaded to allow the running user(s) to move flexibly around the Flow State. See Navigation for details.<br/><br/><strong>developerName</strong> (string)<br/>The developerName for the Navigation Element that can be loaded to allow the running user(s) to move flexibly around the Flow State. See Navigation for details.</td>
+</tr>
+</tbody></table>
 
 <h4 id="http-request">HTTP Request</h4>
 
@@ -11534,86 +12876,7 @@ The filter can take the following formats:
 
 <p><code class="prettyprint">POST /api/run/1/state/package</code></p>
 
-          <h1 id="social-api">Social API</h1>
-
-<h2 id="stream">Stream</h2>
-
-<h3 id="create-stream">Create Stream</h3>
-
-<h4 id="http-request">HTTP Request</h4>
-
-<p><code class="prettyprint">POST /api/social/1/{service_element_id}</code></p>
-
-<h3 id="follow-stream">Follow Stream</h3>
-
-<h4 id="http-request">HTTP Request</h4>
-
-<p><code class="prettyprint">POST /api/social/1/stream/{stream_id}</code></p>
-
-<h3 id="post-message-to-stream">Post Message to Stream</h3>
-
-<h4 id="http-request">HTTP Request</h4>
-
-<p><code class="prettyprint">POST /api/social/1/stream/{stream_id}/message</code></p>
-
-<h3 id="get-stream-messages">Get Stream Messages</h3>
-
-<h4 id="http-request">HTTP Request</h4>
-
-<p><code class="prettyprint">GET /api/social/1/stream/{stream_id}</code></p>
-
-<h3 id="like-stream-message">Like Stream Message</h3>
-
-<h4 id="http-request">HTTP Request</h4>
-
-<p><code class="prettyprint">POST /api/social/1/stream/{stream_id}/message</code></p>
-
-<h3 id="delete-stream-message">Delete Stream Message</h3>
-
-<h4 id="http-request">HTTP Request</h4>
-
-<p><code class="prettyprint">DELETE /api/social/1/stream/{stream_id}/message/{message_id}</code></p>
-
-<h3 id="upload-file-to-stream">Upload File to Stream</h3>
-
-<h4 id="http-request">HTTP Request</h4>
-
-<p><code class="prettyprint">POST /api/social/1/stream/{stream_id}/file</code></p>
-
-<h3 id="delete-uploaded-file">Delete Uploaded File</h3>
-
-<h4 id="http-request">HTTP Request</h4>
-
-<p><code class="prettyprint">DELETE /api/social/1/stream/{stream_id}/file/{file_id}</code></p>
-
-<h2 id="user-info">User Info</h2>
-
-<h3 id="get-current-user-info">Get Current User Info</h3>
-
-<h4 id="http-request">HTTP Request</h4>
-
-<p><code class="prettyprint">GET /api/social/1/stream/{stream_id}/user/me</code></p>
-
-<h3 id="get-user-info">Get User Info</h3>
-
-<h4 id="http-request">HTTP Request</h4>
-
-<p><code class="prettyprint">GET /api/social/1/stream/{stream_id}/user/{id}</code></p>
-
-<h3 id="get-stream-followers">Get Stream Followers</h3>
-
-<h4 id="http-request">HTTP Request</h4>
-
-<p><code class="prettyprint">GET /api/social/1/stream/{stream_id}/follower</code></p>
-
-<h2 id="share">Share</h2>
-
-<h3 id="flow-link">Flow Link</h3>
-
-<h4 id="http-request">HTTP Request</h4>
-
-<p><code class="prettyprint">POST /api/social/1/stream/{stream_id}/share</code></p>
-
+          
           <h1 id="service-api">Service API</h1>
 
 <h2 id="requests">Requests</h2>
@@ -11690,13 +12953,53 @@ The filter can take the following formats:
 
 <p><code class="prettyprint">GET /api/log/{flow_id}/{state_id}</code></p>
 
-          <h1 id="report-api">Report API</h1>
+          <h1 id="play-api">Play API</h1>
 
-<h2 id="receive-report">Receive Report</h2>
+<h2 id="create-update-player">Create/Update Player</h2>
 
 <h4 id="http-request">HTTP Request</h4>
 
-<p><code class="prettyprint">POST /api/report/1/states</code></p>
+<p><code class="prettyprint">POST /{tenant_id}/play/{name}</code></p>
+
+<h2 id="create-update-player">Create/Update Player</h2>
+
+<h4 id="http-request">HTTP Request</h4>
+
+<p><code class="prettyprint">POST /{tenant_id}/play/{name}</code></p>
+
+<h2 id="get-players">Get Players</h2>
+
+<h4 id="http-request">HTTP Request</h4>
+
+<p><code class="prettyprint">GET /{tenant_id}/player</code></p>
+
+<h2 id="get-player-sub-domain">Get Player (Sub-Domain)</h2>
+
+<h4 id="http-request">HTTP Request</h4>
+
+<p><code class="prettyprint">GET /play/{name}</code></p>
+
+<h2 id="get-player-no-sub-domain">Get Player (No Sub-Domain)</h2>
+
+<h4 id="http-request">HTTP Request</h4>
+
+<p><code class="prettyprint">GET /{tenant_id}/play/{name}</code></p>
+
+<h2 id="get-custom-styles">Get Custom Styles</h2>
+
+<h4 id="http-request">HTTP Request</h4>
+
+<p><code class="prettyprint">GET /css/tenant/{tenant_id}/customstyles</code></p>
+
+<h2 id="delete-player">Delete Player</h2>
+
+<h4 id="http-request">HTTP Request</h4>
+
+<p><code class="prettyprint">DELETE /{tenant_id}/play/{name}</code></p>
+
+          <h1 id="report-api">Report API</h1>
+
+<p>This should reference the Odata APIs</p>
 
       </div>
       <div class="dark-box">
