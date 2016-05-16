@@ -963,12 +963,95 @@ The raw JSON for the Value Element translation.
 
 ## Type Element Translation
 
+> Example response:
+
+```json
+{
+    "properties": [
+        {
+            "id": "{idA}",
+            "developerName": "Property One",
+            "contentFormatContentValueId": "{idB}"
+        },
+        {
+            "id": "{idC}",
+            "developerName": "Property Two",
+            "contentFormatContentValueId": "{idD}"
+        }
+    ],
+    "id": "{idE}",
+    "elementType": "TYPE",
+    "developerName": "Type Name",
+    "developerSummary": "",
+    "contentValueDocument": {
+        "translations": {
+            "{idF}": {
+                "contentValues": {
+                    "{idB}": "Translation for Property One",
+                    "{idD}": "Translation for Property Two"
+                }
+            }
+        }
+    }
+}
+```
+
+*The Type Element Translation object provides all of the content properties in a Type Element that can be translated.*
+
+The Type Element Translation object also includes additional properties to help translators identity the purpose/location of the content being translated.
+
+Key | Description
+--- | -----------
+**id**<br/>string | A unique identifier for the Type Element (see Type Element in the Draw API).
+**elementType**<br/>string | The type of Type Element. Valid values are:<br/><ul><li>TYPE</li></ul>
+**developerName**<br/>string | The developer name of the Type Element (see Type Element in the Draw API).
+**developerSummary**<br/>string | The developer summary of the Type Element (see Type Element in the Draw API).
+**contentValueDocument**<br/>object | See the Flow Translation Document section for details on this object.
+
 ### Get Type Element Translation
+
+Used to get an existing Type Element Translation. The Type Element Translation object provides all of the content properties in a Type Element that can be translated.
 
 #### HTTP Request
 
+> Example Response:
+
+```json
+{
+    "properties": [
+        {
+            "id": "5af55b98-d697-4cd3-a450-be77b4982872",
+            "developerName": "Name",
+            "contentFormatContentValueId": "079359a8-cc9b-4747-95f5-d1cb46fb0bc4"
+        },
+        {
+            "id": "60001a40-5ad5-4faf-aa46-89443aca0607",
+            "developerName": "Age",
+            "contentFormatContentValueId": "978258dd-8e7d-4a4c-bbe6-1b02c5d75e3d"
+        }
+    ],
+    "id": "cd594a53-0f32-4b21-bd82-21f35b00e5cf",
+    "elementType": "TYPE",
+    "developerName": "Person",
+    "developerSummary": "",
+    "contentValueDocument": {
+        "translations": {
+            "88b9010a-4a01-40e5-a18e-742d95de6273": {
+                "contentValues": {
+                    "079359a8-cc9b-4747-95f5-d1cb46fb0bc4": "",
+                    "978258dd-8e7d-4a4c-bbe6-1b02c5d75e3d": ""
+                }
+            }
+        }
+    }
+}
+```
+
 `GET /api/translate/1/element/type/{id}`
 
+Key | Description
+--- | -----------
+**id**<br/>string | The unique identifier for the Type associated with this Type Translation.
 
 ### Update Type Element Translation
 
@@ -976,21 +1059,191 @@ The raw JSON for the Value Element translation.
 
 `POST /api/translate/1/element/type`
 
+```json
+{
+    "properties": [
+        {
+            "id": "5af55b98-d697-4cd3-a450-be77b4982872",
+            "developerName": "Name",
+            "contentFormatContentValueId": "079359a8-cc9b-4747-95f5-d1cb46fb0bc4"
+        },
+        {
+            "id": "60001a40-5ad5-4faf-aa46-89443aca0607",
+            "developerName": "Age",
+            "contentFormatContentValueId": "978258dd-8e7d-4a4c-bbe6-1b02c5d75e3d"
+        }
+    ],
+    "id": "cd594a53-0f32-4b21-bd82-21f35b00e5cf",
+    "elementType": "TYPE",
+    "developerName": "Person",
+    "developerSummary": "",
+    "contentValueDocument": {
+        "translations": {
+            "88b9010a-4a01-40e5-a18e-742d95de6273": {
+                "contentValues": {
+                    "079359a8-cc9b-4747-95f5-d1cb46fb0bc4": "",
+                    "978258dd-8e7d-4a4c-bbe6-1b02c5d75e3d": ""
+                }
+            }
+        }
+    }
+}
+```
+
+#### Body
+
+The raw JSON for the Type Element translation.
+
 
 ## Map Element Translation
 
+> Example response:
+
+```json
+{
+    "userContentContentValueId": "{idA}",
+    "statusMessageContentValueId": "{idB}",
+    "postUpdateMessageContentValueId": "{idC}",
+    "notAuthorizedMessageContentValueId": "{idD}",
+    "outcomes": [
+        {
+            "developerName": "Outcome Name",
+            "developerSummary": "Outcome Summary",
+            "labelContentValueId": "{idE}",
+            "nextMapElementId": "Id of the next Map Element"
+        }
+    ],
+    "id": "Id of the Map Element",
+    "elementType": "Map Element Type",
+    "developerName": "Map Element Name",
+    "developerSummary": "Map Element Summary",
+    "contentValueDocument": {
+        "translations": {
+            "<!-- Culture: United States of America -->": {
+                "contentValues": {
+                    "{idE}": "Outcome Label",
+                    "{idB}": null,
+                    "{idC}": null,
+                    "{idD}": null,
+                    "{idA}": "<p>Content</p>"
+                }
+            }
+        }
+    }
+}
+```
+
+*The Map Element Translation object provides all of the content properties in a Map Element that can be translated.*
+
+The Map Element Translation object also includes additional properties to help translators identity the purpose/location of the content being translated.
+
+Key | Description
+--- | -----------
+**userContentContentValueId**<br/>string | A unique identifier for the content inside Map Elements of type **Step**. This identifier matches with an identifier in the translations section.
+**statusMessageContentValueId**<br/>string | A unique identifier for the content that should be shown to the user while waiting for a system step to complete. This identifier matches with an identifier in the translations section.
+**postUpdateMessageContentValueId**<br/>string | A unique identifier for the content of the message that should be posted to the collaboration stream. This identifier matches with an identifier in the translations section.
+**notAuthorizedMessageContentValueId**<br/>string | A unique identifier for the content that should be shown to the user if they are not authorized to take action on this Map Element. This identifier matches with an identifier in the translations section.
+**outcomes**<br/>array | The array of Outcomes coming from the Map Element. Each Outcome entry has the following keys:<br/><br/>**developerName**(string):<br/>The developer name for the outcome object(see Outcome in the Draw API).<br/></br>**developerSummary**(string):<br/>The developerSummary of the outcome object(see Outcome in the Draw API).<br/><br/>**labelContentValueId**(string):<br/>A unique identifier for the Outcome label property. This identifier matches with an identifier in the translations section.<br/><br/>**nextMapElementId**(string):<br/>A unique identifier for the target Map Element of the Outcome(see Outcome in the Draw API).
+**id**<br/>string | A unique identifier for the Map Element(see Map Element in the Draw API).
+**elementType**<br/>string | The type of Map Element. Valid values are:<br/><br/><ul><li>step</li><li>input</li><li>decision</li><li>operator</li><li>message</li><li>database_delete</li><li>database_load</li><li>database_save</li>
+**developerName**<br/>string | The developer name of the Map Element(see Map Element in the Draw API).
+**developerSummary**<br/>string | The developer summary of the Map Element(see Map Element in the Draw API).
+**contentValueDocument**<br/>object | See the Flow Translation Document section for details on this object.
+
 ### Get Map Element Translation
+
+Used to filter existing Map Element objects that are available for translation. The Map Element Translation object provides all of the properties in a Map Element that can be translated.
 
 #### HTTP Request
 
+```json
+{
+    "userContentContentValueId": "fe6fceca-6498-46a2-8cf1-91a0792a9b8c",
+    "statusMessageContentValueId": "e069447f-2244-4769-b0ba-4b94b75058f2",
+    "postUpdateMessageContentValueId": "1ded70cc-7e00-4de4-b778-f0752ec22862",
+    "notAuthorizedMessageContentValueId": "ed714ae2-79ad-4846-9e80-f44ea980f0a7",
+    "outcomes": [
+        {
+            "developerName": "Outcome Name",
+            "developerSummary": "Outcome Summary",
+            "labelContentValueId": "34d6a14d-e578-400d-958a-94b2863596fe",
+            "nextMapElementId": "9c07363f-51ee-48ba-a70e-1d7cc16625db"
+        }
+    ],
+    "id": "5067025f-8ab8-43de-8293-875faf12f4c8",
+    "elementType": "step",
+    "developerName": "Map Element Name",
+    "developerSummary": "Map Element Summary",
+    "contentValueDocument": {
+        "translations": {
+            "e9f71cf1-b8d4-4acd-a16c-e51a8c328b60": {
+                "contentValues": {
+                    "34d6a14d-e578-400d-958a-94b2863596fe": "Outcome Label",
+                    "e069447f-2244-4769-b0ba-4b94b75058f2": "Status message presented while waiting",
+                    "ed714ae2-79ad-4846-9e80-f44ea980f0a7": "Message presented when not authorized",
+                    "1ded70cc-7e00-4de4-b778-f0752ec22862": "Content added to the collaboration stream",
+                    "fe6fceca-6498-46a2-8cf1-91a0792a9b8c": "<p>Content inside the step Map Element</p>"
+                }
+            }
+        }
+    }
+}
+```
 `GET /api/translate/1/flow/{flow_id}/{editing_token}/element/map/{id}`
 
+Key | Description
+--- | -----------
+**flow_id**<br/>string | The unique identifier of the Flow where the Map Element is present.
+**editing_token**<br/>string | The unique identifier of the token used to validate changes to the Flow's Map Elements.
+**id**<br/>string | The unique identifier of the Map Element associated with this Map Element Translation.
 
 ### Update Map Element Translation
 
 #### HTTP Request
 
+```json
+{
+    "userContentContentValueId": "fe6fceca-6498-46a2-8cf1-91a0792a9b8c",
+    "statusMessageContentValueId": "e069447f-2244-4769-b0ba-4b94b75058f2",
+    "postUpdateMessageContentValueId": "1ded70cc-7e00-4de4-b778-f0752ec22862",
+    "notAuthorizedMessageContentValueId": "ed714ae2-79ad-4846-9e80-f44ea980f0a7",
+    "outcomes": [
+        {
+            "developerName": "Outcome Name",
+            "developerSummary": "Outcome Summary",
+            "labelContentValueId": "34d6a14d-e578-400d-958a-94b2863596fe",
+            "nextMapElementId": "9c07363f-51ee-48ba-a70e-1d7cc16625db"
+        }
+    ],
+    "id": "5067025f-8ab8-43de-8293-875faf12f4c8",
+    "elementType": "step",
+    "developerName": "Map Element Name",
+    "developerSummary": "Map Element Summary",
+    "contentValueDocument": {
+        "translations": {
+            "e9f71cf1-b8d4-4acd-a16c-e51a8c328b60": {
+                "contentValues": {
+                    "34d6a14d-e578-400d-958a-94b2863596fe": "Outcome Label",
+                    "e069447f-2244-4769-b0ba-4b94b75058f2": "Status message presented while waiting",
+                    "ed714ae2-79ad-4846-9e80-f44ea980f0a7": "Message presented when not authorized",
+                    "1ded70cc-7e00-4de4-b778-f0752ec22862": "Content added to the collaboration stream",
+                    "fe6fceca-6498-46a2-8cf1-91a0792a9b8c": "<p>Content inside the step Map Element</p>"
+                }
+            }
+        }
+    }
+}
+```
 `POST /api/translate/1/flow/{flow_id}/{editing_token}/element/map`
+
+Key | Description
+--- | -----------
+**flow_id**<br/>string | The unique identifier of the Flow where the Map Element is present.
+**editing_token**<br/>string | The unique identifier of the token used to validate changes to the Flow's Map Elements.
+
+#### Body
+
+The raw JSON for the Map Element translation.
 
 
 ## Navigation Element Translation

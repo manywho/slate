@@ -1,4 +1,4 @@
-# Connect
+# Connect Framework
 
 This section contains information on how you can connect/integrate ManyWho to various other applications and platforms. Typically there are two parts to any integration:
 
@@ -34,7 +34,7 @@ Using the Grizzly server to run the service locally is the best option, as it's 
 3. Under **Configuration > Main class**, point to your service's **Application** class
 4. Click **OK**, and your service should now run under Grizzly when you launch it by clicking the **Debug** button
 
-### How to: Build a Service
+### Build a Service
 
 In this tutorial, we will be building a service that integrates with GitHub. We'll start right from generating the basic project template, and finish off with a service that loads, saves, and hits actions on the GitHub API.
 

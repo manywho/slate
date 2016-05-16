@@ -15,35 +15,22 @@ Go to http://developer.force.com and click on the Sign Up button on the top righ
 Take a note of the website address being used by your account in salesforce. You should see something like 'https://na15.salesforce.com/'. Make a note of the first part that starts with 'na' or 'eu', etc. In this example, it's 'na15'. We'll need this information when setting up the Salesforce Service.
 </aside>
 
-#### Enable Social Features
+#### Salesforce SDK
 
-##### Create a Custom Object for ManyWho
+Install the Salesforce SDK available here:
 
-In order for ManyWho to leverage the social/feed capabilities of Salesforce (i.e. Chatter), you need to create a custom object. We use this to store the feed comments:
+https://github.com/manywho/sdk-salesforce
 
-1. In the top right menu of your salesforce.com account, click on **Setup**
-2. In the navigation bar on the left side, under the *Build* section, click on **Create**
-3. In the sub-menu you have to go into *Objects* and then click **New**
-4. On the screen for *New Custom Object*, complete the following (make sure this information is entered exactly as shown):
-    - Label: ManyWhoFlow
-    - Plural Label: ManyWhoFlows
-5. Leave all of the other settings alone and click on the **Save** button.
-6. In the *Custom Fields & Relationships* section, click on **New** to create a new field.
-7. Select **URL** for the field type and click on **Next**
-8. Provide the following for the field:
-    - Field Label: JoinUri
-    - Field Name: JoinUri
-9. Click on Next.
-10. Tick the box at the top of the **Visible** column to ensure this field is visible to all profiles.
-11. Click on Next. Click on Save.
+Simply do the following:
 
-##### Add feed tracking to the ManyWhoFlow Custom Object
+1. Click on Deploy to Salesforce (blue button).
+2. Click on the Login to Salesforce button (top right).
+3. Login into your Salesforce org.
+4. Click on the Deploy button.
 
-1. Under the *Build* section, click on **Customize**
-2. In the displayed sub menu, scroll down and click on **Chatter**
-3. In the displayed sub menu, click on **Feed Tracking**
-4. On the *Feed Tracking* screen, select **ManyWhoFlow** in this list of objects (on the left beside the main setup menu)
-5. Tick the box for **Enable Feed Tracking** at the top of the page area and click on the **Save** button
+Once this process is completed, you will have a number of ManyWho features added to your Salesforce org. Check out the README documentation for information on what's in the Salesforce SDK:
+
+https://github.com/manywho/sdk-salesforce/blob/master/README.md
 
 #### Enable Identity Features
 
@@ -445,20 +432,11 @@ This is certainly not an exhaustive list as all projects vary. However, there ca
 
 #### Create the Common ManyWho API objects
 
-We do not yet have a fully comprehensive set of our API objects in Salesforce Apex, however, we have many of the main ones. In order to make these objects available to you in your Salesforce org, download the SDK file here:
+Make sure you have the Salesforce SDK deployed into your Salesforce org. The SDK is available here:
 
-[ManyWho Apex API](https://drive.google.com/file/d/0BxOahH5Z4tUTX2NBcjY3aGlFLTg/view?usp=sharing)
+https://github.com/manywho/sdk-salesforce
 
-To add this to your org, simply do the following:
-
-1. Login to Salesforce (https://login.salesforce.com).
-2. Click on **Setup** and find the *Build* section in the setup tree.
-3. Click on **Develop -> Apex Classes**.
-4. Click on the **New** button.
-5. Copy the contents of the above file into the **Apex Class** tab.
-6. Click on the **Save** button.
-
-And that's it. You can now code up a Service directly in Apex. Let's do that now.
+For instructions on installing this, please see the Salesforce SDK section above.
 
 #### Tell ManyWho what the Service does
 
