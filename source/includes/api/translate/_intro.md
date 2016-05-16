@@ -1309,7 +1309,7 @@ Key | Description
 **flow_id**<br/>string | Unique identifier for the Flow containing the Navigation Element Translation
 **editing_token**<br/>string | The active Editing Token for the Flow being edited
 
-It is possible to modify the title and sections of the page modifying the contentValues in this example: "page label" and "element label".
+It is possible to modify the title and sections of the page modifying the contentValues (for this request example: "page label" and "element label").
 
 #### Body
 
