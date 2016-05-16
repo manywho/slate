@@ -997,13 +997,150 @@ The raw JSON for the Value Element translation.
 
 ### Get Navigation Element Translation
 
+This element allow you to have one or more translations for the element navigation.
+The navigation element translation will show the information in runtime depending on which culture is choose when the flow runs.
+
 #### HTTP Request
 
 `GET /api/translate/1/flow/{flow_id}/{editing_token}/element/navigation/{id}`
 
+#### Parameters
+
+Key | Description
+--- | -----------
+**flow_id**<br/>string | Unique identifier for the Flow containing the Navigation Element Translation
+**editing_token**<br/>string | The active Editing Token for the Flow being edited
+**id**<br/>string | The unique identifier for the 
+
+> Example 200 OK Response
+
+```json
+{
+    "labelContentValueId": "d6590e01-592e-4ed3-b604-cc4a836bb1a3",
+    "navigationItems": [
+        {
+            "locationMapElementId": "8048be5c-6cfc-4d77-a7ed-a6377a0976c9",
+            "developerName": "element1name",
+            "developerSummary": "",
+            "labelContentValueId": "fcd01664-2d72-4df7-9cd6-8d00f5b52631",
+            "navigationItems": null
+        }
+    ],
+    "id": "c22605e1-8dc5-4bed-91b9-3bf1a8c26e26",
+    "elementType": "NAVIGATION",
+    "developerName": "page1name",
+    "developerSummary": "page1summary",
+    "contentValueDocument": {
+        "translations": {
+            "0c0410a2-c456-469b-8cc6-9f53a77912fb": {
+                "contentValues": {
+                    "d6590e01-592e-4ed3-b604-cc4a836bb1a3": "page label text",
+                    "fcd01664-2d72-4df7-9cd6-8d00f5b52631": "element label text"
+                }
+            }
+        }
+    }
+}
+```
 
 ### Update Navigation Element Translation
 
 #### HTTP Request
 
 `POST /api/translate/1/flow/{flow_id}/{editing_token}/element/navigation`
+
+#### Parameters
+
+Key | Description
+--- | -----------
+**flow_id**<br/>string | Unique identifier for the Flow containing the Navigation Element Translation
+**editing_token**<br/>string | The active Editing Token for the Flow being edited
+
+It is possible to modify the title and sections of the page modifying the contentValues in this example: "page label" and "element label".
+
+#### Body
+
+The raw JSON for the Content Value Culture.
+
+Key | Description
+--- | -----------
+**labelContentValueId** <br/> string | id of one of the translations
+**navigationItems** <br/> List of navigationItems| list of navigation items
+**id** <br/>string | id of the Navigation Element Translation.
+**elementType** <br/> string | constant value "NAVIGATION"
+**developerName** <br/> string | name of the developer
+**developerSummary** <br/> string | summary of the items
+**contentValueDocument** <br/> string | contains a translations object
+
+Translations object
+
+Key | Description
+--- | -----------
+**\*name** <br/> string | the attribute name is the id of culture object and contains an object of type contentValues
+
+contentValues object
+
+Key | Description
+--- | -----------
+**\*name** <br/> string | the attribute name is the id of the navigation element and the value is the translation
+
+> Example 200 OK Request
+
+```json
+{
+    "labelContentValueId": "d6590e01-592e-4ed3-b604-cc4a836bb1a3",
+    "navigationItems": [
+        {
+            "locationMapElementId": "8048be5c-6cfc-4d77-a7ed-a6377a0976c9",
+            "developerName": "element1name",
+            "developerSummary": "",
+            "labelContentValueId": "fcd01664-2d72-4df7-9cd6-8d00f5b52631",
+            "navigationItems": null
+        }
+    ],
+    "id": "c22605e1-8dc5-4bed-91b9-3bf1a8c26e26",
+    "elementType": "NAVIGATION",
+    "developerName": "page1name",
+    "developerSummary": "page1summary",
+    "contentValueDocument": {
+        "translations": {
+            "0c0410a2-c456-469b-8cc6-9f53a77912fb": {
+                "contentValues": {
+                    "d6590e01-592e-4ed3-b604-cc4a836bb1a3": "page label",
+                    "fcd01664-2d72-4df7-9cd6-8d00f5b52631": "element label"
+                }
+            }
+        }
+    }
+}
+```
+> Example 200 OK Response
+
+```json
+{
+    "labelContentValueId": "d6590e01-592e-4ed3-b604-cc4a836bb1a3",
+    "navigationItems": [
+        {
+            "locationMapElementId": "8048be5c-6cfc-4d77-a7ed-a6377a0976c9",
+            "developerName": "element1name",
+            "developerSummary": "",
+            "labelContentValueId": "fcd01664-2d72-4df7-9cd6-8d00f5b52631",
+            "navigationItems": null
+        }
+    ],
+    "id": "c22605e1-8dc5-4bed-91b9-3bf1a8c26e26",
+    "elementType": "NAVIGATION",
+    "developerName": "page1name",
+    "developerSummary": "page1summary",
+    "contentValueDocument": {
+        "translations": {
+            "0c0410a2-c456-469b-8cc6-9f53a77912fb": {
+                "contentValues": {
+                    "d6590e01-592e-4ed3-b604-cc4a836bb1a3": "page label",
+                    "fcd01664-2d72-4df7-9cd6-8d00f5b52631": "element label"
+                }
+            }
+        }
+    }
+}
+```
