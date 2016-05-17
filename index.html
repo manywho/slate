@@ -12046,15 +12046,221 @@ The filter can take the following formats:
 
 <h3 id="get-navigation-element-translation">Get Navigation Element Translation</h3>
 
+<p>This element allow you to have one or more translations for the element navigation.
+The navigation element translation will show the information in runtime depending on which culture is choose when the flow runs.</p>
+
 <h4 id="http-request">HTTP Request</h4>
 
 <p><code class="prettyprint">GET /api/translate/1/flow/{flow_id}/{editing_token}/element/navigation/{id}</code></p>
+
+<h4 id="parameters">Parameters</h4>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>flow_id</strong><br/>string</td>
+<td>Unique identifier for the Flow containing the Navigation Element Translation</td>
+</tr>
+<tr>
+<td><strong>editing_token</strong><br/>string</td>
+<td>The active Editing Token for the Flow being edited</td>
+</tr>
+<tr>
+<td><strong>id</strong><br/>string</td>
+<td>The unique identifier for the</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>Example 200 OK Response</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"labelContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"d6590e01-592e-4ed3-b604-cc4a836bb1a3"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"navigationItems"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"locationMapElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8048be5c-6cfc-4d77-a7ed-a6377a0976c9"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"element1name"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"labelContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fcd01664-2d72-4df7-9cd6-8d00f5b52631"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"navigationItems"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c22605e1-8dc5-4bed-91b9-3bf1a8c26e26"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"elementType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NAVIGATION"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"page1name"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">"page1summary"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"contentValueDocument"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"translations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"0c0410a2-c456-469b-8cc6-9f53a77912fb"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"contentValues"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"d6590e01-592e-4ed3-b604-cc4a836bb1a3"</span><span class="p">:</span><span class="w"> </span><span class="s2">"page label text"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"fcd01664-2d72-4df7-9cd6-8d00f5b52631"</span><span class="p">:</span><span class="w"> </span><span class="s2">"element label text"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 
 <h3 id="update-navigation-element-translation">Update Navigation Element Translation</h3>
 
 <h4 id="http-request">HTTP Request</h4>
 
 <p><code class="prettyprint">POST /api/translate/1/flow/{flow_id}/{editing_token}/element/navigation</code></p>
+
+<h4 id="parameters">Parameters</h4>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>flow_id</strong><br/>string</td>
+<td>Unique identifier for the Flow containing the Navigation Element Translation</td>
+</tr>
+<tr>
+<td><strong>editing_token</strong><br/>string</td>
+<td>The active Editing Token for the Flow being edited</td>
+</tr>
+</tbody></table>
+
+<p>It is possible to modify the title and sections of the page modifying the contentValues (for this request example: &ldquo;page label&rdquo; and &ldquo;element label&rdquo;).</p>
+
+<h4 id="body">Body</h4>
+
+<p>The raw JSON for the Content Value Culture.</p>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>labelContentValueId</strong> <br/> string</td>
+<td>id of one of the translations</td>
+</tr>
+<tr>
+<td><strong>navigationItems</strong> <br/> List of navigationItems</td>
+<td>list of navigation items</td>
+</tr>
+<tr>
+<td><strong>id</strong> <br/>string</td>
+<td>id of the Navigation Element Translation.</td>
+</tr>
+<tr>
+<td><strong>elementType</strong> <br/> string</td>
+<td>constant value &ldquo;NAVIGATION&rdquo;</td>
+</tr>
+<tr>
+<td><strong>developerName</strong> <br/> string</td>
+<td>name of the developer</td>
+</tr>
+<tr>
+<td><strong>developerSummary</strong> <br/> string</td>
+<td>summary of the items</td>
+</tr>
+<tr>
+<td><strong>contentValueDocument</strong> <br/> string</td>
+<td>contains a translations object</td>
+</tr>
+</tbody></table>
+
+<p>Translations object</p>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>*name</strong> <br/> string</td>
+<td>the attribute name is the id of culture object and contains an object of type contentValues</td>
+</tr>
+</tbody></table>
+
+<p>contentValues object</p>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>*name</strong> <br/> string</td>
+<td>the attribute name is the id of the navigation element and the value is the translation</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>Example 200 OK Request</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"labelContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"d6590e01-592e-4ed3-b604-cc4a836bb1a3"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"navigationItems"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"locationMapElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8048be5c-6cfc-4d77-a7ed-a6377a0976c9"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"element1name"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"labelContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fcd01664-2d72-4df7-9cd6-8d00f5b52631"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"navigationItems"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c22605e1-8dc5-4bed-91b9-3bf1a8c26e26"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"elementType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NAVIGATION"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"page1name"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">"page1summary"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"contentValueDocument"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"translations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"0c0410a2-c456-469b-8cc6-9f53a77912fb"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"contentValues"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"d6590e01-592e-4ed3-b604-cc4a836bb1a3"</span><span class="p">:</span><span class="w"> </span><span class="s2">"page label"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"fcd01664-2d72-4df7-9cd6-8d00f5b52631"</span><span class="p">:</span><span class="w"> </span><span class="s2">"element label"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<blockquote>
+<p>Example 200 OK Response</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"labelContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"d6590e01-592e-4ed3-b604-cc4a836bb1a3"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"navigationItems"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"locationMapElementId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8048be5c-6cfc-4d77-a7ed-a6377a0976c9"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"element1name"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"labelContentValueId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fcd01664-2d72-4df7-9cd6-8d00f5b52631"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"navigationItems"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c22605e1-8dc5-4bed-91b9-3bf1a8c26e26"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"elementType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NAVIGATION"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"developerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"page1name"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"developerSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">"page1summary"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"contentValueDocument"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"translations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"0c0410a2-c456-469b-8cc6-9f53a77912fb"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"contentValues"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"d6590e01-592e-4ed3-b604-cc4a836bb1a3"</span><span class="p">:</span><span class="w"> </span><span class="s2">"page label"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"fcd01664-2d72-4df7-9cd6-8d00f5b52631"</span><span class="p">:</span><span class="w"> </span><span class="s2">"element label"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 
           <h1 id="package-api">Package API</h1>
 
