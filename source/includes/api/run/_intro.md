@@ -1,4 +1,4 @@
-# Run API
+# Run
 
 The Run API provides all of the features of your executing Flow applications. When you build a Flow on the ManyWho Platform, it is exposed through this API:
 

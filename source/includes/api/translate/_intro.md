@@ -1,4 +1,4 @@
-# Translate API
+# Translate
 
 When building Flows on the Platform, all "content" is automatically separated from "logic". This means that all Flows are automatically ready for internationalization into other languages. The result being that you can write one Flow, but adjust the content accordingly for each Content Value Culture needed.
 

@@ -1,3 +1,3 @@
-# Report API
+# Report
 
 This should reference the Odata APIs

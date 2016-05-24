@@ -1,4 +1,4 @@
-# Log API
+# Log
 
 ## Get Log
 

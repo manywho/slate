@@ -1,4 +1,4 @@
-# Play API
+# Play
 
 
 ## Create/Update Player

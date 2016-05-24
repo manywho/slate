@@ -1,4 +1,4 @@
-# Service API
+# Service
 
 ## Requests
 

@@ -1,4 +1,4 @@
-# Package API
+# Package
 
 The packaging API allows you to move a Flow from one tenant to another. This can be handy for a few example reasons:
 
