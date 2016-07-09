@@ -47,14 +47,7 @@ Used to get the list of Users. The User object provides basic information about 
 
 #### HTTP Request
 
-`GET /api/admin/1/directory/{tenant_domain}/user`
-
-#### Parameters
-
-Key | Description
---- | -----------
-**tenant_domain**<br/>string | The domain provided for the tenant. This is the domain part of any username used to login to the tenant. For example, for a username of: paul.smith@mycompany.manywho.com, the tenant_domain would be: @mycompany.manywho.com
-
+`GET /api/admin/1/directory/user`
 
 ### Get User
 
@@ -75,13 +68,12 @@ Used to get an individual User object for a Service or Flow Builder. The User ob
 
 #### HTTP Request
 
-`GET /api/admin/1/directory/{tenant_domain}/user?username={username}`
+`GET /api/admin/1/directory/user?username={username}`
 
 #### Parameters
 
 Key | Description
 --- | -----------
-**tenant_domain**<br/>string | The domain provided for the tenant. This is the domain part of any username used to login to the tenant. For example, for a username of: paul.smith@mycompany.manywho.com, the tenant_domain would be: @mycompany.manywho.com
 **username**<br/>string | The username associated for the User record.
 
 
@@ -104,7 +96,7 @@ Used to set an individual User object for a Service or Flow Builder. The User ob
 
 #### HTTP Request
 
-`POST /api/admin/1/directory/{tenant_domain}/user`
+`POST /api/admin/1/directory/user`
 
 #### Body
 
@@ -119,11 +111,10 @@ Used to delete an individual User object for a Service or Flow Builder. This wil
 
 #### HTTP Request
 
-`DELETE /api/admin/1/directory/{tenant_domain}/user?username={username}`
+`DELETE /api/admin/1/directory/user?username={username}`
 
 #### Parameters
 
 Key | Description
 --- | -----------
-**tenant_domain**<br/>string | The domain provided for the tenant. This is the domain part of any username used to login to the tenant. For example, for a username of: paul.smith@mycompany.manywho.com, the tenant_domain would be: @mycompany.manywho.com
 **username**<br/>string | The username associated for the User record.
