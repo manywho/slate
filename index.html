@@ -658,21 +658,7 @@ Use this API with extreme caution. Though we do keep backups of Tenant data, rec
 
 <h4 id="http-request">HTTP Request</h4>
 
-<p><code class="prettyprint">GET /api/admin/1/directory/{tenant_domain}/user</code></p>
-
-<h4 id="parameters">Parameters</h4>
-
-<table><thead>
-<tr>
-<th>Key</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><strong>tenant_domain</strong><br/>string</td>
-<td>The domain provided for the tenant. This is the domain part of any username used to login to the tenant. For example, for a username of: paul.smith@mycompany.manywho.com, the tenant_domain would be: @mycompany.manywho.com</td>
-</tr>
-</tbody></table>
+<p><code class="prettyprint">GET /api/admin/1/directory/user</code></p>
 
 <h3 id="get-user">Get User</h3>
 
@@ -693,7 +679,7 @@ Use this API with extreme caution. Though we do keep backups of Tenant data, rec
 
 <h4 id="http-request">HTTP Request</h4>
 
-<p><code class="prettyprint">GET /api/admin/1/directory/{tenant_domain}/user?username={username}</code></p>
+<p><code class="prettyprint">GET /api/admin/1/directory/user?username={username}</code></p>
 
 <h4 id="parameters">Parameters</h4>
 
@@ -703,10 +689,6 @@ Use this API with extreme caution. Though we do keep backups of Tenant data, rec
 <th>Description</th>
 </tr>
 </thead><tbody>
-<tr>
-<td><strong>tenant_domain</strong><br/>string</td>
-<td>The domain provided for the tenant. This is the domain part of any username used to login to the tenant. For example, for a username of: paul.smith@mycompany.manywho.com, the tenant_domain would be: @mycompany.manywho.com</td>
-</tr>
 <tr>
 <td><strong>username</strong><br/>string</td>
 <td>The username associated for the User record.</td>
@@ -732,7 +714,7 @@ Use this API with extreme caution. Though we do keep backups of Tenant data, rec
 
 <h4 id="http-request">HTTP Request</h4>
 
-<p><code class="prettyprint">POST /api/admin/1/directory/{tenant_domain}/user</code></p>
+<p><code class="prettyprint">POST /api/admin/1/directory/user</code></p>
 
 <h4 id="body">Body</h4>
 
@@ -748,7 +730,7 @@ Use this API with extreme caution. Though we do keep backups of Tenant data, rec
 
 <h4 id="http-request">HTTP Request</h4>
 
-<p><code class="prettyprint">DELETE /api/admin/1/directory/{tenant_domain}/user?username={username}</code></p>
+<p><code class="prettyprint">DELETE /api/admin/1/directory/user?username={username}</code></p>
 
 <h4 id="parameters">Parameters</h4>
 
@@ -758,10 +740,6 @@ Use this API with extreme caution. Though we do keep backups of Tenant data, rec
 <th>Description</th>
 </tr>
 </thead><tbody>
-<tr>
-<td><strong>tenant_domain</strong><br/>string</td>
-<td>The domain provided for the tenant. This is the domain part of any username used to login to the tenant. For example, for a username of: paul.smith@mycompany.manywho.com, the tenant_domain would be: @mycompany.manywho.com</td>
-</tr>
 <tr>
 <td><strong>username</strong><br/>string</td>
 <td>The username associated for the User record.</td>
