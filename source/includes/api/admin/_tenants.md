@@ -205,7 +205,7 @@ The raw JSON for the Tenant Delete Request.
 Key | Description
 --- | -----------
 **flows**<br/>boolean | Indicates if all Flow models should be deleted.
-**pages**<br/>boolean | Indicates if all Page Elements should be deleted.
+**pageLayouts**<br/>boolean | Indicates if all Page Elements should be deleted.
 **values**<br/>boolean | Indicates if all Value Elements should be deleted.
 **types**<br/>boolean | Indicates if all Type Elements should be deleted.
 **services**<br/>boolean | Indicates if all Service Elements should be deleted.
