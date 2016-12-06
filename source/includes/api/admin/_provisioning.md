@@ -79,13 +79,12 @@ The password reset API is only applicable to Flow Builders. For running users, t
 
 #### HTTP Request
 
-`POST /api/admin/1/directory/{tenant_domain}/user/password?username={username}`
+`POST /api/admin/1/directory/user/password?username={username}`
 
 #### Parameters
 
 Key | Description
 --- | -----------
-**tenant_domain**<br/>string | The domain provided for the tenant. This is the domain part of any username used to login to the tenant. For example, for a username of: paul.smith@mycompany.manywho.com, the tenant_domain would be: @mycompany.manywho.com
 **username**<br/>string | The username associated with the password. Following on from the example above, this would be: paul.smith@mycompany.manywho.com. It's important to note that this is not necessarily the users' email as a builder user can belong to more than one tenant.
 
 #### Body
@@ -110,13 +109,12 @@ Key | Description
 
 #### HTTP Request
 
-`POST /api/admin/1/directory/{tenant_domain}/user/credential/{token}`
+`POST /api/admin/1/directory/user/credential/{token}`
 
 #### Parameters
 
 Key | Description
 --- | -----------
-**tenant_domain**<br/>string | The domain provided for the tenant. This is the domain part of any username used to login to the tenant. For example, for a username of: paul.smith@mycompany.manywho.com, the tenant_domain would be: @mycompany.manywho.com
 **token**<br/>string | The token that was provided to the user as part of the notification callback. The token is not provided in the email, but rather the token is provided after the user clicks on the notification email link. The token will either be parsed into the provided redirectUrl (if specified) or provided in the REST response from a GET request to the notification callback Url provided in the email.
 
 #### Body
