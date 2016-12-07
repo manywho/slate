@@ -18,7 +18,7 @@
 
 The purpose of the Tag Element is to add flexibility to your Flow application user experience. The components, containers and navigation items in your Flow can benefit from having access to the Flow State to get more contextual information. For example, if you have a numeric input field, it may be useful to know the possible range or numeric values that can be provided by the end user - where that range depends on logic in the Flow. The components, containers and navigation items also supports "attributes" and these are often sufficient for many use-cases. As a result, only use the Tag Element if you need information that is very specific to the Flow State for particular running user(s). The base properties of the Tag Element are outlined here.
 
-#### Page Element
+#### Tag Element
 
 Key | Description
 --- | -----------
