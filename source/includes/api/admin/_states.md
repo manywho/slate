@@ -323,8 +323,7 @@ Key | Description
 ```json
 [
   "{id}",
-  "{id}",
-  
+  "{id}"
 ]
 ```
 
