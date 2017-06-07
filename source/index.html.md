@@ -29,7 +29,7 @@ includes:
   - api/translate/intro
   - api/package/intro
   - api/run/intro
-  - api/social/intro
+  - api/social/socialapi
   - api/service/intro
   - api/log/intro
   - api/play/intro
