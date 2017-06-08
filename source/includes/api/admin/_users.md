@@ -118,3 +118,26 @@ Used to delete an individual User object for a Service or Flow Builder. This wil
 Key | Description
 --- | -----------
 **username**<br/>string | The username associated for the User record.
+
+
+### Update tenant user settings
+
+Used to update the tenant-specific settings for a user
+
+#### HTTP Request
+
+`PUT /api/admin/1/users/me/settings`
+
+#### Body
+
+The raw JSON for the settings.
+
+> Example 200 OK Response
+
+```json
+{
+  "notifications": {
+    "enableEmails": false
+  }
+}
+```
