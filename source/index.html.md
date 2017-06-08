@@ -26,6 +26,7 @@ includes:
   - api/draw/valueelements
   - api/draw/typeelements
   - api/draw/commonobjects
+  - api/notifications/intro
   - api/translate/intro
   - api/package/intro
   - api/run/intro
