@@ -836,6 +836,27 @@ Use this API with extreme caution. Though we do keep backups of Tenant data, rec
 </tr>
 </tbody></table>
 
+<h3 id="update-tenant-user-settings">Update tenant user settings</h3>
+
+<p>Used to update the tenant-specific settings for a user</p>
+
+<h4 id="http-request">HTTP Request</h4>
+
+<p><code class="prettyprint">PUT /api/admin/1/users/me/settings</code></p>
+
+<h4 id="body">Body</h4>
+
+<p>The raw JSON for the settings.</p>
+
+<blockquote>
+<p>Example 200 OK Response</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"notifications"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"enableEmails"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
           <h2 id="flow-states">Flow States</h2>
 
 <blockquote>
