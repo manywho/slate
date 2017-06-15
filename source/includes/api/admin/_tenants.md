@@ -169,6 +169,23 @@ Used to set the Tenant object for the current Tenant. The Tenant provides a cent
 
 The raw JSON for the Tenant.
 
+### Delete Tenant
+
+> Success 204 No Content Response
+
+<aside class="error">
+<b>Careful!</b><br/>
+Use this API with extreme caution. Though we do keep backups of Tenant, recovering from Tenant delete operations takes time and is chargeable. A request to delete Tenant does require verification via email before the actual delete is performed.
+</aside>
+
+#### HTTP Request
+
+`DELETE /api/admin/1/tenant`
+
+#### Body
+
+There is not body in this request.
+
 
 ### Delete Tenant Data
 
@@ -200,7 +217,7 @@ Use this API with extreme caution. Though we do keep backups of Tenant data, rec
 
 The raw JSON for the Tenant Delete Request.
 
-#### Tenant Delete Request
+#### Tenant Data Delete Request
 
 Key | Description
 --- | -----------
