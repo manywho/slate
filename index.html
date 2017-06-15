@@ -633,6 +633,25 @@
 
 <p>The raw JSON for the Tenant.</p>
 
+<h3 id="delete-tenant">Delete Tenant</h3>
+
+<blockquote>
+<p>Success 204 No Content Response</p>
+</blockquote>
+
+<aside class="error">
+<b>Careful!</b><br/>
+Use this API with extreme caution. Though we do keep backups of Tenant, recovering from Tenant delete operations takes time and is chargeable. A request to delete Tenant does require verification via email before the actual delete is performed.
+</aside>
+
+<h4 id="http-request">HTTP Request</h4>
+
+<p><code class="prettyprint">DELETE /api/admin/1/tenant</code></p>
+
+<h4 id="body">Body</h4>
+
+<p>There is not body in this request.</p>
+
 <h3 id="delete-tenant-data">Delete Tenant Data</h3>
 
 <blockquote>
@@ -662,7 +681,7 @@ Use this API with extreme caution. Though we do keep backups of Tenant data, rec
 
 <p>The raw JSON for the Tenant Delete Request.</p>
 
-<h4 id="tenant-delete-request">Tenant Delete Request</h4>
+<h4 id="tenant-data-delete-request">Tenant Data Delete Request</h4>
 
 <table><thead>
 <tr>
