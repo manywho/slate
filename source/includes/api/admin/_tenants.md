@@ -194,13 +194,14 @@ There is not body in this request.
 ```json
 {
   "flows": true,
-  "pageLayouts": true,
+  "pages": true,
   "values": true,
   "types": true,
   "services": true,
   "tags": true,
   "snapshots": true,
-  "states": true
+  "states": true,
+  "macros": true
 }
 ```
 
@@ -222,10 +223,11 @@ The raw JSON for the Tenant Delete Request.
 Key | Description
 --- | -----------
 **flows**<br/>boolean | Indicates if all Flow models should be deleted.
-**pageLayouts**<br/>boolean | Indicates if all Page Elements should be deleted.
+**pages**<br/>boolean | Indicates if all Page Elements should be deleted.
 **values**<br/>boolean | Indicates if all Value Elements should be deleted.
 **types**<br/>boolean | Indicates if all Type Elements should be deleted.
 **services**<br/>boolean | Indicates if all Service Elements should be deleted.
 **tags**<br/>boolean | Indicates if all Tag Elements should be deleted.
 **snapshots**<br/>boolean | Indicates if all Flow snapshots should be deleted.
 **states**<br/>boolean | Indicates if all Flow States should be deleted.
+**macros**<br/>boolean | Indicates if all Macros should be deleted.
