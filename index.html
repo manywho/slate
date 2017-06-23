@@ -659,13 +659,14 @@ Use this API with extreme caution. Though we do keep backups of Tenant, recoveri
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"flows"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"pageLayouts"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"pages"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
   </span><span class="s2">"values"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
   </span><span class="s2">"types"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
   </span><span class="s2">"services"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
   </span><span class="s2">"tags"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
   </span><span class="s2">"snapshots"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"states"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+  </span><span class="s2">"states"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"macros"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <aside class="error">
@@ -694,7 +695,7 @@ Use this API with extreme caution. Though we do keep backups of Tenant data, rec
 <td>Indicates if all Flow models should be deleted.</td>
 </tr>
 <tr>
-<td><strong>pageLayouts</strong><br/>boolean</td>
+<td><strong>pages</strong><br/>boolean</td>
 <td>Indicates if all Page Elements should be deleted.</td>
 </tr>
 <tr>
@@ -720,6 +721,10 @@ Use this API with extreme caution. Though we do keep backups of Tenant data, rec
 <tr>
 <td><strong>states</strong><br/>boolean</td>
 <td>Indicates if all Flow States should be deleted.</td>
+</tr>
+<tr>
+<td><strong>macros</strong><br/>boolean</td>
+<td>Indicates if all Macros should be deleted.</td>
 </tr>
 </tbody></table>
 
