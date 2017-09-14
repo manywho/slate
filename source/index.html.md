@@ -15,6 +15,7 @@ includes:
   - api/admin/states
   - api/draw/intro
   - api/draw/authentication
+  - api/draw/assets
   - api/draw/flow
   - api/draw/flowgraph
   - api/draw/flowsnapshot
