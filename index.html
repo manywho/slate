@@ -1316,6 +1316,108 @@ Use this API with extreme caution. Though we do keep backups of Tenant data, rec
 </tr>
 </tbody></table>
 
+          <h2 id="assets">Assets</h2>
+
+<h3 id="lists-all-assets">Lists all Assets</h3>
+
+<blockquote>
+<p>Example 200 OK Response</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"contentType"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bbeb742d-b6ea-402a-9578-c2cb7dd0ffa2/image.png"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"modifiedAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-07-27T05:22:48+00:00"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"publicUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://files-manywho-com.s3.amazonaws.com/bbeb742d-b6ea-402a-9578-c2cb7dd0ffa2/image.png"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">2248160</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"contentType"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bbeb742d-b6ea-402a-9578-c2cb7dd0ffa2/player.css"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"modifiedAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-08-08T09:47:45+00:00"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"publicUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://files-manywho-com.s3.amazonaws.com/bbeb742d-b6ea-402a-9578-c2cb7dd0ffa2/player.css"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">96755</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+<p>Used to get a list of all the assets that exist for a Tenant.</p>
+
+<h4 id="http-request">HTTP Request</h4>
+
+<p><code class="prettyprint">GET /api/draw/1/assets</code></p>
+
+<h3 id="create-folder">Create Folder</h3>
+
+<blockquote>
+<p>204 No Content</p>
+</blockquote>
+
+<p>Used to create an empty folder.</p>
+
+<h4 id="http-request">HTTP Request</h4>
+
+<p><code class="prettyprint">POST /api/draw/1/assets</code></p>
+
+<h4 id="body">Body</h4>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"folder1/folder2"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<h3 id="delete-asset">Delete Asset</h3>
+
+<blockquote>
+<p>204 No Content</p>
+</blockquote>
+
+<p>Used to delete an asset (or a folder)</p>
+
+<h4 id="http-request">HTTP Request</h4>
+
+<p><code class="prettyprint">POST /api/draw/1/assets</code></p>
+
+<h4 id="body">Body</h4>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"folder1/folder2/key.png"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<h3 id="move-asset">Move Asset</h3>
+
+<blockquote>
+<p>204 No Content</p>
+</blockquote>
+
+<p>Used to move an asset (or a folder)</p>
+
+<h4 id="http-request">HTTP Request</h4>
+
+<p><code class="prettyprint">PUT /api/draw/1/assets</code></p>
+
+<h4 id="body">Body</h4>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"oldKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"folder1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"newKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"folder2"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<h3 id="upload-asset">Upload Asset</h3>
+
+<blockquote>
+<p>204 No Content</p>
+</blockquote>
+
+<p>Used to generate a signed upload URL, which should be used to submit the asset to (using <code class="prettyprint">PUT</code>). A <code class="prettyprint">contentType</code> is required in this request.</p>
+
+<h4 id="http-request">HTTP Request</h4>
+
+<p><code class="prettyprint">POST /api/draw/1/assets/upload</code></p>
+
+<h4 id="body">Body</h4>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"contentType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"image/png"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"folder1/folder2/key.png"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
           <h2 id="flow">Flow</h2>
 
 <blockquote>
