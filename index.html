@@ -487,6 +487,10 @@
   </span><span class="s2">"stateSettings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="s2">"endpoint"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://mycompany.com/api/report"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"persistToDatabase"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"tenantSettings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"formatValues"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"releaseCycle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"rolling"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
@@ -533,6 +537,10 @@
 <tr>
 <td><strong>stateSettings</strong><br/>object</td>
 <td>The settings for State persistence and storage. The State Settings object has the following keys:<br/><br/><strong>endpoint</strong> (string):<br/>The Uri for the State persistence implementation. This endpoint must implement our Reporting API interface. More details on that can be found on GitHub here: https://github.com/manywho/reporting<br/><br/><strong>persistToDatabase</strong> (boolean):<br/>(deprecated)</td>
+</tr>
+<tr>
+<td><strong>tenantSettings</strong><br />object</td>
+<td>The settings specific to the tenant. It has the following keys: <br /><br /><strong>releaseCycle</strong> (string): <br />The version of the platform your tenant&rsquo;s flow will run using - can be one of <strong>rolling</strong> for the latest version always, or <strong>monthly</strong> for a monthly-released, 1-month delayed version (based on <strong>rolling</strong>).</td>
 </tr>
 </tbody></table>
 
@@ -8888,6 +8896,46 @@ The navigation element translation will show the information in runtime dependin
 <tr>
 <td><strong>uriMapping[n][to]</strong><br/>string</td>
 <td>Optional. At position n in an array of uriMapping values, this is the Uri that the matching Service (as per the from) should point to once the Package has been imported. This allows you to map Services to a different Uri as part of the packaging process.</td>
+</tr>
+</tbody></table>
+
+<h2 id="share-package">Share Package</h2>
+
+<blockquote>
+<p>Example Request</p>
+</blockquote>
+<pre class="highlight http tab-http"><code><span class="err">POST https://flow.manywho.com/api/package/1/flow/{id}/{version}/share
+</span></code></pre>
+<p>This allows you to share a package, and be given a unique token for others to use to import that package into their tenant.</p>
+
+<h4 id="http-request">HTTP Request</h4>
+
+<p><code class="prettyprint">POST /api/package/1/flow/{id}/{version}/share</code></p>
+
+<h2 id="import-shared-package">Import Shared Package</h2>
+
+<blockquote>
+<p>Example Request</p>
+</blockquote>
+<pre class="highlight http tab-http"><code><span class="err">POST https://flow.manywho.com/api/package/1/shared/flow
+</span></code></pre>
+<p>This allows you to import a package that has been shared with you, using the unique token.</p>
+
+<h4 id="http-request">HTTP Request</h4>
+
+<p><code class="prettyprint">POST /api/package/1/shared/flow</code></p>
+
+<h4 id="parameters">Parameters</h4>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>token</strong><br/>string</td>
+<td>The unique sharing token you wish to import</td>
 </tr>
 </tbody></table>
 
