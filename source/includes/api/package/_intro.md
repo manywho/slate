@@ -67,3 +67,37 @@ Key | Description
 **isDefault**<br/>boolean | Optional. A boolean value indicating if the Package should be imported as an active SnapShot that should be immediately made the default version.
 **uriMapping[n][from]**<br/>string | Optional. At position n in an array of uriMapping values, this is the Uri that any Services in the Package currently point to.
 **uriMapping[n][to]**<br/>string | Optional. At position n in an array of uriMapping values, this is the Uri that the matching Service (as per the from) should point to once the Package has been imported. This allows you to map Services to a different Uri as part of the packaging process.
+
+## Share Package
+
+> Example Request
+
+```http
+POST https://flow.manywho.com/api/package/1/flow/{id}/{version}/share
+```
+
+This allows you to share a package, and be given a unique token for others to use to import that package into their tenant.
+
+#### HTTP Request
+
+`POST /api/package/1/flow/{id}/{version}/share`
+
+## Import Shared Package
+
+> Example Request
+
+```http
+POST https://flow.manywho.com/api/package/1/shared/flow
+```
+
+This allows you to import a package that has been shared with you, using the unique token.
+
+#### HTTP Request
+
+`POST /api/package/1/shared/flow`
+
+#### Parameters
+
+Key | Description
+--- | -----------
+**token**<br/>string | The unique sharing token you wish to import
