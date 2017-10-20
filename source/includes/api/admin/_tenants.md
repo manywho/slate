@@ -64,6 +64,10 @@
   "stateSettings": {
     "endpoint": "https://mycompany.com/api/report",
   	"persistToDatabase": false
+  },
+  "tenantSettings": {
+    "formatValues": true,
+    "releaseCycle": "rolling"
   }
 }
 ```
@@ -84,7 +88,7 @@ Key | Description
 **reportSettings**<br/>string | (deprecated)
 **subdomain**<br/>string | The requested subdomain to register for this tenant. The subdomain can be null, but if provided must be unique for the entire Platform.
 **stateSettings**<br/>object | The settings for State persistence and storage. The State Settings object has the following keys:<br/><br/>**endpoint** (string):<br/>The Uri for the State persistence implementation. This endpoint must implement our Reporting API interface. More details on that can be found on GitHub here: https://github.com/manywho/reporting<br/><br/>**persistToDatabase** (boolean):<br/>(deprecated)
-
+**tenantSettings**<br />object | The settings specific to the tenant. It has the following keys: <br /><br />**releaseCycle** (string): <br />The version of the platform your tenant's flow will run using - can be one of **rolling** for the latest version always, or **monthly** for a monthly-released, 1-month delayed version (based on **rolling**).
 
 #### IP Range
 Key | Description
